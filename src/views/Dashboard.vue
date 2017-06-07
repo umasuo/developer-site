@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="page-title">
       <div class="title_left">
         <h3>仪表盘</h3>

@@ -566,10 +566,9 @@ ul.nav.child_menu li:after {
 }
 .panel_toolbox {
   float: right;
-  min-width: 70px;
 }
 .panel_toolbox>li {
-  float: left;
+  float: right;
   cursor: pointer;
 }
 .panel_toolbox>li>a {

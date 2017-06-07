@@ -74,12 +74,12 @@
                 toName: 'ManageDevices'
               },
               {
-                name: '设备类型',
-                toName: 'DeviceTypes'
+                name: '设备定义',
+                toName: 'DeviceDefinitions'
               },
               {
-                name: '设备数据定义',
-                toName: 'DataTypes'
+                name: '数据定义',
+                toName: 'DataDefinitions'
               }
             ]
           }

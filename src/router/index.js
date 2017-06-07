@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Frame from '@/Frame'
 import Dashboard from '@/views/Dashboard'
+import DeviceDefinitions from '@/views/DeviceDefinitions'
+import DataDefinitions from '@/views/DataDefinitions'
 
 Vue.use(Router)
 
@@ -24,14 +26,14 @@ export default new Router({
           component: Dashboard
         },
         {
-          path: 'device-types',
-          name: 'DeviceTypes',
-          component: Dashboard
+          path: 'device-definitions',
+          name: 'DeviceDefinitions',
+          component: DeviceDefinitions
         },
         {
-          path: 'data-types',
-          name: 'DataTypes',
-          component: Dashboard
+          path: 'data-definitions',
+          name: 'DataDefinitions',
+          component: DataDefinitions
         }
       ]
     }

@@ -28,3 +28,53 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+/**
+   * auto generated uuid.
+   */
+  private String id;
+
+  /**
+   * The Created at.
+   */
+  protected ZonedDateTime createdAt;
+
+  /**
+   * The Last modified at.
+   */
+  protected ZonedDateTime lastModifiedAt;
+
+  /**
+   * version used for update date check.
+   */
+  private Integer version;
+
+  /**
+   * which developer this data definition belong to.
+   */
+  @NotNull
+  private String developerId;
+
+  /**
+   * data id defined by the developer.
+   */
+  @NotNull
+  private String dataId;
+
+  /**
+   * the data structure.
+   */
+  @NotNull
+  private PointType dataType;
+
+  /**
+   * name of this definition.
+   */
+  @NotNull
+  private String name;
+
+  /**
+   * describe the usage of this definition.
+   */
+  @NotNull
+  private String description;
