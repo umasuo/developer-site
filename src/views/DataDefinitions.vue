@@ -69,31 +69,16 @@
             name: '手环步数概要',
             description: '手环步数概要数据',
             dataType: {
-              key: 'root',
-              type: 'type.object',
-              subTypes: [
-                {
-                  key: 'subObj',
-                  type: 'type.object',
-                  subTypes: [
-                    {
-                      key: 'name',
-                      type: 'type.string'
-                    }
-                  ]
+              id: 'node',
+              type: 'object',
+              properties: {
+                title: {
+                  type: 'string'
                 },
-                {
-                  key: 'subArray',
-                  type: 'type.array',
-                  subType: {
-                    type: 'type.string'
-                  }
-                },
-                {
-                  key: 'subNumber',
-                  type: 'type.number'
+                sub_node: {
+                  '$ref': 'node'
                 }
-              ]
+              }
             }
           }
         ]

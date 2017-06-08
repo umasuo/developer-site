@@ -1,24 +1,43 @@
 <template>
-  <div class="modal fade bs-example-modal-lg" ref="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade data-editor" ref="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">{{ isAddingNew ? '新增数据定义' :`编辑"${editingDataDefinition.name}"` }}</h4>
+          <h4 class="modal-title">{{ isAddingNew ? '新增数据定义' :`编辑"${editingDataDefinition.name}"` }}</h4>
         </div>
         <div class="modal-body">
 
           <form>
-            <label for="dataId">ID :</label>
-            <input type="text" id="dataId" class="form-control" v-model="editingDataDefinition.dataId" required>
+            <label>ID :</label>
+            <input type="text" class="form-control" v-model="editingDataDefinition.dataId" required>
 
-            <label for="name">名称 :</label>
-            <input type="text" id="name" class="form-control" v-model="editingDataDefinition.name" required>
+            <label>名称 :</label>
+            <input type="text" class="form-control" v-model="editingDataDefinition.name" required>
 
-            <label for="description">简介 :</label>
-            <textarea id="description" class="form-control" v-model="editingDataDefinition.description" required></textarea>
+            <label>简介 :</label>
+            <textarea class="form-control" v-model="editingDataDefinition.description" required></textarea>
+
+            <label>数据定义 :</label>
+            <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataType, null, 2) }}</div>
+
+            <button type="button" class="btn btn-primary" @click="checkSchemaAndGenerateJson">更新范例数据</button>
+            <span v-if="errMsg">格式有误
+              <a href="javascript:;" class="text-danger" @click="showErrMsg = !showErrMsg">显示详细错误信息</a>
+            </span>
+
+            <div>
+              <textarea class="data-editor__err-msg" rows="10" v-if="errMsg && showErrMsg">
+                {{ errMsg }}
+              </textarea>
+            </div>
+
+            <div class="clear-fix"></div>
+
+            <label>范例数据 :</label>
+            <textarea class="form-control" v-model="demoJson" readonly></textarea>
           </form>
 
         </div>
@@ -33,6 +52,16 @@
 </template>
 
 <script>
+  import brace from 'brace'
+  import Ajv from 'ajv'
+  import jsf from 'json-schema-faker'
+  import 'brace/mode/json'
+  import 'brace/theme/monokai'
+
+  jsf.option({
+    requiredOnly: false
+  })
+
   export default {
     name: 'DataDefinitionEditor',
 
@@ -53,48 +82,80 @@
           name: '范例数据定义',
           description: '范例数据定义，修改以创建新的数据定义',
           dataType: {
-            key: 'root',
-            type: 'type.object',
-            subTypes: [
-              {
-                key: 'subObj',
-                type: 'type.object',
-                subTypes: [
-                  {
-                    key: 'name',
-                    type: 'type.string'
-                  }
-                ]
+            id: 'node',
+            type: 'object',
+            properties: {
+              title: {
+                type: 'string'
               },
-              {
-                key: 'subArray',
-                type: 'type.array',
-                subType: {
-                  type: 'type.string'
-                }
-              },
-              {
-                key: 'subNumber',
-                type: 'type.number'
+              sub_node: {
+                '$ref': 'node'
               }
-            ]
+            }
           }
         }
       }
 
       return {
         editingDataDefinition,
-        isAddingNew
+        isAddingNew,
+        errMsg: null,
+        showErrMsg: false,
+        demoJson: ''
       }
+    },
+
+    mounted () {
+      this.editor = brace.edit(this.$refs.dataEditor)
+      this.editor.getSession().setMode('ace/mode/json')
+      this.editor.setTheme('ace/theme/monokai')
     },
 
     methods: {
       finishEditing () {
         // TODO: Implement me
+      },
+
+      checkSchemaAndGenerateJson () {
+        this.errMsg = null
+
+        const schema = JSON.parse(this.editor.getValue())
+        const ajv = new Ajv({allErrors: true})
+        const valid = ajv.validateSchema(schema)
+
+        if (!valid) {
+          this.errMsg = ajv.errorsText(ajv.errors, { separator: '\n' }) + '\najv validateSchema errors:\n' +
+            JSON.stringify(ajv.errors, null, 2)
+        } else {
+          this.editingDataDefinition.dataType = schema
+          const result = jsf(schema)
+          this.demoJson = JSON.stringify(result, null, 2)
+        }
       }
     }
   }
 </script>
 
 <style lang="scss">
+  .data-editor {
+    &__err-msg {
+      width: 100%;
+      color: red;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+  }
+
+  .data-def-editor {
+    min-height: 250px;
+    resize: vertical;
+    overflow: auto;
+    margin-bottom: 4px;
+
+    span {
+      line-height: 16px;
+    }
+  }
 </style>
