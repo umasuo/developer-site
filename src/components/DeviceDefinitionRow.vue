@@ -41,10 +41,6 @@
       }
     },
 
-    mounted () {
-      console.log(this.device)
-    },
-
     watch: {
       device (device) {
         this.editingDevice = Object.assign({}, device)
