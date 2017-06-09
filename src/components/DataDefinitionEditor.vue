@@ -20,7 +20,7 @@
             <label>简介 :</label>
             <textarea class="form-control" v-model="editingDataDefinition.description" required></textarea>
 
-            <label>数据定义 <small>(使用 JSON Schema drafts-04 描述数据格式)</small> :</label>
+            <label>数据定义 <small>(使用 <a href="http://json-schema.org/" target="_blank">JSON Schema</a> drafts-04 描述数据格式)</small> :</label>
             <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataType, null, 2) }}</div>
 
             <button type="button" class="btn btn-primary" @click="checkSchemaAndGenerateJson">更新范例数据</button>
@@ -37,7 +37,7 @@
             <div class="clear-fix"></div>
 
             <label>范例数据 :</label>
-            <textarea class="form-control" v-model="demoJson" readonly></textarea>
+            <textarea class="form-control data-editor__demo" v-model="demoJson" readonly></textarea>
           </form>
 
         </div>
@@ -89,10 +89,14 @@
               title: {
                 type: 'string'
               },
-              sub_node: {
-                '$ref': 'node'
+              sub_nodes: {
+                type: 'array',
+                items: {
+                  '$ref': 'node'
+                }
               }
-            }
+            },
+            required: ['title']
           }
         }
       }
@@ -147,6 +151,10 @@
 
     textarea {
       resize: vertical;
+    }
+
+    &__demo {
+      min-height: 150px;
     }
   }
 
