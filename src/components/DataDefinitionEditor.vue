@@ -20,7 +20,7 @@
             <label>简介 :</label>
             <textarea class="form-control" v-model="editingDataDefinition.description" required></textarea>
 
-            <label>数据定义 :</label>
+            <label>数据定义 <small>(使用 JSON Schema drafts-04 描述数据格式)</small> :</label>
             <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataType, null, 2) }}</div>
 
             <button type="button" class="btn btn-primary" @click="checkSchemaAndGenerateJson">更新范例数据</button>
@@ -54,6 +54,7 @@
 <script>
   import brace from 'brace'
   import Ajv from 'ajv'
+  import draft4 from 'ajv/lib/refs/json-schema-draft-04'
   import jsf from 'json-schema-faker'
   import 'brace/mode/json'
   import 'brace/theme/monokai'
@@ -121,6 +122,7 @@
 
         const schema = JSON.parse(this.editor.getValue())
         const ajv = new Ajv({allErrors: true})
+        ajv.addMetaSchema(draft4)
         const valid = ajv.validateSchema(schema)
 
         if (!valid) {
