@@ -2,7 +2,7 @@
   <div>
     <div class="page-title">
       <div class="title_left">
-        <h3>设备定义</h3>
+        <h3>设备管理</h3>
       </div>
     </div>
 
@@ -12,11 +12,11 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>设备定义列表</h2>
+            <h2>设备列表</h2>
 
             <ul class="nav navbar-right panel_toolbox">
               <li>
-                <a class="collapse-link" @click="addNewDevice"><i class="fa fa-plus"></i> 新增设备定义</a>
+                <a class="collapse-link" @click="addNewDevice"><i class="fa fa-plus"></i> 添加设备</a>
               </li>
             </ul>
 
@@ -28,19 +28,21 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>设备定义名称</th>
-                  <th>连接类型</th>
-                  <th>数据定义</th>
+                  <th>设备icon</th>
+                  <th>设备ID</th>
+                  <th>设备类型</th>
+                  <th>所属用户</th>
                   <th>操作</th>
+                  <th>管理</th>
                 </tr>
               </thead>
               <tbody>
-                <DeviceDefinitionRow v-for="device in deviceDefinitions"
+                <DeviceInfoRow v-for="device in deviceInfo"
                                      :device="device"
                                      :key="device.id"
                                      @removeDevice="removeDevice"
                                      @updateDevice="updateDevice">
-                </DeviceDefinitionRow>
+                </DeviceInfoRow>
               </tbody>
             </table>
 
@@ -52,22 +54,24 @@
 </template>
 
 <script>
-  import DeviceDefinitionRow from '@/components/DeviceDefinitionRow'
+  import DeviceInfoRow from '@/components/device/DeviceInfoRow'
 
   let id = 1
 
   export default {
-    name: 'DeviceDefinitions',
+    name: 'DeviceInfo',
 
     data () {
       return {
-        deviceDefinitions: [
+        deviceInfo: [
           {
             'id': 'asdf',
+            'customerId': 'QWEQ-SASD-ZCZC-SATT-ADAS',
             'developerId': 'developer1',
+            'userId': 'user1',
             'name': '手环',
-            'icon': 'http://asdasadsa.com/asdad',
-            'type': 'WIFI',
+            'icon': 'http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png',
+            'type': 'WIFY',
             'dataDefineIds': [
               'data1',
               'data2'
@@ -80,36 +84,38 @@
     methods: {
       addNewDevice () {
         // TODO: implement this.
-        this.deviceDefinitions.unshift({
+        this.deviceInfo.unshift({
           'id': 'asdf' + id++,
+          'customerId': 'QWEQ-SASD-ZCZC-SATT-ADAS',
           'developerId': 'developer1',
+          'userId': 'user1',
           'name': '新设备',
-          'icon': 'http://asdasadsa.com/asdad',
+          'icon': 'http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png',
           'type': 'WIFI',
           'dataDefineIds': []
         })
       },
 
       removeDevice (device) {
-        const index = this.deviceDefinitions.indexOf(device)
-        this.deviceDefinitions.splice(index, 1)
+        const index = this.deviceInfo.indexOf(device)
+        this.deviceInfo.splice(index, 1)
       },
 
       updateDevice (updatingDevice) {
         let index = -1
-        this.deviceDefinitions.filter((device, curIndex) => {
+        this.deviceInfo.filter((device, curIndex) => {
           if (device.id === updatingDevice.id) {
             index = curIndex
           }
         })
         if (index !== -1) {
-          this.deviceDefinitions[index] = Object.assign({}, updatingDevice)
+          this.deviceInfo[index] = Object.assign({}, updatingDevice)
         }
       }
     },
 
     components: {
-      DeviceDefinitionRow
+      DeviceInfoRow
     }
   }
 </script>

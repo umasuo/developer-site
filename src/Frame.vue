@@ -36,7 +36,7 @@
       <!-- footer content -->
       <footer>
         <div class="pull-right">
-          Eva Cloud developer - Built with <a href="https://colorlib.com/polygon/gentelella/index.html">Gentelella</a>
+          Eva Cloud developer console
         </div>
         <div class="clearfix"></div>
       </footer>
@@ -76,10 +76,48 @@
               {
                 name: '设备定义',
                 toName: 'DeviceDefinitions'
+              }
+            ]
+          },
+          {
+            title: '数据',
+            faIcon: 'fa-database',
+            subMenu: [
+              {
+                name: '数据概要',
+                toName: ''
               },
               {
                 name: '数据定义',
                 toName: 'DataDefinitions'
+              },
+              {
+                name: '数据分析',
+                toName: ''
+              }
+            ]
+          },
+          {
+            title: '用户',
+            faIcon: 'fa-users',
+            subMenu: [
+              {
+                name: '用户管理',
+                toName: ''
+              }
+            ]
+          },
+          {
+            title: '开发者信息',
+            faIcon: 'fa-user',
+            subMenu: [
+              {
+                name: '基本信息',
+                toName: ''
+              },
+              {
+                name: '密码管理',
+                toName: ''
               }
             ]
           }

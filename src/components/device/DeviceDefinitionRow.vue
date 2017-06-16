@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import DeviceDataDefinitionsEditor from '@/components/DeviceDataDefinitionsEditor'
+  import DeviceDataDefinitionsEditor from '@/components/device/DeviceDataDefinitionsEditor'
 
   export default {
     name: 'DeviceDefinitionRow',

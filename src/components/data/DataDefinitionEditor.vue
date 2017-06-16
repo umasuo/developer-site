@@ -36,7 +36,7 @@
 
             <div class="clear-fix"></div>
 
-            <label>范例数据 :</label>
+            <label>范例数据(根据定义随机生成) :</label>
             <textarea class="form-control data-editor__demo" v-model="demoJson" readonly></textarea>
           </form>
 
