@@ -85,7 +85,7 @@
             subMenu: [
               {
                 name: '数据概要',
-                toName: ''
+                toName: 'DataSummary'
               },
               {
                 name: '数据定义',
@@ -93,7 +93,7 @@
               },
               {
                 name: '数据分析',
-                toName: ''
+                toName: 'DataProcessor'
               }
             ]
           },
@@ -103,7 +103,7 @@
             subMenu: [
               {
                 name: '用户管理',
-                toName: ''
+                toName: 'UserManager'
               }
             ]
           },
@@ -113,11 +113,11 @@
             subMenu: [
               {
                 name: '基本信息',
-                toName: ''
+                toName: 'DeveloperInfo'
               },
               {
                 name: '密码管理',
-                toName: ''
+                toName: 'DeveloperPassword'
               }
             ]
           }
