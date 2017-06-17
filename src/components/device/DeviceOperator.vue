@@ -16,7 +16,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="finishEditing">保存</button>
+            <!--<button type="button" class="btn btn-primary" data-dismiss="modal" @click="finishEditing">保存</button>-->
           </div>
 
         </div>
@@ -52,7 +52,7 @@
 
       openEditor () {
         this.showError = false
-        $(this.$refs.tagsInput).importTags(this.formatTags(this.value))
+        // $(this.$refs.tagsInput).importTags(this.formatTags(this.value))
         $(this.$refs.modal).modal('show')
       },
 
