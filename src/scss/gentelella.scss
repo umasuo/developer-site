@@ -99,7 +99,7 @@
   padding: 0;
   position: absolute;
   display: flex;
-  z-index: 9999;
+  z-index: 500;
 }
 .container.body .col-md-3.left_col.menu_fixed {
   height: 100%;
@@ -1922,7 +1922,7 @@ a.star {
   border-right: 0;
   border-bottom: 0;
   border-top-left-radius: 5px;
-  z-index: 500;
+  z-index: 9999;
   display: none;
 }
 
