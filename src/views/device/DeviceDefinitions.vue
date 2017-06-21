@@ -28,8 +28,10 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>设备icon</th>
                   <th>设备定义名称</th>
                   <th>连接类型</th>
+                  <!--<th>是否开放</th>-->
                   <th>数据定义</th>
                   <th>操作</th>
                 </tr>
@@ -39,7 +41,8 @@
                                      :device="device"
                                      :key="device.id"
                                      @removeDevice="removeDevice"
-                                     @updateDevice="updateDevice">
+                                     @updateDevice="updateDevice"
+                                     track-by="id">
                 </DeviceDefinitionRow>
               </tbody>
             </table>
@@ -66,8 +69,9 @@
             'id': 'asdf',
             'developerId': 'developer1',
             'name': '手环',
-            'icon': 'http://asdasadsa.com/asdad',
+            'icon': 'http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png',
             'type': 'WIFI',
+            'isOpen': false,
             'dataDefineIds': [
               'data1',
               'data2'
@@ -84,8 +88,9 @@
           'id': 'asdf' + id++,
           'developerId': 'developer1',
           'name': '新设备',
-          'icon': 'http://asdasadsa.com/asdad',
+          'icon': 'http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png',
           'type': 'WIFI',
+          'isOpen': false,
           'dataDefineIds': []
         })
       },

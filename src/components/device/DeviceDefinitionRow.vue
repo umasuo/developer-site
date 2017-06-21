@@ -1,6 +1,10 @@
 <template>
   <tr>
     <td>
+      <!--<img v-bind:src="editingDevice.icon"></img>-->
+      <FileUploader :deviceIcon.sync="editingDevice.icon" title="更新设备icon"></FileUploader>
+    </td>
+    <td>
       <input class="device-row__name" type="text"
              v-model.trim.lazy="editingDevice.name"
              :value="editingDevice.name"
@@ -14,9 +18,15 @@
       <select name="type" v-model="editingDevice.type">
         <option value="WIFI">WIFI</option>
         <option value="BLUETOOTH">Bluetooth</option>
-        <option value="OTHER">忘了还有什么了</option>
+        <option value="OTHER">LoRa</option>
       </select>
     </td>
+    <!--<td>
+      <select name="isOpen" v-model="editingDevice.isOpen">
+        <option value="FALSE">否</option>
+        <option value="TURE">是</option>
+      </select>
+    </td>-->
     <td>
       <DeviceDataDefinitionsEditor v-model="device.dataDefineIds" :deviceName="editingDevice.name"></DeviceDataDefinitionsEditor>
     </td>
@@ -28,6 +38,7 @@
 
 <script>
   import DeviceDataDefinitionsEditor from '@/components/device/DeviceDataDefinitionsEditor'
+  import FileUploader from '@/components/common/FileUploader'
 
   export default {
     name: 'DeviceDefinitionRow',
@@ -71,7 +82,8 @@
     },
 
     components: {
-      DeviceDataDefinitionsEditor
+      DeviceDataDefinitionsEditor,
+      FileUploader
     }
   }
 </script>
