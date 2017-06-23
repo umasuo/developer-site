@@ -17,7 +17,8 @@
                   <span>设置</span>
                 </a>
               </li>
-              <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> 注销</a></li>
+              <!--<li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> 注销</a></li>-->
+              <li><router-link :to="{ name: 'Login' }"><i class="fa fa-sign-out pull-right"></i> 注销</router-link></li>
             </ul>
           </li>
 
