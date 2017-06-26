@@ -46,7 +46,7 @@
 
           &nbsp;
 
-          <button class="form-control">查询</button>
+          <button class="form-control btn-default">查询</button>
         </form>
       </div>
     </div><!-- end of search condition -->

@@ -70,12 +70,12 @@
             faIcon: 'fa-tablet',
             subMenu: [
               {
-                name: '设备管理',
-                toName: 'ManageDevices'
+                name: '产品定义',
+                toName: 'DeviceDefinitions'
               },
               {
-                name: '设备定义',
-                toName: 'DeviceDefinitions'
+                name: '设备管理',
+                toName: 'ManageDevices'
               }
             ]
           },
@@ -83,10 +83,10 @@
             title: '数据',
             faIcon: 'fa-database',
             subMenu: [
-              {
-                name: '数据概要',
-                toName: 'DataSummary'
-              },
+              // { 暂时保留不显示
+              //   name: '数据概要',
+              //   toName: 'DataSummary'
+              // },
               {
                 name: '数据定义',
                 toName: 'DataDefinitions'
@@ -108,16 +108,22 @@
             ]
           },
           {
-            title: '开发者信息',
+            title: '告警信息',
             faIcon: 'fa-user',
             subMenu: [
               {
-                name: '基本信息',
+                name: '告警信息',
                 toName: 'DeveloperInfo'
-              },
+              }
+            ]
+          },
+          {
+            title: '用户反馈',
+            faIcon: 'fa-user',
+            subMenu: [
               {
-                name: '密码管理',
-                toName: 'DeveloperPassword'
+                name: '用户反馈',
+                toName: 'FeedbackManager'
               }
             ]
           }

@@ -2,7 +2,7 @@
   <div>
     <div class="page-title">
       <div class="title_left">
-        <h3>设备定义</h3>
+        <h3>产品定义</h3>
       </div>
     </div>
 
@@ -12,11 +12,11 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>设备定义列表</h2>
+            <h2>产品列表</h2>
 
             <ul class="nav navbar-right panel_toolbox">
               <li>
-                <a class="collapse-link" @click="addNewDevice"><i class="fa fa-plus"></i> 新增设备定义</a>
+                <a class="collapse-link" @click="addNewDevice"><i class="fa fa-plus"></i> 新增产品定义</a>
               </li>
             </ul>
 
@@ -28,11 +28,15 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>设备icon</th>
-                  <th>设备定义名称</th>
-                  <th>连接类型</th>
+                  <th>产品icon</th>
+                  <th>产品名称</th>
+                  <th>产品类型</th>
+                  <th>产品介绍</th>
+                  <th>联网类型</th>
                   <!--<th>是否开放</th>-->
+                  <th>功能定义</th>
                   <th>数据定义</th>
+                  <th>产品状态</th>
                   <th>操作</th>
                 </tr>
               </thead>

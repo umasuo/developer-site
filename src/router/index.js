@@ -14,6 +14,8 @@ import DeveloperPassword from '@/views/developer/DeveloperPassword'
 
 import UserManager from '@/views/user/UserManager'
 
+import FeedbackManager from '@/views/feedback/FeedbackManager'
+
 Vue.use(Router)
 
 export default new Router({
@@ -72,6 +74,11 @@ export default new Router({
         path: 'user-manager',
         name: 'UserManager',
         component: UserManager
+      },
+      {
+        path: 'feedback-manager',
+        name: 'FeedbackManager',
+        component: FeedbackManager
       }
       ]
     }
