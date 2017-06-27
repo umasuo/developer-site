@@ -62,14 +62,6 @@
               {
                 name: '仪表盘',
                 toName: 'Dashboard'
-              },
-              {
-                name: '设备',
-                toName: 'ReportDevice'
-              },
-              {
-                name: '用户',
-                toName: 'ReportUser'
               }
             ]
           },

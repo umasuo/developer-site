@@ -8,9 +8,6 @@ import Dashboard from '@/views/dashboard/Dashboard'
 import DeveloperInfo from '@/views/developer/DeveloperInfo'
 import DeveloperPassword from '@/views/developer/DeveloperPassword'
 
-import ReportDevice from '@/views/report/ReportDevice'
-import ReportUser from '@/views/report/ReportUser'
-
 import DeviceDefinitions from '@/views/device/DeviceDefinitions'
 import DeviceManager from '@/views/device/DeviceManager'
 
@@ -42,16 +39,6 @@ export default new Router({
           path: '/',
           name: 'Dashboard',
           component: Dashboard
-        },
-        {
-          path: 'report-device',
-          name: 'ReportDevice',
-          component: ReportDevice
-        },
-        {
-          path: 'report-user',
-          name: 'ReportUser',
-          component: ReportUser
         },
         {
           path: 'manage-devices',
