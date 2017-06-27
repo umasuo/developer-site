@@ -12,6 +12,13 @@
 
           <div class="clearfix"></div>
 
+          <div class="clearfix">
+            <select class="form-control area-selector">
+              <option value="cn">中国区域</option>
+              <option value="us">北美区域</option>
+            </select>
+          </div>
+
           <br/>
 
           <!-- sidebar menu -->
@@ -150,5 +157,13 @@
   .right_col {
     min-height: 100vh;
     min-height: calc(100vh - 51px);
+  }
+
+  .area-selector {
+    appearance: none;
+    border-width: 0;
+    border-radius: 0;
+    background-color: lighten(#2a3f54, 10%);
+    color: white;
   }
 </style>
