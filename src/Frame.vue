@@ -12,8 +12,8 @@
 
           <div class="clearfix"></div>
 
-          <div class="clearfix">
-            <select class="form-control area-selector">
+          <div class="clearfix area-selector">
+            <select class="form-control area-selector__content">
               <option value="cn">中国区域</option>
               <option value="us">北美区域</option>
             </select>
@@ -42,8 +42,25 @@
 
       <!-- footer content -->
       <footer>
-        <div class="pull-right">
-          Eva Cloud developer console
+        Eva Cloud developer console
+        <div class="pull-right form-inline">
+          <div class="form-group">
+            <label>语言:
+              <select>
+                <option value="zh_cn">中文</option>
+                <option value="us_en">English</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>时区:
+              <select>
+                <option v-for="gmt in 27" :value="gmt">GMT{{ (gmt - 13 < 0 ? '' : '+') + (gmt - 13) }}</option>
+              </select>
+            </label>
+          </div>
+
         </div>
         <div class="clearfix"></div>
       </footer>
@@ -160,10 +177,11 @@
   }
 
   .area-selector {
-    appearance: none;
-    border-width: 0;
-    border-radius: 0;
     background-color: lighten(#2a3f54, 10%);
-    color: white;
+    &__content {
+      border: none;
+      background-color: transparent;
+      color: white;
+    }
   }
 </style>
