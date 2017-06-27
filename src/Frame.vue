@@ -4,10 +4,10 @@
       <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title">
+            <router-link :to="{ name: 'Dashboard' }" class="site_title">
               <img class="brand-logo" src="./assets/brand.svg">
               <span class="brand-text">Eva Cloud</span>
-            </a>
+            </router-link>
           </div>
 
           <div class="clearfix"></div>
@@ -62,6 +62,14 @@
               {
                 name: '仪表盘',
                 toName: 'Dashboard'
+              },
+              {
+                name: '设备',
+                toName: 'ReportDevice'
+              },
+              {
+                name: '用户',
+                toName: 'ReportUser'
               }
             ]
           },

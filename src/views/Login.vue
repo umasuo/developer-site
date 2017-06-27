@@ -15,7 +15,7 @@
                   <input type="password" class="form-control" placeholder="密码" required="" />
                 </div>
                 <div>
-                  <a class="btn btn-default submit" href="/">登陆</a>
+                  <a class="btn btn-default submit" href="javascript:;" @click="login">登陆</a>
                   <a class="reset_pass" href="javascript:;">忘记密码？</a>
                 </div>
 
@@ -91,6 +91,13 @@
     data () {
       return {
         showRegister: false
+      }
+    },
+
+    methods: {
+      login () {
+        // TODO: login user
+        this.$router.replace({ name: 'Dashboard' })
       }
     },
 
