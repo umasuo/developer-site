@@ -28,9 +28,10 @@
               <div class="form-group">
                 <label>选择设备类型：
                   <select class="form-control">
+                    <option>所有设备</option>
                     <option>设备1</option>
-                    <option>设备1</option>
-                    <option>设备1</option>
+                    <option>设备2</option>
+                    <option>设备3</option>
                   </select>
                 </label>
               </div>
@@ -45,7 +46,7 @@
                 </label>
               </div>
 
-              <button class="form-control btn-default">查询</button>
+              <button class="form-control btn-default" @click.prevent="">查询</button>
             </form>
           </div>
         </div>
@@ -90,12 +91,37 @@
       <div class="col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>表格</h2>
+            <h2>报表 <small>显示最近30天</small></h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <div class="col-xs-12">
-              <LineChart class="eva-chart"></LineChart>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>日期</th>
+                    <th>新增设备</th>
+                    <th>活跃设备</th>
+                    <th>总设备</th>
+                    <th>新增用户</th>
+                    <th>活跃用户</th>
+                    <th>总用户</th>
+                    <th>新增反馈</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="wildcard in 12">
+                    <th scope="row">{{ new Date().toLocaleDateString() }}</th>
+                    <td>123</td>
+                    <td>234</td>
+                    <td>345</td>
+                    <td>123</td>
+                    <td>234</td>
+                    <td>345</td>
+                    <td>123</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
