@@ -8,16 +8,18 @@ export default Line.extend({
   props: {
     chartData: {
       type: Object,
-      required: true,
+      // required: true,
       // TODO: Remove demo data
-      default: {
-        labels: ['label 1', 'label 2', 'label 3'],
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data: [300, 600, 1500]
-          }
-        ]
+      default () {
+        return {
+          labels: ['label 1', 'label 2', 'label 3'],
+          datasets: [
+            {
+              label: 'Dataset 1',
+              data: [300, 600, 1500]
+            }
+          ]
+        }
       },
       validator (data) {
         return data.hasOwnProperty('labels') &&
@@ -27,8 +29,8 @@ export default Line.extend({
       }
     },
     options: {
-      type: Object,
-      required: true
+      type: Object
+      // required: true
     }
   },
 
