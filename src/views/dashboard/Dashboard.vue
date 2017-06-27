@@ -22,6 +22,11 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="x_panel">
+          <div class="x_title">
+            <h2>过滤条件</h2>
+            <div class="clearfix"></div>
+          </div>
+
           <div class="x_content">
 
             <form class="form-inline">
@@ -53,24 +58,44 @@
     </div><!-- end of search condition -->
 
     <div class="row">
-      <div class="col-md-6 col-xs-12">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>新增激活设备</h2>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="col-xs-12">
-              <LineChart class="eva-chart"></LineChart>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="col-xs-12">
+        <TabPanel>
+          <TabPanelItem title="新增设备" active=true>
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
 
-      <div class="col-md-6 col-xs-12">
+          <TabPanelItem title="活跃设备">
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
+
+          <TabPanelItem title="总设备">
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
+
+          <TabPanelItem title="新增用户">
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
+
+          <TabPanelItem title="活跃用户">
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
+
+          <TabPanelItem title="总用户">
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
+
+          <TabPanelItem title="新增反馈">
+            <LineChart class="eva-chart"></LineChart>
+          </TabPanelItem>
+        </TabPanel>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>活跃设备</h2>
+            <h2>表格</h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -87,12 +112,19 @@
 
 <script>
   import LineChart from '@/components/common/LineChart'
+  import TabPanel from '@/components/common/TabPanel'
+  import TabPanelItem from '@/components/common/TabPanelItem'
 
   export default {
     name: 'Dashboard',
 
     components: {
-      LineChart
+      LineChart,
+      TabPanel,
+      TabPanelItem
     }
   }
 </script>
+
+<style>
+</style>
