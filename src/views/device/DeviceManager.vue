@@ -1,58 +1,58 @@
 <template>
   <div>
-    <div class="page-title">
-      <div class="title_left">
-        <h3>设备管理</h3>
-      </div>
-    </div>
-
     <div class="row">
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
             <h2>过滤条件</h2>
-            <ul class="nav navbar-right panel_toolbox">
-              <li>
-                <a class="collapse-link" @click="addNewDevice"><i class="fa fa-plus"></i> 添加设备</a>
-              </li>
-            </ul>
             <div class="clearfix"></div>
           </div>
-          <div class="row">
-            <div class="col-md-1 col-sm-12 tile_stats_count">
-              <select>
-                <option value="all" selected="selected">所有产品</option>
-                <option value="id1" >手环</option>
-                <option value="id2" >体重秤</option>
-              </select>
-            </div>
-            <div class="col-md-1 col-sm-12 tile_stats_count">
-              <input type="checkbox" class="btn-radio">是否激活</input>
-            </div>
-            <div class="col-md-1 col-sm-12 tile_stats_count">
-              <input type="checkbox" class="btn-radio">是否在线</input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2 tile_stats_count">
-              <label>用户ID:</label>
-              <input></input>
-            </div>
-            <div class="col-md-2 tile_stats_count">
-              <label>出厂ID:</label>
-              <input></input>
-            </div>
-            <div class="col-md-2 tile_stats_count">
-              <label>设备ID:</label>
-              <input></input>
-            </div>
-          </div>
-          <button type="button" class="btn btn-default">搜索</button>
+          <div class="x_content">
+            <form class="form-inline">
+              <div>
+                <div class="form-group">
+                  <label>产品:
+                    <select class="form-control">
+                      <option value="all" selected="selected">所有产品</option>
+                      <option value="id1" >手环</option>
+                      <option value="id2" >体重秤</option>
+                    </select>
+                  </label>
+                </div>
 
+                <label class="checkbox-inline">
+                  <input type="checkbox">是否激活
+                </label>
+
+                <label class="checkbox-inline">
+                  <input type="checkbox">是否在线
+                </label>
+              </div>
+
+              <div>
+                <div class="form-group">
+                  <label>用户ID:
+                    <input type="text" class="form-control"/>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>出厂ID:
+                    <input type="text" class="form-control"/>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>设备ID:
+                    <input type="text" class="form-control"/>
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-    <div class="clearfix"></div>
 
     <div class="row">
       <div class="col-sm-12">
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div><!-- end of device list row -->
   </div>
 </template>
 
