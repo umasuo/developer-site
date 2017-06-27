@@ -113,7 +113,7 @@
             subMenu: [
               {
                 name: '告警信息',
-                toName: 'DeveloperInfo'
+                toName: 'MessageManager'
               }
             ]
           },
