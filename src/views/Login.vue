@@ -133,6 +133,7 @@
     left: 0;
     right: 0;
     padding: 10px 20px;
+    text-shadow: 0 1px 0 white;
 
     &__logo {
       fill: #73879c;
