@@ -1,90 +1,99 @@
 <template>
   <div class="login">
-    <div>
-      <div class="login_wrapper">
+    <div class="eva-login-top">
+      <svg class="eva-login-top__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 301.86 178.59"><path class="cls-1" d="M60.94,112.52,102.51,70.7a36.51,36.51,0,0,0-3.18-3.64,41.36,41.36,0,1,0,0,58.49l-7.07-7.07a31.36,31.36,0,1,1-3.94-47.68L53.85,105.47Z"/><path class="cls-1" d="M178.33,65.48l-6.62,7.39a31.4,31.4,0,0,1-41.92,46.76,10.56,10.56,0,0,1-1.75-2.05,31.28,31.28,0,0,1,3-45.39.55.55,0,0,0-.09-.17l-7.54-6.72c-19.67,16.87-17.1,48.82,2,63.67,15.31,11.91,40.17,10.55,54.08-3A41.4,41.4,0,0,0,178.33,65.48Z"/><path class="cls-1" d="M207.55,70.8c-11.91,15.31-10.55,40.17,3,54.08,13.73,14.16,38.69,20.61,60.66-1.18V68.86l.06-.06C254.35,49.13,222.4,51.7,207.55,70.8Zm53.61,48.83A31.41,31.41,0,0,1,216.89,75.2a10.56,10.56,0,0,1,2.05-1.75,31.26,31.26,0,0,1,42.22-.31Z"/><path class="cls-1" d="M150.93,178.59a89,89,0,0,1-57.83-21.26,65.92,65.92,0,0,1-26.46,5.47A66.63,66.63,0,1,1,82.83,31.53,89.3,89.3,0,0,1,219,31.5a66.64,66.64,0,1,1,16.22,131.27,65.93,65.93,0,0,1-26.44-5.46A89,89,0,0,1,150.93,178.59ZM94.81,145.42l2.53,2.32a79.28,79.28,0,0,0,107.21,0l2.53-2.32,3.07,1.52a56.06,56.06,0,0,0,25.08,5.85A56.63,56.63,0,1,0,218.66,42l-3.27,1-2.12-2.69a79.3,79.3,0,0,0-124.7,0L86.45,43l-3.27-1a56.64,56.64,0,1,0-16.55,110.8,56.05,56.05,0,0,0,25.1-5.87Z"/></svg>
+      <span class="eva-login-top__brand"> Eva Cloud</span>
 
-        <transition name="fade">
-          <div class="form login_form" v-show="!showRegister">
-            <section class="login_content">
-              <form>
-                <h1>登陆</h1>
-                <div>
-                  <input type="text" class="form-control" placeholder="用户名" required="" />
-                </div>
-                <div>
-                  <input type="password" class="form-control" placeholder="密码" required="" />
-                </div>
-                <div>
-                  <a class="btn btn-default submit" href="javascript:;" @click="login">登陆</a>
-                  <a class="reset_pass" href="javascript:;">忘记密码？</a>
-                </div>
-
-                <div class="clearfix"></div>
-
-                <div class="separator">
-                  <p class="change_link">还没有账户？
-                      <a href="#signup" class="to_register" @click.prevent="showRegister = true"> 注册一个 </a>
-                  </p>
-
-                  <div class="clearfix"></div>
-                  <br />
-
-                  <div>
-                    <h1><BrandIcon class="login-brand-icon" /> Eva Cloud</h1>
-                    <!--<p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>-->
-                  </div>
-                </div>
-              </form>
-            </section>
-          </div>
-        </transition>
-
-        <transition name="fade">
-          <div id="register" class="animate form registration_form" v-show="showRegister">
-            <section class="login_content">
-              <form>
-                <h1>注册账号</h1>
-                <div>
-                  <input type="text" class="form-control" placeholder="用户名" required="" />
-                </div>
-                <div>
-                  <input type="email" class="form-control" placeholder="邮箱地址" required="" />
-                </div>
-                <div>
-                  <input type="password" class="form-control" placeholder="密码" required="" />
-                </div>
-                <div>
-                  <a class="btn btn-default submit" href="index.html">注册</a>
-                </div>
-
-                <div class="clearfix"></div>
-
-                <div class="separator">
-                  <p class="change_link">已经有一个账号了?
-                      <a href="#signin" class="to_register" @click.prevent="showRegister = false"> 登陆 </a>
-                  </p>
-
-                  <div class="clearfix"></div>
-                  <br />
-
-                  <div>
-                    <h1>Eva Cloud</h1>
-                    <!--<p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>-->
-                  </div>
-                </div>
-              </form>
-            </section>
-          </div>
-        </transition>
-
+      <div class="eva-login-top__right">
+        <label>选择语言:
+          <select>
+            <option value="zh_cn">中文</option>
+            <option value="us_en">English</option>
+          </select>
+        </label>
       </div>
     </div>
+    <div class="login_wrapper">
+
+      <transition name="fade">
+        <div class="form login_form" v-show="!showRegister">
+          <section class="login_content">
+            <form>
+              <h1>登陆</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="用户名" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="密码" required="" />
+              </div>
+              <div>
+                <a class="btn btn-default submit" href="javascript:;" @click="login">登陆</a>
+                <a class="reset_pass" href="javascript:;">忘记密码？</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">还没有账户？
+                    <a href="#signup" class="to_register" @click.prevent="showRegister = true"> 注册一个 </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1>Eva Cloud</h1>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </transition>
+
+      <transition name="fade">
+        <div id="register" class="animate form registration_form" v-show="showRegister">
+          <section class="login_content">
+            <form>
+              <h1>注册账号</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="用户名" required="" />
+              </div>
+              <div>
+                <input type="email" class="form-control" placeholder="邮箱地址" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="密码" required="" />
+              </div>
+              <div>
+                <a class="btn btn-default submit" href="index.html">注册</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">已经有一个账号了?
+                    <a href="#signin" class="to_register" @click.prevent="showRegister = false"> 登陆 </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1>Eva Cloud</h1>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </transition>
+
+    </div>
+
+    <div class="eva-login-footer">网站备案号: 12312412321523 公司信息</div>
   </div>
 </template>
 
 <script>
-  import BrandIcon from '@/assets/brand.svg'
-
   export default {
     name: 'Login',
 
@@ -99,10 +108,6 @@
         // TODO: login user
         this.$router.replace({ name: 'Dashboard' })
       }
-    },
-
-    components: {
-      BrandIcon
     }
   }
 </script>
@@ -110,20 +115,56 @@
 <style lang="scss">
   .login {
     overflow: auto;
-  }
-
-  .login_wrapper {
-    width: 100vw;
     min-height: 100vh;
-    height: 100%;
-    background: #F7F7F7;
   }
 
   .fade-enter-active, .fade-leave-active {
     transition: all .5s
   }
+
   .fade-enter, .fade-leave-to {
     opacity: 0;
     transform: translateX(-100%);
+  }
+
+  .eva-login-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+
+    &__logo {
+      fill: #73879c;
+      width: 60px;
+      vertical-align: middle;
+    }
+
+    &__brand {
+      font-size: 25px;
+      vertical-align: top;
+      font-weight: 300;
+    }
+
+    &__right {
+      float: right;
+
+      &:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+    }
+  }
+
+  .eva-login-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: lighten(#73879c, 20%);
+    text-shadow: 0 1px 0 white;
+    padding-bottom: 20px;
+    text-align: center;
   }
 </style>
