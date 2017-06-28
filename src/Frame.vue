@@ -70,8 +70,8 @@
 </template>
 
 <script>
-  import NavMenu from '@/components/NavMenu'
-  import TopNav from '@/components/TopNav'
+  import NavMenu from '@/components/FrameNavMenu'
+  import TopNav from '@/components/FrameTopNav'
 
   export default {
     name: 'Frame',
@@ -81,7 +81,7 @@
         menu: [
           {
             title: '仪表盘',
-            faIcon: 'fa-table',
+            faIcon: 'fa-tachometer',
             toName: 'Dashboard'
           },
           {
@@ -100,7 +100,7 @@
           },
           {
             title: '运营',
-            faIcon: 'fa-database',
+            faIcon: 'fa-line-chart',
             subMenu: [
               // { 暂时保留不显示
               //   name: '数据概要',
@@ -127,6 +127,11 @@
                 toName: 'FeedbackManager'
               }
             ]
+          },
+          {
+            title: '文档',
+            faIcon: 'fa-book',
+            toHref: '/document'
           }
         ]
       }

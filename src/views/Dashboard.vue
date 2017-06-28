@@ -19,6 +19,8 @@
       </div>
     </div>
 
+    <!-- TODO: show a x-steps-to-create-product wizard -->
+
     <div class="row">
       <div class="col-xs-12">
         <div class="x_panel">

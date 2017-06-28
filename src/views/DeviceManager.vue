@@ -102,7 +102,7 @@
 </template>
 
 <script>
-  import DeviceInfoRow from '@/components/device/DeviceInfoRow'
+  import DeviceInfoRow from '@/components/DeviceInfoRow'
 
   let id = 1
 

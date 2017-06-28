@@ -1,38 +1,23 @@
 <template>
   <div>
-    <div class="page-title">
-      <div class="title_left">
-        <h3>数据定义</h3>
-      </div>
-    </div>
-
-    <div class="clearfix"></div>
-
     <div class="row">
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>数据定义列表</h2>
-
-            <ul class="nav navbar-right panel_toolbox">
-              <li>
-                <a class="collapse-link" @click="addNewData"><i class="fa fa-plus"></i> 新增数据定义</a>
-                <DataDefinitionEditor ref="addNewEditor"></DataDefinitionEditor>
-              </li>
-            </ul>
+            <h2>告警信息</h2>
 
             <div class="clearfix"></div>
-
           </div>
           <div class="x_content">
 
             <table class="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>名称</th>
-                  <th>简介</th>
-                  <th>操作</th>
+                  <th>信息ID</th>
+                  <th>设备类型</th>
+                  <th>信息标题</th>
+                  <th>内容</th>
+                  <th>发出时间</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,12 +38,11 @@
 </template>
 
 <script>
-  import $ from 'jquery'
-  import DataDefinitionEditor from '@/components/data/DataDefinitionEditor'
-  import DataDefinitionRow from '@/components/data/DataDefinitionRow'
+  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
+  import DataDefinitionRow from '@/components/DataDefinitionRow'
 
   export default {
-    name: 'DataDefinitions',
+    name: 'MessageManager',
 
     data () {
       return {
@@ -83,29 +67,6 @@
           }
         ]
         // end of dataDefinitions
-      }
-    },
-
-    methods: {
-      addNewData () {
-        $(this.$refs.addNewEditor.$el).modal('show')
-      },
-
-      removeDataDefinition (data) {
-        const index = this.dataDefinitions.indexOf(data)
-        this.dataDefinitions.splice(index, 1)
-      },
-
-      updateDataDefinition (updatingData) {
-        let index = -1
-        this.dataDefinitions.filter((data, curIndex) => {
-          if (data.id === updatingData.id) {
-            index = curIndex
-          }
-        })
-        if (index !== -1) {
-          this.dataDefinitions[index] = Object.assign({}, updatingData)
-        }
       }
     },
 

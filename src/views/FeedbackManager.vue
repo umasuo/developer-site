@@ -2,7 +2,7 @@
   <div>
     <div class="page-title">
       <div class="title_left">
-        <h3>数据定义</h3>
+        <h3>用户反馈</h3>
       </div>
     </div>
 
@@ -12,7 +12,7 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>数据定义列表</h2>
+            <h2>用户反馈列表</h2>
 
             <ul class="nav navbar-right panel_toolbox">
               <li>
@@ -29,10 +29,14 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>名称</th>
-                  <th>简介</th>
-                  <th>操作</th>
+                  <th>用户ID</th>
+                  <th>设备类型</th>
+                  <th>设备ID</th>
+                  <th>反馈标题</th>
+                  <th>内容</th>
+                  <th>反馈时间</th>
+                  <th>处理人员</th>
+                  <th>处理时间</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,11 +58,11 @@
 
 <script>
   import $ from 'jquery'
-  import DataDefinitionEditor from '@/components/data/DataDefinitionEditor'
-  import DataDefinitionRow from '@/components/data/DataDefinitionRow'
+  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
+  import DataDefinitionRow from '@/components/DataDefinitionRow'
 
   export default {
-    name: 'DataDefinitions',
+    name: 'FeedbackManager',
 
     data () {
       return {

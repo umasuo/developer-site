@@ -3,23 +3,21 @@ import Router from 'vue-router'
 import Frame from '@/Frame'
 
 import Login from '@/views/Login'
-import Dashboard from '@/views/dashboard/Dashboard'
+import Dashboard from '@/views/Dashboard'
 
-import DeveloperInfo from '@/views/developer/DeveloperInfo'
-import DeveloperPassword from '@/views/developer/DeveloperPassword'
+import DeveloperInfo from '@/views/DeveloperInfo'
+import DeveloperPassword from '@/views/DeveloperPassword'
 
-import DeviceDefinitions from '@/views/device/DeviceDefinitions'
-import DeviceManager from '@/views/device/DeviceManager'
+import DeviceDefinitions from '@/views/ProductDefinitions'
+import DeviceManager from '@/views/DeviceManager'
 
-import DataDefinitions from '@/views/data/DataDefinitions'
-import DataSummary from '@/views/data/DataSummary'
-import DataProcessor from '@/views/data/DataProcessor'
+import DataDefinitions from '@/views/DataDefinitions'
+import DataSummary from '@/views/DataSummary'
+import DataProcessor from '@/views/DataProcessor'
 
-import UserManager from '@/views/user/UserManager'
-
-import FeedbackManager from '@/views/feedback/FeedbackManager'
-
-import MessageManager from '@/views/message/MessageManager'
+import UserManager from '@/views/UserManager'
+import FeedbackManager from '@/views/FeedbackManager'
+import MessageManager from '@/views/MessageManager'
 
 Vue.use(Router)
 
@@ -34,9 +32,10 @@ export default new Router({
     {
       path: '/',
       component: Frame,
+      redirect: '/dashboard', // TODO: redirect to dashboard or login, according to login state.
       children: [
         {
-          path: '/',
+          path: '/dashboard',
           name: 'Dashboard',
           component: Dashboard
         },

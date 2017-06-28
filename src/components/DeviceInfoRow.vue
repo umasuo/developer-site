@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import DeviceOperator from '@/components/device/DeviceOperator'
+import DeviceOperator from '@/components/DeviceOperator'
 
 export default {
   name: 'DeviceInfoRow',

@@ -6,12 +6,31 @@
         <i class="fa" :class="menu.faIcon"></i> {{ menu.title }}</span>
       </router-link>
 
-      <template v-if="!menu.toName">
+      <!-- Render a normal a tag if menu item have toHref field -->
+      <a v-else-if="menu.toHref" :href="menu.toHref" target="_blank">
+        <i class="fa" :class="menu.faIcon"></i> {{ menu.title }}</span>
+      </a>
+
+      <!-- else render submenus -->
+      <template v-else>
         <a @click="isOpen = !isOpen">
           <i class="fa" :class="menu.faIcon"></i> {{ menu.title }} <span class="fa fa-chevron-down"></span>
         </a>
         <ul class="nav child_menu" v-show="isOpen">
-          <router-link tag="li" v-for="menu in menu.subMenu" :key="menu.toName" :to="{ name: menu.toName }" exact=""><a>{{ menu.name }}</a></router-link>
+
+          <!-- Render a normal a tag if menu item have toHref field -->
+          <template v-for="menu in menu.subMenu">
+            <a v-if="menu.toHref" :href="menu.toHref" :key="menu.toName">{{ menu.name }}</a>
+
+            <!-- else render a router-link -->
+            <router-link v-else
+                         tag="li"
+                         :key="menu.toName"
+                         :to="{ name: menu.toName }" exact>
+              <a>{{ menu.name }}</a>
+            </router-link>
+          </template>
+
         </ul>
       </template>
     </li>
@@ -34,7 +53,9 @@
       isCurrent () {
         const routeName = this.$route.name
 
-        if (this.menu.toName) {
+        if (this.menu.toHref) {
+          return false // normal a tag will open link in new page, and don't trigger vue router change.
+        } else if (this.menu.toName) {
           return this.menu.toName === routeName
         } else {
           const matched = this.menu.subMenu.filter((menu) => {
