@@ -80,17 +80,12 @@
       return {
         menu: [
           {
-            title: '报表',
+            title: '仪表盘',
             faIcon: 'fa-table',
-            subMenu: [
-              {
-                name: '仪表盘',
-                toName: 'Dashboard'
-              }
-            ]
+            toName: 'Dashboard'
           },
           {
-            title: '设备',
+            title: '产品',
             faIcon: 'fa-tablet',
             subMenu: [
               {
@@ -98,13 +93,13 @@
                 toName: 'DeviceDefinitions'
               },
               {
-                name: '设备管理',
-                toName: 'ManageDevices'
+                name: '数据定义',
+                toName: 'DataDefinitions'
               }
             ]
           },
           {
-            title: '数据',
+            title: '运营',
             faIcon: 'fa-database',
             subMenu: [
               // { 暂时保留不显示
@@ -112,39 +107,21 @@
               //   toName: 'DataSummary'
               // },
               {
-                name: '数据定义',
-                toName: 'DataDefinitions'
+                name: '设备管理',
+                toName: 'ManageDevices'
               },
               {
                 name: '数据分析',
                 toName: 'DataProcessor'
-              }
-            ]
-          },
-          {
-            title: '用户',
-            faIcon: 'fa-users',
-            subMenu: [
+              },
               {
                 name: '用户管理',
                 toName: 'UserManager'
-              }
-            ]
-          },
-          {
-            title: '告警信息',
-            faIcon: 'fa-user',
-            subMenu: [
+              },
               {
                 name: '告警信息',
                 toName: 'MessageManager'
-              }
-            ]
-          },
-          {
-            title: '用户反馈',
-            faIcon: 'fa-user',
-            subMenu: [
+              },
               {
                 name: '用户反馈',
                 toName: 'FeedbackManager'
