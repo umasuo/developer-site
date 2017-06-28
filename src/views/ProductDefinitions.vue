@@ -32,7 +32,7 @@
           </ul>
 
           <div class="stepContainer">
-            <button class="btn btn-lg btn-primary">创建产品</button>
+            <button class="btn btn-lg btn-primary" @click="isShowCreateModal = true">创建产品</button>
             <p class="eva-create-product-wizard__line-through"><span>或快速创建</span></p>
 
             <ul class="eva-create-product-wizard__quick-prod">
@@ -61,6 +61,8 @@
                 <a href="javascript:;">空气净化器</a>
               </li>
             </ul>
+
+            <ProductCreate :show="isShowCreateModal" @hide="isShowCreateModal = false"></ProductCreate>
           </div>
         </div><!-- End of eva-create-product-wizard -->
 
@@ -115,12 +117,20 @@
 
 <script>
   import ProductDefinitionRow from '@/components/ProductDefinitionRow'
+  import ProductCreate from '@/components/ProductCreate'
 
   export default {
     name: 'ProductDefinitions',
 
+    data () {
+      return {
+        isShowCreateModal: false
+      }
+    },
+
     components: {
-      ProductDefinitionRow
+      ProductDefinitionRow,
+      ProductCreate
     }
   }
 </script>

@@ -8,7 +8,8 @@ import Dashboard from '@/views/Dashboard'
 import DeveloperInfo from '@/views/DeveloperInfo'
 import DeveloperPassword from '@/views/DeveloperPassword'
 
-import DeviceDefinitions from '@/views/ProductDefinitions'
+import ProductDefinitions from '@/views/ProductDefinitions'
+import ProductDetail from '@/views/ProductDetail'
 import DeviceManager from '@/views/DeviceManager'
 
 import DataDefinitions from '@/views/DataDefinitions'
@@ -45,9 +46,14 @@ export default new Router({
           component: DeviceManager
         },
         {
-          path: 'device-definitions',
-          name: 'DeviceDefinitions',
-          component: DeviceDefinitions
+          path: 'product-definitions',
+          name: 'ProductDefinitions',
+          component: ProductDefinitions
+        },
+        {
+          path: 'product-definitions/:pid',
+          name: 'ProductDetail',
+          component: ProductDetail
         },
         {
           path: 'data-summary',

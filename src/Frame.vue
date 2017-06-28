@@ -90,7 +90,7 @@
             subMenu: [
               {
                 name: '产品定义',
-                toName: 'DeviceDefinitions'
+                toName: 'ProductDefinitions'
               },
               {
                 name: '数据定义',
