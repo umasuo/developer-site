@@ -53,7 +53,8 @@ export default new Router({
         {
           path: 'product-definitions/:pid',
           name: 'ProductDetail',
-          component: ProductDetail
+          component: ProductDetail,
+          props: true // decouple component from route
         },
         {
           path: 'data-summary',

@@ -1,5 +1,14 @@
 <template>
   <div class="row">
+
+    <div class="col-sm-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <ProductBasicInfo></ProductBasicInfo>
+        </div>
+      </div>
+    </div>
+
     <div class="col-sm-12">
       <div class="x_panel">
         <div class="x_title">
@@ -38,12 +47,26 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
+  import ProductBasicInfo from '@/components/ProductBasicInfo'
+
   export default {
-    name: 'ProductDetail'
+    name: 'ProductDetail',
+
+    props: {
+      pid: {
+        required: true,
+        type: String
+      }
+    },
+
+    components: {
+      ProductBasicInfo
+    }
   }
 </script>
 

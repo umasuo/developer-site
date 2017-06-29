@@ -40,7 +40,7 @@
                   </div>
 
                   <div>
-                    <label class="control-label col-xs-3">通信类型:</label>
+                    <label class="control-label col-xs-3">传输类型:</label>
                     <div class="checkbox col-xs-9">
                       <label>
                         <input type="radio" name="connectType" value="wifi"> WIFI
@@ -56,7 +56,7 @@
                     </div>
                   </div>
 
-                  <button class="btn btn-lg btn-primary btn-block">创建</button>
+                  <button class="btn btn-lg btn-primary btn-block" @click="createAndEdit">创建</button>
                 </form>
               </div>
 
@@ -114,6 +114,11 @@
       changeType () {
         this.selectedType = ''
         this.curStep = 1
+      },
+
+      createAndEdit () {
+        $(this.$refs.modal).modal('hide')
+        this.$router.push({ name: 'ProductDetail', params: { pid: 123 } })
       }
     },
 
