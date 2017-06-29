@@ -80,11 +80,6 @@
         required: true
       },
 
-      step: {
-        type: Number,
-        default: 1
-      },
-
       type: {
         type: String,
         default: ''
@@ -94,7 +89,7 @@
     data () {
       return {
         // For quick create
-        curStep: this.step,
+        curStep: this.type ? 2 : 1,
         selectedType: this.type,
 
         curTypeCategory: '大家电',
@@ -131,6 +126,11 @@
             this.$emit('hide')
           })
         }
+      },
+
+      type (newType) {
+        this.curStep = newType ? 2 : 1
+        this.selectedType = newType
       }
     }
   }

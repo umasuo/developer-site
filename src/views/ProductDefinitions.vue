@@ -32,37 +32,37 @@
           </ul>
 
           <div class="stepContainer">
-            <button class="btn btn-lg btn-primary" @click="isShowCreateModal = true">创建产品</button>
+            <button class="btn btn-lg btn-primary" @click="createProd()">创建产品</button>
             <p class="eva-create-product-wizard__line-through"><span>或快速创建</span></p>
 
             <ul class="eva-create-product-wizard__quick-prod">
               <li>
-                <a href="javascript:;">开关</a>
+                <a href="javascript:;" @click="createProd('开关')">开关</a>
               </li>
               <li>
-                <a href="javascript:;">电灯</a>
+                <a href="javascript:;" @click="createProd('电灯')">电灯</a>
               </li>
               <li>
-                <a href="javascript:;">手环</a>
+                <a href="javascript:;" @click="createProd('手环')">手环</a>
               </li>
               <li>
-                <a href="javascript:;">空调</a>
+                <a href="javascript:;" @click="createProd('空调')">空调</a>
               </li>
               <li>
-                <a href="javascript:;">计步器</a>
+                <a href="javascript:;" @click="createProd('计步器')">计步器</a>
               </li>
               <li>
-                <a href="javascript:;">体重计</a>
+                <a href="javascript:;" @click="createProd('体重计')">体重计</a>
               </li>
               <li>
-                <a href="javascript:;">平衡车</a>
+                <a href="javascript:;" @click="createProd('平衡车')">平衡车</a>
               </li>
               <li>
-                <a href="javascript:;">空气净化器</a>
+                <a href="javascript:;" @click="createProd('空气净化器')">空气净化器</a>
               </li>
             </ul>
 
-            <ProductCreate :show="isShowCreateModal" @hide="isShowCreateModal = false"></ProductCreate>
+            <ProductCreate :show="isShowCreateModal" @hide="isShowCreateModal = false" :type="quickType"></ProductCreate>
           </div>
         </div><!-- End of eva-create-product-wizard -->
 
@@ -124,7 +124,15 @@
 
     data () {
       return {
+        quickType: '',
         isShowCreateModal: false
+      }
+    },
+
+    methods: {
+      createProd (type = '') {
+        this.quickType = type
+        this.isShowCreateModal = true
       }
     },
 
