@@ -62,7 +62,9 @@
               </li>
             </ul>
 
-            <ProductCreate :show="isShowCreateModal" @hide="isShowCreateModal = false" :type="quickType"></ProductCreate>
+            <portal to="modals" v-if="isShowCreateModal">
+              <ProductCreate ref="createProductModal" :type="quickType"></ProductCreate>
+            </portal>
           </div>
         </div><!-- End of eva-create-product-wizard -->
 
@@ -116,6 +118,7 @@
 </template>
 
 <script>
+  import $ from 'jquery'
   import ProductDefinitionRow from '@/components/ProductDefinitionRow'
   import ProductCreate from '@/components/ProductCreate'
 
@@ -124,15 +127,25 @@
 
     data () {
       return {
-        quickType: '',
         isShowCreateModal: false
       }
     },
 
     methods: {
       createProd (type = '') {
-        this.quickType = type
         this.isShowCreateModal = true
+        const vm = this
+        setTimeout(() => {
+          if (type) {
+            vm.$refs.createProductModal.curStep = 2
+            vm.$refs.createProductModal.selectedType = type
+          }
+          $(vm.$refs.createProductModal.$el).modal('show').on('hidden.bs.modal', e => {
+            vm.$refs.createProductModal.curStep = 1
+            vm.$refs.createProductModal.selectedType = ''
+            vm.isShowCreateModal = false
+          })
+        }, 0)
       }
     },
 

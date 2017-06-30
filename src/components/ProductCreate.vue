@@ -1,71 +1,69 @@
 <template>
-  <portal to="modals">
-    <div ref="modal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">创建产品</h4>
-          </div>
-          <div class="modal-body eva-product-create__wrapper">
-            <div class="eva-product-create__content" :class="{ 'slideLeft': curStep === 2 }">
+  <div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">创建产品</h4>
+        </div>
+        <div class="modal-body eva-product-create__wrapper">
+          <div class="eva-product-create__content" :class="{ 'slideLeft': curStep === 2 }">
 
-              <!-- STEP 1, Type -->
-              <div class="eva-product-create-type">
-                <ul class="eva-product-create-type__category">
-                  <li v-for="(cate, key) in stdTypes"
-                      :class="{ active: curTypeCategory === key }"
-                      @click="curTypeCategory = key">
-                    <a href="javascript:;">{{ key }}</a>
-                  </li>
-                </ul>
+            <!-- STEP 1, Type -->
+            <div class="eva-product-create-type">
+              <ul class="eva-product-create-type__category">
+                <li v-for="(cate, key) in stdTypes"
+                    :class="{ active: curTypeCategory === key }"
+                    @click="curTypeCategory = key">
+                  <a href="javascript:;">{{ key }}</a>
+                </li>
+              </ul>
 
-                <ul class="eva-product-create-type__list">
-                  <li v-for="type in stdTypes[curTypeCategory]" @click="selectType(type)"><a href="javascript:;">{{ type }}</a></li>
-                </ul>
-              </div>
-
-              <!-- STEP 2, Info-->
-              <div class="eva-product-create-info">
-                <h3>创建{{ selectedType }}产品</h3>
-                <a href="javascript:;" @click="changeType">重选产品类别</a>
-
-                <form class="form-horizontal form-label-left eva-product-create-info__form">
-                  <div class="form-group">
-                    <label class="control-label col-xs-3">产品名称:</label>
-
-                    <div class="col-xs-9">
-                      <input class="form-control" type="text">
-                    </div>
-                  </div>
-
-                  <div>
-                    <label class="control-label col-xs-3">传输类型:</label>
-                    <div class="checkbox col-xs-9">
-                      <label>
-                        <input type="radio" name="connectType" value="wifi"> WIFI
-                      </label>
-
-                      <label>
-                        <input type="radio" name="connectType" value="bt"> 蓝牙
-                      </label>
-
-                      <label>
-                        <input type="radio" name="connectType" value="gprs"> GPRS
-                      </label>
-                    </div>
-                  </div>
-
-                  <button class="btn btn-lg btn-primary btn-block" @click="createAndEdit">创建</button>
-                </form>
-              </div>
-
+              <ul class="eva-product-create-type__list">
+                <li v-for="type in stdTypes[curTypeCategory]" @click="selectType(type)"><a href="javascript:;">{{ type }}</a></li>
+              </ul>
             </div>
+
+            <!-- STEP 2, Info-->
+            <div class="eva-product-create-info">
+              <h3>创建{{ selectedType }}产品</h3>
+              <a href="javascript:;" @click="changeType">重选产品类别</a>
+
+              <form class="form-horizontal form-label-left eva-product-create-info__form">
+                <div class="form-group">
+                  <label class="control-label col-xs-3">产品名称:</label>
+
+                  <div class="col-xs-9">
+                    <input class="form-control" type="text">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="control-label col-xs-3">传输类型:</label>
+                  <div class="checkbox col-xs-9">
+                    <label>
+                      <input type="radio" name="connectType" value="wifi"> WIFI
+                    </label>
+
+                    <label>
+                      <input type="radio" name="connectType" value="bt"> 蓝牙
+                    </label>
+
+                    <label>
+                      <input type="radio" name="connectType" value="gprs"> GPRS
+                    </label>
+                  </div>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" @click="createAndEdit">创建</button>
+              </form>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-  </portal>
+  </div>
 </template>
 
 <script>
@@ -74,23 +72,10 @@
   export default {
     name: 'ProductCreate',
 
-    props: {
-      show: {
-        type: Boolean,
-        required: true
-      },
-
-      type: {
-        type: String,
-        default: ''
-      }
-    },
-
     data () {
       return {
-        // For quick create
-        curStep: this.type ? 2 : 1,
-        selectedType: this.type,
+        curStep: 1,
+        selectedType: '',
 
         curTypeCategory: '大家电',
 
@@ -119,23 +104,6 @@
       createAndEdit () {
         $(this.$refs.modal).modal('hide')
         this.$router.push({ name: 'ProductDetail', params: { pid: '123' } })
-      }
-    },
-
-    watch: {
-      show (newValue) {
-        if (newValue) {
-          $(this.$refs.modal).modal('show').on('hide.bs.modal', e => {
-            this.curStep = 1
-            this.selectedType = ''
-            this.$emit('hide')
-          })
-        }
-      },
-
-      type (newType) {
-        this.curStep = newType ? 2 : 1
-        this.selectedType = newType
       }
     }
   }

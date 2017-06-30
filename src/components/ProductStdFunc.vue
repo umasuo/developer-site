@@ -20,12 +20,11 @@
         <td>枚举型</td>
         <td>枚举值auto, manual, smart, ECO</td>
         <td>
-          <!--<a href="javascript:;" @click="showEditor">编辑</a>-->
           <a href="javascript:;" @click="showEditor">编辑</a>
 
-          <!--<portal to="modals">-->
-            <!--<ProductStdFuncEditor ref="editor"></ProductStdFuncEditor>-->
-          <!--</portal>-->
+          <portal to="modals" v-if="isShowingEditor">
+            <ProductStdFuncEditor ref="editor"></ProductStdFuncEditor>
+          </portal>
 
           <a href="javascript:;">删除</a>
         </td>
@@ -35,20 +34,32 @@
 </template>
 
 <script>
-//  import $ from 'jquery'
-//  import ProductStdFuncEditor from '@/components/ProductStdFuncEditor'
+  import $ from 'jquery'
+  import ProductStdFuncEditor from '@/components/ProductStdFuncEditor'
 
   export default {
     name: 'ProductStdFunc',
 
+    data () {
+      return {
+        isShowingEditor: false
+      }
+    },
+
     methods: {
-//      showEditor () {
-//        $(this.$refs.editor.$el).modal('show')
-//      }
+      showEditor () {
+        const vm = this
+        this.isShowingEditor = true
+        setTimeout(() => {
+          $(this.$refs.editor.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isShowingEditor = false
+          })
+        }, 0)
+      }
     },
 
     components: {
-//      ProductStdFuncEditor
+      ProductStdFuncEditor
     }
   }
 </script>

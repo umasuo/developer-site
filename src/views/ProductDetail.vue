@@ -16,7 +16,7 @@
             <button class="btn btn-xs btn-primary" @click="showStdFuncManager">管理</button>
           </h2>
 
-          <portal to="modals">
+          <portal to="modals" v-if="isShowingStdFuncManager">
             <ProductStdFuncManager ref="stdFuncManager"></ProductStdFuncManager>
           </portal>
 
@@ -72,9 +72,21 @@
   export default {
     name: 'ProductDetail',
 
+    data () {
+      return {
+        isShowingStdFuncManager: false
+      }
+    },
+
     methods: {
       showStdFuncManager () {
-        $(this.$refs.stdFuncManager.$el).modal('show')
+        const vm = this
+        this.isShowingStdFuncManager = true
+        setTimeout(() => {
+          $(this.$refs.stdFuncManager.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isShowingStdFuncManager = false
+          })
+        }, 0)
       }
     },
 
