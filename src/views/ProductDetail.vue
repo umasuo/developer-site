@@ -32,8 +32,12 @@
       <div class="x_panel">
         <div class="x_title">
           <h2>自定义功能
-            <button class="btn btn-xs btn-primary">添加</button>
+            <button class="btn btn-xs btn-primary" @click="showCreateCustomFuncModal">添加</button>
           </h2>
+
+          <portal to="modals" v-if="isCreatingCustomFunc">
+            <ProductFuncEditor mode="createCustom" ref="createCustomFuncModal"></ProductFuncEditor>
+          </portal>
 
           <div class="clearfix"></div>
         </div>
@@ -68,13 +72,15 @@
   import ProductStdFunc from '@/components/ProductStdFunc'
   import ProductCustomFunc from '@/components/ProductCustomFunc'
   import ProductData from '@/components/ProductData'
+  import ProductFuncEditor from '@/components/ProductFuncEditor'
 
   export default {
     name: 'ProductDetail',
 
     data () {
       return {
-        isShowingStdFuncManager: false
+        isShowingStdFuncManager: false,
+        isCreatingCustomFunc: false
       }
     },
 
@@ -87,6 +93,16 @@
             vm.isShowingStdFuncManager = false
           })
         }, 0)
+      },
+
+      showCreateCustomFuncModal () {
+        const vm = this
+        this.isCreatingCustomFunc = true
+        setTimeout(() => {
+          $(this.$refs.createCustomFuncModal.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isCreatingCustomFunc = false
+          })
+        })
       }
     },
 
@@ -102,7 +118,8 @@
       ProductStdFunc,
       ProductCustomFunc,
       ProductData,
-      ProductStdFuncManager
+      ProductStdFuncManager,
+      ProductFuncEditor
     }
   }
 </script>

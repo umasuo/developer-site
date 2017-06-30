@@ -63,7 +63,7 @@
             </ul>
 
             <portal to="modals" v-if="isShowCreateModal">
-              <ProductCreate ref="createProductModal" :type="quickType"></ProductCreate>
+              <ProductCreate ref="createProductModal"></ProductCreate>
             </portal>
           </div>
         </div><!-- End of eva-create-product-wizard -->

@@ -23,7 +23,7 @@
           <a href="javascript:;" @click="showEditor">编辑</a>
 
           <portal to="modals" v-if="isShowingEditor">
-            <ProductStdFuncEditor ref="editor"></ProductStdFuncEditor>
+            <ProductFuncEditor mode="standard" ref="editor"></ProductFuncEditor>
           </portal>
 
           <a href="javascript:;">删除</a>
@@ -35,7 +35,7 @@
 
 <script>
   import $ from 'jquery'
-  import ProductStdFuncEditor from '@/components/ProductStdFuncEditor'
+  import ProductFuncEditor from '@/components/ProductFuncEditor'
 
   export default {
     name: 'ProductStdFunc',
@@ -59,7 +59,7 @@
     },
 
     components: {
-      ProductStdFuncEditor
+      ProductFuncEditor
     }
   }
 </script>

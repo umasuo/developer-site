@@ -20,7 +20,12 @@
         <td>枚举型</td>
         <td>枚举值auto, manual, smart, ECO</td>
         <td>
-          <a href="javascript:;">编辑</a>&nbsp;
+          <a href="javascript:;" @click="showEditor">编辑</a>
+
+          <portal to="modals" v-if="isShowingEditor">
+            <ProductFuncEditor mode="custom" ref="editor"></ProductFuncEditor>
+          </portal>
+
           <a href="javascript:;">删除</a>
         </td>
       </tr>
@@ -29,8 +34,33 @@
 </template>
 
 <script>
+  import $ from 'jquery'
+  import ProductFuncEditor from '@/components/ProductFuncEditor'
+
   export default {
-    name: 'ProductCustomFunc'
+    name: 'ProductCustomFunc',
+
+    data () {
+      return {
+        isShowingEditor: false
+      }
+    },
+
+    methods: {
+      showEditor () {
+        const vm = this
+        this.isShowingEditor = true
+        setTimeout(() => {
+          $(this.$refs.editor.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isShowingEditor = false
+          })
+        }, 0)
+      }
+    },
+
+    components: {
+      ProductFuncEditor
+    }
   }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal fade" ref="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -102,8 +102,9 @@
       },
 
       createAndEdit () {
-        $(this.$refs.modal).modal('hide')
-        this.$router.push({ name: 'ProductDetail', params: { pid: '123' } })
+        $(this.$refs.modal).modal('hide').on('hidden.bs.modal', e => {
+          this.$router.push({name: 'ProductDetail', params: {pid: '123'}})
+        })
       }
     }
   }
