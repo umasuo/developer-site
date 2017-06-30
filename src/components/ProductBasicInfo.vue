@@ -8,9 +8,10 @@
           <h3>产品名 <button class="btn btn-xs btn-default" @click="state = 'editor'">编辑产品信息</button></h3>
 
           <p>
-            <span class="label label-default">类型: 冰箱</span>
             <span class="label label-default">PID: 123</span>
+            <span class="label label-default">类型: 冰箱</span>
             <span class="label label-default">传输类型: WIFI</span>
+            <span class="label label-default">状态: 开发中</span>
           </p>
         </div>
       </div>

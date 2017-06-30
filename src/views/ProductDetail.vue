@@ -12,12 +12,18 @@
     <div class="col-sm-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>标准功能</h2>
+          <h2>标准功能
+            <button class="btn btn-xs btn-primary" @click="showStdFuncManager">管理</button>
+          </h2>
+
+          <portal to="modals">
+            <ProductStdFuncManager ref="stdFuncManager"></ProductStdFuncManager>
+          </portal>
 
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
-          标准功能
+          <ProductStdFunc></ProductStdFunc>
         </div>
       </div>
     </div>
@@ -25,12 +31,14 @@
     <div class="col-sm-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>自定义功能</h2>
+          <h2>自定义功能
+            <button class="btn btn-xs btn-primary">添加</button>
+          </h2>
 
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
-          自定义功能
+          <ProductCustomFunc></ProductCustomFunc>
         </div>
       </div>
     </div>
@@ -38,12 +46,14 @@
     <div class="col-sm-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>数据</h2>
+          <h2>数据
+            <button class="btn btn-xs btn-primary">添加</button>
+          </h2>
 
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
-          数据
+          <ProductData></ProductData>
         </div>
       </div>
     </div>
@@ -52,10 +62,21 @@
 </template>
 
 <script>
+  import $ from 'jquery'
+  import ProductStdFuncManager from '@/components/ProductStdFuncManager'
   import ProductBasicInfo from '@/components/ProductBasicInfo'
+  import ProductStdFunc from '@/components/ProductStdFunc'
+  import ProductCustomFunc from '@/components/ProductCustomFunc'
+  import ProductData from '@/components/ProductData'
 
   export default {
     name: 'ProductDetail',
+
+    methods: {
+      showStdFuncManager () {
+        $(this.$refs.stdFuncManager.$el).modal('show')
+      }
+    },
 
     props: {
       pid: {
@@ -65,7 +86,11 @@
     },
 
     components: {
-      ProductBasicInfo
+      ProductBasicInfo,
+      ProductStdFunc,
+      ProductCustomFunc,
+      ProductData,
+      ProductStdFuncManager
     }
   }
 </script>

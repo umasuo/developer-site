@@ -36,7 +36,7 @@
   import ScriptJS from 'scriptjs'
 
   export default {
-    name: 'DeviceDataDefinitionsEditor',
+    name: 'ProductDataDefinitionsEditor',
 
     data () {
       return {

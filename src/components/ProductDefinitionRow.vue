@@ -19,7 +19,7 @@
        上线
     </td>
     <td>
-      <a href="javascript:;">编辑</a>
+      <router-link :to="{ name: 'ProductDetail', params: { pid: '123' } }" href="javascript:;">编辑</router-link>
       <a href="javascript:;">删除</a>
     </td>
   </tr>

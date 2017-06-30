@@ -14,7 +14,7 @@
       <!-- else render submenus -->
       <template v-else>
         <a @click="isOpen = !isOpen">
-          <i class="fa" :class="menu.faIcon"></i> {{ menu.title }} <span class="fa fa-chevron-down"></span>
+          <i class="fa" :class="menu.faIcon"></i> {{ menu.title }} <span class="fa fa-chevron-down" :class="isOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
         </a>
         <ul class="nav child_menu" v-show="isOpen">
 

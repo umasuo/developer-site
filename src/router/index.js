@@ -12,7 +12,7 @@ import ProductDefinitions from '@/views/ProductDefinitions'
 import ProductDetail from '@/views/ProductDetail'
 import DeviceManager from '@/views/DeviceManager'
 
-import DataDefinitions from '@/views/DataDefinitions'
+// import DataDefinitions from '@/views/DataDefinitions'
 import DataSummary from '@/views/DataSummary'
 import DataProcessor from '@/views/DataProcessor'
 
@@ -61,11 +61,12 @@ export default new Router({
           name: 'DataSummary',
           component: DataSummary
         },
-        {
-          path: 'data-definitions',
-          name: 'DataDefinitions',
-          component: DataDefinitions
-        },
+        // TODO: uncomment when ready
+        // {
+        //   path: 'data-definitions',
+        //   name: 'DataDefinitions',
+        //   component: DataDefinitions
+        // },
         {
           path: 'data-processor',
           name: 'DataProcessor',

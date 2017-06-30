@@ -3,3 +3,12 @@
 
 // Modules
 @import "charts";
+
+.x_title h2 .btn-xs {
+  margin-bottom: 0;
+}
+
+// fix gentelella modal footer button margin
+.modal-footer button.btn {
+  margin-bottom: 0;
+}

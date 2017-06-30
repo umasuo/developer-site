@@ -85,9 +85,10 @@
             toName: 'Dashboard'
           },
           {
-            title: '产品',
+            title: '产品定义',
             faIcon: 'fa-tablet',
-            subMenu: [
+            toName: 'ProductDefinitions'
+            /* subMenu: [
               {
                 name: '产品定义',
                 toName: 'ProductDefinitions'
@@ -96,7 +97,7 @@
                 name: '数据定义',
                 toName: 'DataDefinitions'
               }
-            ]
+            ] */
           },
           {
             title: '运营',

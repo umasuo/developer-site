@@ -118,7 +118,7 @@
 
       createAndEdit () {
         $(this.$refs.modal).modal('hide')
-        this.$router.push({ name: 'ProductDetail', params: { pid: 123 } })
+        this.$router.push({ name: 'ProductDetail', params: { pid: '123' } })
       }
     },
 
