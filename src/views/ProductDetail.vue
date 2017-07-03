@@ -2,6 +2,38 @@
   <div class="row">
 
     <div class="col-sm-12">
+
+      <div class="eva-wizard form_wizard wizard_horizontal">
+        <ul class="wizard_steps anchor">
+          <li>
+              <span class="wizard_step" :class="step === 1 ? 'selected' : 'done'">
+                <span class="step_no">1</span>
+                <span class="step_descr">
+                  产品定义<br>
+                </span>
+              </span>
+          </li>
+          <li>
+              <span class="wizard_step" :class="{ selected: step === 2, done: step > 2, disabled: step < 2}">
+                <span class="step_no">2</span>
+                <span class="step_descr">
+                  开发调试<br>
+                </span>
+              </span>
+          </li>
+          <li>
+              <span class="wizard_step" :class="step === 3 ? 'selected' : 'disabled'">
+                <span class="step_no">3</span>
+                <span class="step_descr">
+                  批量投产<br>
+                </span>
+              </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
       <div class="x_panel">
         <div class="x_content">
           <ProductBasicInfo></ProductBasicInfo>
@@ -9,45 +41,46 @@
       </div>
     </div>
 
-    <div class="col-sm-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>标准功能
-            <button class="btn btn-xs btn-primary" @click="showStdFuncManager">管理</button>
-          </h2>
+    <template v-if="step === 1">
+      <div class="col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>标准功能
+              <button class="btn btn-xs btn-primary" @click="showStdFuncManager">管理</button>
+            </h2>
 
-          <portal to="modals" v-if="isShowingStdFuncManager">
-            <ProductStdFuncManager ref="stdFuncManager"></ProductStdFuncManager>
-          </portal>
+            <portal to="modals" v-if="isShowingStdFuncManager">
+              <ProductStdFuncManager ref="stdFuncManager"></ProductStdFuncManager>
+            </portal>
 
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <ProductStdFunc></ProductStdFunc>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>自定义功能
-            <button class="btn btn-xs btn-primary" @click="showCreateCustomFuncModal">添加</button>
-          </h2>
-
-          <portal to="modals" v-if="isCreatingCustomFunc">
-            <ProductFuncEditor mode="createCustom" ref="createCustomFuncModal"></ProductFuncEditor>
-          </portal>
-
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <ProductCustomFunc></ProductCustomFunc>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <ProductStdFunc></ProductStdFunc>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-sm-12">
+      <div class="col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>自定义功能
+              <button class="btn btn-xs btn-primary" @click="showCreateCustomFuncModal">添加</button>
+            </h2>
+
+            <portal to="modals" v-if="isCreatingCustomFunc">
+              <ProductFuncEditor mode="createCustom" ref="createCustomFuncModal"></ProductFuncEditor>
+            </portal>
+
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <ProductCustomFunc></ProductCustomFunc>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
       <div class="x_panel">
         <div class="x_title">
           <h2>数据
@@ -65,7 +98,11 @@
         </div>
       </div>
     </div>
+    </template>
 
+    <template v-else-if="step === 2">
+
+    </template>
   </div>
 </template>
 
@@ -86,7 +123,8 @@
       return {
         isShowingStdFuncManager: false,
         isCreatingCustomFunc: false,
-        isShowingDataDefinition: false
+        isShowingDataDefinition: false,
+        step: 1
       }
     },
 

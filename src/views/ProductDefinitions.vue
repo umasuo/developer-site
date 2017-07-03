@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12">
 
-        <div class="eva-create-product-wizard form_wizard wizard_horizontal">
+        <div class="eva-wizard eva-wizard--create-product form_wizard wizard_horizontal">
           <ul class="wizard_steps anchor">
             <li>
               <span class="wizard_step selected">
@@ -33,9 +33,9 @@
 
           <div class="stepContainer">
             <button class="btn btn-lg btn-primary" @click="createProd()">创建产品</button>
-            <p class="eva-create-product-wizard__line-through"><span>或快速创建</span></p>
+            <p class="eva-line-through"><span>或快速创建</span></p>
 
-            <ul class="eva-create-product-wizard__quick-prod">
+            <ul class="eva-quick-prod">
               <li>
                 <a href="javascript:;" @click="createProd('开关')">开关</a>
               </li>
@@ -157,40 +157,27 @@
 </script>
 
 <style lang="scss">
-  .eva-create-product-wizard {
-    margin: 40px 0;
+  .eva-line-through {
+    margin: 20px auto 10px auto;
+    width: 320px;
+    border-top: 1px solid lighten(black, 20%);
+
+    > span {
+      background-color: #F7F7F7;
+      position: relative;
+      top: -10px;
+      padding: 0 10px;
+    }
+  }
+
+  .eva-quick-prod {
     text-align: center;
+    list-style: none;
+    padding: 0;
 
-    > .wizard_steps {
-      padding-left: 0;
-    }
-
-    .stepContainer {
-      margin-top: 50px;
-    }
-
-    &__line-through {
-      margin: 20px auto 10px auto;
-      width: 320px;
-      border-top: 1px solid lighten(black, 20%);
-
-      > span {
-        background-color: #F7F7F7;
-        position: relative;
-        top: -10px;
-        padding: 0 10px;
-      }
-    }
-
-    &__quick-prod {
-      text-align: center;
-      list-style: none;
-      padding: 0;
-
-      > li {
-        display: inline-block;
-        margin: 10px;
-      }
+    > li {
+      display: inline-block;
+      margin: 10px;
     }
   }
 </style>
