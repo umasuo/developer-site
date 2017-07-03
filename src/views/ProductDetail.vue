@@ -51,8 +51,12 @@
       <div class="x_panel">
         <div class="x_title">
           <h2>数据
-            <button class="btn btn-xs btn-primary">添加</button>
+            <button class="btn btn-xs btn-primary" @click="showAddDataModal">添加</button>
           </h2>
+
+          <portal to="modals" v-if="isShowingDataDefinition">
+            <DataDefinitionEditor ref="dataDefinitionModal"></DataDefinitionEditor>
+          </portal>
 
           <div class="clearfix"></div>
         </div>
@@ -73,6 +77,7 @@
   import ProductCustomFunc from '@/components/ProductCustomFunc'
   import ProductData from '@/components/ProductData'
   import ProductFuncEditor from '@/components/ProductFuncEditor'
+  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
 
   export default {
     name: 'ProductDetail',
@@ -80,7 +85,8 @@
     data () {
       return {
         isShowingStdFuncManager: false,
-        isCreatingCustomFunc: false
+        isCreatingCustomFunc: false,
+        isShowingDataDefinition: false
       }
     },
 
@@ -103,6 +109,16 @@
             vm.isCreatingCustomFunc = false
           })
         })
+      },
+
+      showAddDataModal () {
+        const vm = this
+        this.isShowingDataDefinition = true
+        setTimeout(() => {
+          $(this.$refs.dataDefinitionModal.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isShowingDataDefinition = false
+          })
+        })
       }
     },
 
@@ -119,7 +135,8 @@
       ProductCustomFunc,
       ProductData,
       ProductStdFuncManager,
-      ProductFuncEditor
+      ProductFuncEditor,
+      DataDefinitionEditor
     }
   }
 </script>

@@ -1,3 +1,5 @@
+<!-- TODO: remove this file? -->
+
 <template>
   <div>
     <a href="javascript:;" @click="openEditor">查看/编辑</a>

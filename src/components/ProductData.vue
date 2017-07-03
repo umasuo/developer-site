@@ -14,7 +14,12 @@
         <td>温度</td>
         <td>冷冻室温度</td>
         <td>
-          <a href="javascript:;">编辑</a>
+          <a href="javascript:;" @click="showEditor">编辑</a>
+
+          <portal to="modals" v-if="isShowingEditor">
+            <DataDefinitionEditor ref="editor" :dataDefinition="{}"></DataDefinitionEditor>
+          </portal>
+
           <a href="javascript:;">删除</a>
         </td>
       </tr>
@@ -23,8 +28,33 @@
 </template>
 
 <script>
+  import $ from 'jquery'
+  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
+
   export default {
-    name: 'ProductData'
+    name: 'ProductData',
+
+    data () {
+      return {
+        isShowingEditor: false
+      }
+    },
+
+    methods: {
+      showEditor () {
+        const vm = this
+        this.isShowingEditor = true
+        setTimeout(() => {
+          $(this.$refs.editor.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isShowingEditor = false
+          })
+        }, 0)
+      }
+    },
+
+    components: {
+      DataDefinitionEditor
+    }
   }
 </script>
 
