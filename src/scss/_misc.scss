@@ -1,0 +1,19 @@
+.eva-line-through {
+  margin: 20px auto 10px auto;
+  width: 320px;
+  text-align: center;
+  border-top: 1px solid lighten(black, 20%);
+
+  > span {
+    background-color: #F7F7F7;
+    position: relative;
+    top: -10px;
+    padding: 0 10px;
+  }
+
+  &__whitebg {
+    > span {
+      background-color: white;
+    }
+  }
+}

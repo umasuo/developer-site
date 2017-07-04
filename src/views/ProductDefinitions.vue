@@ -157,19 +157,6 @@
 </script>
 
 <style lang="scss">
-  .eva-line-through {
-    margin: 20px auto 10px auto;
-    width: 320px;
-    border-top: 1px solid lighten(black, 20%);
-
-    > span {
-      background-color: #F7F7F7;
-      position: relative;
-      top: -10px;
-      padding: 0 10px;
-    }
-  }
-
   .eva-quick-prod {
     text-align: center;
     list-style: none;

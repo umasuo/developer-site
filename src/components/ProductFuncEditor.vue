@@ -28,12 +28,12 @@
             <div class="form-group">
               <label class="col-xs-3 control-label"><span class="required">*</span> 数据类型：</label>
               <div class="col-xs-9">
-                <label><input type="radio" value="bool" v-model="dataType" :disabled="mode === 'standard'"> 布尔型</label>
-                <label><input type="radio" value="number" v-model="dataType" :disabled="mode === 'standard'"> 数值型</label>
-                <label><input type="radio" value="enum" v-model="dataType" :disabled="mode === 'standard'"> 枚举型</label>
-                <label><input type="radio" value="error" v-model="dataType" :disabled="mode === 'standard'"> 故障型</label>
-                <label><input type="radio" value="string" v-model="dataType" :disabled="mode === 'standard'"> 字符型</label>
-                <label><input type="radio" value="raw" v-model="dataType" :disabled="mode === 'standard'"> RAW型</label>
+                <label class="eva-radio-label"><input type="radio" value="bool" v-model="dataType" :disabled="mode === 'standard'"> 布尔型</label>
+                <label class="eva-radio-label"><input type="radio" value="number" v-model="dataType" :disabled="mode === 'standard'"> 数值型</label>
+                <label class="eva-radio-label"><input type="radio" value="enum" v-model="dataType" :disabled="mode === 'standard'"> 枚举型</label>
+                <label class="eva-radio-label"><input type="radio" value="error" v-model="dataType" :disabled="mode === 'standard'"> 故障型</label>
+                <label class="eva-radio-label"><input type="radio" value="string" v-model="dataType" :disabled="mode === 'standard'"> 字符型</label>
+                <label class="eva-radio-label"><input type="radio" value="raw" v-model="dataType" :disabled="mode === 'standard'"> RAW型</label>
               </div>
             </div>
 
@@ -103,9 +103,9 @@
             <div class="form-group">
               <label class="col-xs-3 control-label"><span class="required">*</span> 数据传输类型：</label>
               <div class="col-xs-9">
-                <label><input type="radio" value="updown" v-model="transType" :disabled="dataType === 'error'"> 可下发可上报</label>
-                <label><input type="radio" value="up" v-model="transType" ref="upTransType"> 只上报</label>
-                <label><input type="radio" value="down" v-model="transType" :disabled="dataType === 'error'"> 只下发</label>
+                <label class="eva-radio-label"><input type="radio" value="updown" v-model="transType" :disabled="dataType === 'error'"> 可下发可上报</label>
+                <label class="eva-radio-label"><input type="radio" value="up" v-model="transType" ref="upTransType"> 只上报</label>
+                <label class="eva-radio-label"><input type="radio" value="down" v-model="transType" :disabled="dataType === 'error'"> 只下发</label>
               </div>
             </div>
 
