@@ -1,13 +1,17 @@
 <template>
   <div>
-    <button class="btn btn-default" :disabled="step <= 1" @click="curStep--">上一步</button>
-    <button class="btn btn-primary" :disabled="step >= max" @click="curStep++">下一步</button>
+    <button class="btn btn-default" :disabled="step <= 1" @click="previous">上一步</button>
+    <button class="btn btn-primary" :disabled="step >= max" @click="forward">下一步</button>
   </div>
 </template>
 
 <script>
   export default {
     name: 'WizardSteps',
+
+    model: {
+      prop: 'step'
+    },
 
     props: {
       max: {
@@ -20,9 +24,13 @@
       }
     },
 
-    data () {
-      return {
-        curStep: this.step
+    methods: {
+      forward () {
+        this.$emit('input', this.step + 1)
+      },
+
+      previous () {
+        this.$emit('input', this.step - 1)
       }
     }
   }

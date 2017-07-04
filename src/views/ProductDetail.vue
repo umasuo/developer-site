@@ -2,7 +2,6 @@
   <div class="row">
 
     <div class="col-sm-12">
-
       <div class="eva-wizard form_wizard wizard_horizontal">
         <ul class="wizard_steps anchor">
           <li>
@@ -30,6 +29,10 @@
               </span>
           </li>
         </ul>
+
+        <div class="stepContainer">
+          <WizardSteps v-model="step" :max="3"></WizardSteps>
+        </div>
       </div>
     </div>
 
@@ -115,6 +118,7 @@
   import ProductData from '@/components/ProductData'
   import ProductFuncEditor from '@/components/ProductFuncEditor'
   import DataDefinitionEditor from '@/components/DataDefinitionEditor'
+  import WizardSteps from '@/components/common/WizardSteps'
 
   export default {
     name: 'ProductDetail',
@@ -174,7 +178,8 @@
       ProductData,
       ProductStdFuncManager,
       ProductFuncEditor,
-      DataDefinitionEditor
+      DataDefinitionEditor,
+      WizardSteps
     }
   }
 </script>
