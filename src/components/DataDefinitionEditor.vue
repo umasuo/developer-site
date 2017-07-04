@@ -11,13 +11,13 @@
         <div class="modal-body">
 
           <form>
-            <label>ID :</label>
+            <label>Data ID :</label>
             <input type="text" class="form-control" v-model="editingDataDefinition.dataId" required>
 
-            <label>名称 :</label>
+            <label>数据名 :</label>
             <input type="text" class="form-control" v-model="editingDataDefinition.name" required>
 
-            <label>简介 :</label>
+            <label>描述 :</label>
             <textarea class="form-control" v-model="editingDataDefinition.description" required></textarea>
 
             <label>数据定义 <small>(使用 <a href="http://json-schema.org/" target="_blank">JSON Schema</a> drafts-04 描述数据格式)</small> :</label>
