@@ -23,6 +23,7 @@ import MessageManager from '@/views/MessageManager'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   linkActiveClass: 'current-page',
   routes: [
     {
