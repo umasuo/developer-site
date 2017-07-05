@@ -28,6 +28,7 @@
               </div>
               <div>
                 <a class="btn btn-default submit" href="javascript:;" @click="login">登陆</a>
+                <!-- TODO: router link 到"请求重置密码"页面（填写邮箱，发送重置链接；点了链接进入"重置密码"页面） -->
                 <a class="reset_pass" href="javascript:;">忘记密码？</a>
               </div>
 

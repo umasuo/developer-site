@@ -11,13 +11,10 @@
               <span class=" fa fa-angle-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
-              <li><a href="javascript:;"> 个人资料</a></li>
               <li>
-                <a href="javascript:;">
-                  <span>设置</span>
-                </a>
+                <!-- TODO: route link 到修改密码页面 -->
+                <a href="javascript:;"> 修改密码</a>
               </li>
-              <!--<li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> 注销</a></li>-->
               <li><router-link :to="{ name: 'Login' }"><i class="fa fa-sign-out pull-right"></i> 注销</router-link></li>
             </ul>
           </li>
