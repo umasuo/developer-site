@@ -5,7 +5,7 @@ import Frame from '@/Frame'
 import Login from '@/views/Login'
 import Dashboard from '@/views/Dashboard'
 
-import DeveloperInfo from '@/views/DeveloperInfo'
+// import DeveloperInfo from '@/views/DeveloperInfo'
 import DeveloperPassword from '@/views/DeveloperPassword'
 
 import ProductDefinitions from '@/views/ProductDefinitions'
@@ -13,8 +13,8 @@ import ProductDetail from '@/views/ProductDetail'
 import DeviceManager from '@/views/DeviceManager'
 
 // import DataDefinitions from '@/views/DataDefinitions'
-import DataSummary from '@/views/DataSummary'
-import DataProcessor from '@/views/DataProcessor'
+// import DataSummary from '@/views/DataSummary'
+// import DataProcessor from '@/views/DataProcessor'
 
 import UserManager from '@/views/UserManager'
 import FeedbackManager from '@/views/FeedbackManager'
@@ -23,7 +23,7 @@ import MessageManager from '@/views/MessageManager'
 Vue.use(Router)
 
 export default new Router({
-  linkActiveClass: 'current-page ',
+  linkActiveClass: 'current-page',
   routes: [
     {
       path: '/login',
@@ -56,27 +56,27 @@ export default new Router({
           component: ProductDetail,
           props: true // decouple component from route
         },
-        {
-          path: 'data-summary',
-          name: 'DataSummary',
-          component: DataSummary
-        },
+        // {
+        //   path: 'data-summary',
+        //   name: 'DataSummary',
+        //   component: DataSummary
+        // },
         // TODO: uncomment when ready
         // {
         //   path: 'data-definitions',
         //   name: 'DataDefinitions',
         //   component: DataDefinitions
         // },
-        {
-          path: 'data-processor',
-          name: 'DataProcessor',
-          component: DataProcessor
-        },
-        {
-          path: 'developer-info',
-          name: 'DeveloperInfo',
-          component: DeveloperInfo
-        },
+        // {
+        //   path: 'data-processor',
+        //   name: 'DataProcessor',
+        //   component: DataProcessor
+        // },
+        // {
+        //   path: 'developer-info',
+        //   name: 'DeveloperInfo',
+        //   component: DeveloperInfo
+        // },
         {
           path: 'developer-password',
           name: 'DeveloperPassword',

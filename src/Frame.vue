@@ -111,12 +111,12 @@
                 name: '设备管理',
                 toName: 'ManageDevices'
               },
+//              {
+//                name: '数据分析',
+//                toName: 'DataProcessor'
+//              },
               {
-                name: '数据分析',
-                toName: 'DataProcessor'
-              },
-              {
-                name: '用户管理',
+                name: '用户列表',
                 toName: 'UserManager'
               },
               {

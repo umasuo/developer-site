@@ -19,7 +19,7 @@
             </div>
 
             <div class="form-group">
-              <label class="col-xs-3 control-label"><span class="required">*</span> 标识名：</label>
+              <label class="col-xs-3 control-label"><span class="required">*</span> 功能 ID：</label>
               <div class="col-xs-9">
                 <input type="text" class="form-control" placeholder="工作模式" :disabled="mode === 'standard'">
               </div>
@@ -31,7 +31,7 @@
                 <label class="eva-radio-label"><input type="radio" value="bool" v-model="dataType" :disabled="mode === 'standard'"> 布尔型</label>
                 <label class="eva-radio-label"><input type="radio" value="number" v-model="dataType" :disabled="mode === 'standard'"> 数值型</label>
                 <label class="eva-radio-label"><input type="radio" value="enum" v-model="dataType" :disabled="mode === 'standard'"> 枚举型</label>
-                <label class="eva-radio-label"><input type="radio" value="error" v-model="dataType" :disabled="mode === 'standard'"> 故障型</label>
+                <!--<label class="eva-radio-label"><input type="radio" value="error" v-model="dataType" :disabled="mode === 'standard'"> 故障型</label>-->
                 <label class="eva-radio-label"><input type="radio" value="string" v-model="dataType" :disabled="mode === 'standard'"> 字符型</label>
                 <label class="eva-radio-label"><input type="radio" value="raw" v-model="dataType" :disabled="mode === 'standard'"> RAW型</label>
               </div>
@@ -80,15 +80,15 @@
             </template>
 
             <!-- Fields for error type -->
-            <template v-else-if="dataType === 'error'">
-              <div class="form-group">
-                <label class="col-xs-3 control-label"><span class="required">*</span> 故障值：</label>
-                <div class="col-xs-9">
-                  <textarea class="form-control" placeholder="将故障值填入此处，用英文逗号分隔"></textarea>
-                  <p><small>故障值，是按照对应的字节位来标识的，依次为bit0-bitx，多个字节位代表多个故障可同时发生，最多支持32位。</small></p>
-                </div>
-              </div>
-            </template>
+            <!--<template v-else-if="dataType === 'error'">-->
+              <!--<div class="form-group">-->
+                <!--<label class="col-xs-3 control-label"><span class="required">*</span> 故障值：</label>-->
+                <!--<div class="col-xs-9">-->
+                  <!--<textarea class="form-control" placeholder="将故障值填入此处，用英文逗号分隔"></textarea>-->
+                  <!--<p><small>故障值，是按照对应的字节位来标识的，依次为bit0-bitx，多个字节位代表多个故障可同时发生，最多支持32位。</small></p>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</template>-->
 
             <!-- Fields for string type -->
             <template v-else-if="dataType === 'string' || dataType === 'raw'">
@@ -110,7 +110,7 @@
             </div>
 
             <div class="form-group">
-              <label class="col-xs-3 control-label">备注：</label>
+              <label class="col-xs-3 control-label">描述：</label>
               <div class="col-xs-9">
                 <textarea class="form-control" placeholder="根据产品实际功能来设定"></textarea>
               </div>

@@ -1,25 +1,37 @@
 <template>
   <div>
-    <div class="page-title">
-      <div class="title_left">
-        <h3>数据定义</h3>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>过滤条件</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <form class="form-inline">
+              <div class="form-group">
+                <label>用户ID:
+                  <input type="text" class="form-control"/>
+                </label>
+              </div>
+              <div class="form-group">
+                <label>用户手机:
+                  <input type="text" class="form-control"/>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="clearfix"></div>
 
     <div class="row">
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>数据定义列表</h2>
-
-            <ul class="nav navbar-right panel_toolbox">
-              <li>
-                <a class="collapse-link" @click="addNewData"><i class="fa fa-plus"></i> 新增数据定义</a>
-                <DataDefinitionEditor ref="addNewEditor"></DataDefinitionEditor>
-              </li>
-            </ul>
+            <h2>用户列表</h2>
 
             <div class="clearfix"></div>
 
@@ -29,19 +41,17 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>名称</th>
-                  <th>简介</th>
-                  <th>操作</th>
+                  <th>用户 ID</th>
+                  <th>用户手机</th>
+                  <th>注册时间</th>
                 </tr>
               </thead>
               <tbody>
-                <DataDefinitionRow v-for="dataDefinition in dataDefinitions"
-                                     :dataDefinition="dataDefinition"
-                                     :key="dataDefinition.dataId"
-                                     @removeDataDefinition="removeDataDefinition"
-                                     @updateDataDefinition="updateDataDefinition">
-                </DataDefinitionRow>
+                <tr>
+                  <td>123</td>
+                  <td>18507555555</td>
+                  <td>2017/7/5 下午2:17:00</td>
+                </tr>
               </tbody>
             </table>
 
@@ -53,66 +63,8 @@
 </template>
 
 <script>
-  import $ from 'jquery'
-  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
-  import DataDefinitionRow from '@/components/DataDefinitionRow'
-
   export default {
-    name: 'DataDefinitions',
-
-    data () {
-      return {
-        dataDefinitions: [
-          {
-            developerId: 'developer1',
-            dataId: 'sh001',
-            name: '手环步数概要',
-            description: '手环步数概要数据',
-            dataType: {
-              id: 'node',
-              type: 'object',
-              properties: {
-                title: {
-                  type: 'string'
-                },
-                sub_node: {
-                  '$ref': 'node'
-                }
-              }
-            }
-          }
-        ]
-        // end of dataDefinitions
-      }
-    },
-
-    methods: {
-      addNewData () {
-        $(this.$refs.addNewEditor.$el).modal('show')
-      },
-
-      removeDataDefinition (data) {
-        const index = this.dataDefinitions.indexOf(data)
-        this.dataDefinitions.splice(index, 1)
-      },
-
-      updateDataDefinition (updatingData) {
-        let index = -1
-        this.dataDefinitions.filter((data, curIndex) => {
-          if (data.id === updatingData.id) {
-            index = curIndex
-          }
-        })
-        if (index !== -1) {
-          this.dataDefinitions[index] = Object.assign({}, updatingData)
-        }
-      }
-    },
-
-    components: {
-      DataDefinitionRow,
-      DataDefinitionEditor
-    }
+    name: 'UserManager'
   }
 </script>
 

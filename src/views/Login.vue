@@ -56,13 +56,13 @@
             <form>
               <h1>注册账号</h1>
               <div>
-                <input type="text" class="form-control" placeholder="用户名" required="" />
+                <input type="text" class="form-control" placeholder="用户名" required />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="邮箱地址" required="" />
+                <input type="password" class="form-control" placeholder="密码" required />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="密码" required="" />
+                <input type="password" class="form-control" placeholder="重复密码" required />
               </div>
               <div>
                 <a class="btn btn-default submit" href="index.html">注册</a>

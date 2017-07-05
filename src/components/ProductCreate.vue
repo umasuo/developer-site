@@ -102,8 +102,9 @@
       },
 
       createAndEdit () {
+        const vm = this
         $(this.$refs.modal).modal('hide').on('hidden.bs.modal', e => {
-          this.$router.push({name: 'ProductDetail', params: {pid: '123'}})
+          vm.$router.push({name: 'ProductDetail', params: {pid: '123'}})
         })
       }
     }
