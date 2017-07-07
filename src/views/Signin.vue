@@ -80,8 +80,8 @@
 </template>
 
 <script>
-  import Utils from '@/utils'
-  import Api from '@/api'
+  import utils from '@/utils'
+  import api from '@/api'
 
   export default {
     name: 'Signin',
@@ -108,34 +108,34 @@
     methods: {
       async signin () {
         this.signinMsg = ''
-        if (!Utils.validateEmail(this.signinData.email)) {
+        if (!utils.validateEmail(this.signinData.email)) {
           this.signinMsg = '邮箱格式错误，请检查后再试'
           return
-        } else if (!Utils.validatePassword(this.signinData.password)) {
+        } else if (!utils.validatePassword(this.signinData.password)) {
           this.signinMsg = '密码格式错误，至少需要8位，包含小写字母及数字'
           return
         }
 
         this.signinMsg = '请稍候...'
-        await Api.developer.signin(this.signinData.email, this.signinData.password)
+        await api.DeveloperController.signin(this.signinData.email, this.signinData.password)
         this.$router.replace({ name: 'Dashboard' })
       },
 
       async register () {
         this.registerMsg = ''
-        if (!Utils.validateEmail(this.signupData.email)) {
+        if (!utils.validateEmail(this.signupData.email)) {
           this.registerMsg = '邮箱格式错误，请检查后再试'
           return
         } else if (this.signupData.password !== this.signupData.repeatPassword) {
           this.registerMsg = '两次密码输入不一致，请检查后再试'
           return
-        } else if (!Utils.validatePassword(this.signupData.password)) {
+        } else if (!utils.validatePassword(this.signupData.password)) {
           this.registerMsg = '密码格式错误，至少需要8位，包含小写字母及数字'
           return
         }
 
         this.registerMsg = '请稍候...'
-        await Api.developer.signup(this.signupData.email, this.signupData.password)
+        await api.developer.signup(this.signupData.email, this.signupData.password)
         this.registerMsg = '一封包含验证链接的邮件已经发送到您填写的邮箱，请查看邮件并跟随邮件内指引操作。'
       }
     },

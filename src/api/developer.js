@@ -1,13 +1,12 @@
-import storejs from 'store'
-import 
-import Utils from '@/utils'
+import client, { http } from '@/api/client'
+import utils from '@/utils'
 
 export default {
   async signup (email, password) {
-    if (!Utils.validatePassword(password)) {
+    if (!utils.validatePassword(password)) {
       throw new Error('signup(): password not valid')
       // TODO: error handling
-    } else if (!Utils.validateEmail(email)) {
+    } else if (!utils.validateEmail(email)) {
       throw new Error('signup(): email not valid')
       // TODO: error handling
     }
@@ -25,10 +24,10 @@ export default {
   },
 
   async signin (email, password) {
-    if (!Utils.validatePassword(password)) {
+    if (!utils.validatePassword(password)) {
       throw new Error('signin(): password not valid')
       // TODO: error handling
-    } else if (!Utils.validateEmail(email)) {
+    } else if (!utils.validateEmail(email)) {
       throw new Error('signin(): email not valid')
       // TODO: error handling
     }
@@ -45,11 +44,7 @@ export default {
       // 401: 10003 - email or password not correct.
     }
 
-    storejs.set('session', signinResponse.data)
-  },
-
-  current () {
-    return storejs.get('session')
+    client.setSession(signinResponse.data)
   },
 
   resentVerifyEmail (developerId) {
