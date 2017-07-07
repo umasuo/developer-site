@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Frame from '@/Frame'
+import SinglePage from '@/SinglePage'
 
 import Login from '@/views/Login'
+import EmailVerifyResult from '@/views/EmailVerifyResult'
 import Dashboard from '@/views/Dashboard'
 
 // import DeveloperInfo from '@/views/DeveloperInfo'
@@ -27,9 +30,21 @@ export default new Router({
   linkActiveClass: 'current-page',
   routes: [
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
+      path: '/',
+      component: SinglePage,
+      redirect: '/login',
+      children: [
+        {
+          path: '/login',
+          name: 'Login',
+          component: Login
+        },
+        {
+          path: '/email-varify',
+          name: 'EmailVarify',
+          component: EmailVerifyResult
+        }
+      ]
     },
     {
       path: '/',
