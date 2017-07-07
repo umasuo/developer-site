@@ -6,7 +6,7 @@ import SinglePage from '@/SinglePage'
 
 import Login from '@/views/Login'
 import EmailVerifyResult from '@/views/EmailVerifyResult'
-import ResetPwdRequest from '@/views/ResetPwdRequest'
+import ResetPwd from '@/views/ResetPwd'
 import Dashboard from '@/views/Dashboard'
 
 // import DeveloperInfo from '@/views/DeveloperInfo'
@@ -47,8 +47,8 @@ export default new Router({
         },
         {
           path: 'reset-pwd',
-          name: 'ResetPwdRequest',
-          component: ResetPwdRequest
+          name: 'ResetPwd',
+          component: ResetPwd
         }
       ]
     },
