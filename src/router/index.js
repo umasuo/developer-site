@@ -6,6 +6,7 @@ import SinglePage from '@/SinglePage'
 
 import Login from '@/views/Login'
 import EmailVerifyResult from '@/views/EmailVerifyResult'
+import ResetPwdRequest from '@/views/ResetPwdRequest'
 import Dashboard from '@/views/Dashboard'
 
 // import DeveloperInfo from '@/views/DeveloperInfo'
@@ -35,14 +36,19 @@ export default new Router({
       redirect: '/login',
       children: [
         {
-          path: '/login',
+          path: 'login',
           name: 'Login',
           component: Login
         },
         {
-          path: '/email-varify',
-          name: 'EmailVarify',
+          path: 'email-varify',
+          name: 'EmailVarifyResult',
           component: EmailVerifyResult
+        },
+        {
+          path: 'reset-pwd',
+          name: 'ResetPwdRequest',
+          component: ResetPwdRequest
         }
       ]
     },
@@ -52,7 +58,7 @@ export default new Router({
       redirect: '/dashboard', // TODO: redirect to dashboard or login, according to login state.
       children: [
         {
-          path: '/dashboard',
+          path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard
         },

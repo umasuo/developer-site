@@ -7,7 +7,7 @@
           <form>
             <h1 class="eva-line-through-title">登陆</h1>
             <div>
-              <input type="text" class="form-control" placeholder="手机号码" required="" />
+              <input type="text" class="form-control" placeholder="邮箱" required="" />
             </div>
             <div>
               <input type="password" class="form-control" placeholder="密码" required="" />
@@ -15,7 +15,7 @@
             <div>
               <a class="btn btn-default submit" href="javascript:;" @click="login">登陆</a>
               <!-- TODO: router link 到"请求重置密码"页面（填写邮箱，发送重置链接；点了链接进入"重置密码"页面） -->
-              <a class="reset_pass" href="javascript:;">忘记密码？</a>
+              <router-link class="reset_pass" :to="{name: 'ResetPwdRequest'}">忘记密码？</router-link>
             </div>
 
             <div class="clearfix"></div>
@@ -43,7 +43,7 @@
           <form>
             <h1>注册账号</h1>
             <div>
-              <input type="text" class="form-control" placeholder="手机号码" required />
+              <input type="text" class="form-control" placeholder="邮箱" required />
             </div>
             <div>
               <input type="password" class="form-control" placeholder="密码" required />
