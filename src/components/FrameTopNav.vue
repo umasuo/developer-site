@@ -19,7 +19,7 @@
                 <!-- TODO: route link 到修改密码页面 -->
                 <a href="javascript:;"> 修改密码</a>
               </li>
-              <li><router-link :to="{ name: 'Login' }"><i class="fa fa-sign-out pull-right"></i> 注销</router-link></li>
+              <li><router-link :to="{ name: 'Signin' }"><i class="fa fa-sign-out pull-right"></i> 注销</router-link></li>
             </ul>
           </li>
 
@@ -88,8 +88,17 @@
 </template>
 
 <script>
+  import store from 'store'
+
   export default {
-    name: 'TopNav'
+    name: 'TopNav',
+
+    computed: {
+      verified () {
+        const session = store.get('session')
+        return session.developerView.status === 'VERIFIED'
+      }
+    }
   }
 </script>
 

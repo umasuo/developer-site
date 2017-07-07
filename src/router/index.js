@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Frame from '@/Frame'
 import SinglePage from '@/SinglePage'
 
-import Login from '@/views/Login'
+import Signin from '@/views/Signin'
 import EmailVerifyResult from '@/views/EmailVerifyResult'
 import ResetPwd from '@/views/ResetPwd'
 import Dashboard from '@/views/Dashboard'
@@ -33,12 +33,12 @@ export default new Router({
     {
       path: '/',
       component: SinglePage,
-      redirect: '/login',
+      redirect: '/signin',
       children: [
         {
-          path: 'login',
-          name: 'Login',
-          component: Login
+          path: 'signin',
+          name: 'Signin',
+          component: Signin
         },
         {
           path: 'email-varify',
