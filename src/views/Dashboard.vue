@@ -28,12 +28,12 @@
 
             <form class="form-inline">
               <div class="form-group">
-                <label>选择设备类型：
+                <label>选择产品类型：
                   <select class="form-control">
-                    <option>所有设备</option>
-                    <option>设备1</option>
-                    <option>设备2</option>
-                    <option>设备3</option>
+                    <option>所有产品</option>
+                    <option>产品1</option>
+                    <option>产品2</option>
+                    <option>产品3</option>
                   </select>
                 </label>
               </div>

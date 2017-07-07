@@ -12,6 +12,10 @@
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
               <li>
+                <!-- TODO: 只在没验证时显示 -->
+                <a href="javascript:;"> 重发验证邮件</a>
+              </li>
+              <li>
                 <!-- TODO: route link 到修改密码页面 -->
                 <a href="javascript:;"> 修改密码</a>
               </li>
