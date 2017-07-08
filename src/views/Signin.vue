@@ -12,9 +12,16 @@
             <div>
               <input type="password" class="form-control" placeholder="密码" v-model="signinData.password" required="" />
             </div>
-            <p class="text-warning" v-if="signinMsg">{{signinMsg}}</p>
+
+            <p class="text-warning" v-if="signinState === 'email not valid'">邮箱格式错误，请检查后再试</p>
+            <p class="text-warning" v-else-if="signinState === 'password not valid'">密码格式错误，至少需要8位，包含小写字母及数字</p>
+            <p class="text-warning" v-else-if="signinState === 'fetching'">请稍候...</p>
+            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 404'">用户不存在</p>
+            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 401'">邮箱或密码错误</p>
+            <p class="text-warning" v-else-if="signinState !== ''">未知错误</p>
+
             <div>
-              <button class="btn btn-default submit" type="submit" @click.prevent="signin">登陆</button>
+              <button class="btn btn-default submit" type="submit" @click.prevent="signin" :disabled="signinState === 'fetching'">登陆</button>
               <!-- TODO: router link 到"请求重置密码"页面（填写邮箱，发送重置链接；点了链接进入"重置密码"页面） -->
               <router-link class="reset_pass" :to="{name: 'ResetPwd', query: {step: 1}}">忘记密码？</router-link>
             </div>
@@ -52,9 +59,16 @@
             <div>
               <input type="password" class="form-control" placeholder="重复密码" v-model="signupData.repeatPassword" required />
             </div>
-            <p class="text-warning" v-if="registerMsg">{{registerMsg}}</p>
+
+            <p class="text-warning" v-if="registerState === 'success'">一封包含验证链接的邮件已经发送到您填写的邮箱，请查看邮件并跟随邮件内指引操作。</p>
+            <p class="text-warning" v-else-if="registerState === 'email not valid'">邮箱格式错误，请检查后再试</p>
+            <p class="text-warning" v-else-if="registerState === 'password not valid'">密码格式错误，至少需要8位，包含小写字母及数字</p>
+            <p class="text-warning" v-else-if="registerState === 'fetching'">请稍候...</p>
+            <p class="text-warning" v-else-if="registerState === 'Request failed with status code 409'">该邮箱已经注册</p>
+            <p class="text-warning" v-else-if="registerState !== ''">未知错误</p>
+
             <div>
-              <button class="btn btn-default submit" type="submit" @click.prevent="register">注册</button>
+              <button class="btn btn-default submit" type="submit" @click.prevent="register" :disabled="registerState === 'fetching'">注册</button>
             </div>
 
             <div class="clearfix"></div>
@@ -89,8 +103,8 @@
     data () {
       return {
         showRegister: false,
-        registerMsg: '',
-        signinMsg: '',
+        registerState: '',
+        signinState: '',
 
         signinData: {
           email: '',
@@ -107,54 +121,46 @@
 
     methods: {
       async signin () {
-        this.signinMsg = ''
+        this.signinState = ''
         if (!utils.validateEmail(this.signinData.email)) {
-          this.signinMsg = '邮箱格式错误，请检查后再试'
+          this.signinState = 'email not valid'
           return
         } else if (!utils.validatePassword(this.signinData.password)) {
-          this.signinMsg = '密码格式错误，至少需要8位，包含小写字母及数字'
+          this.signinState = 'password not valid'
           return
         }
 
-        this.signinMsg = '请稍候...'
+        this.signinState = 'fetching'
         try {
           await api.developer.signin(this.signinData.email, this.signinData.password)
           this.$store.commit('setDeveloper', api.client.session.developerView)
           this.$router.replace({ name: 'Dashboard' })
         } catch (e) {
-          // TODO: display different msg for errors
-          console.dir(e)
-          switch (e.message) {
-            case 'Request failed with status code 404':
-              this.signinMsg = '用户不存在'
-              break
-            case 'Request failed with status code 401':
-              this.signinMsg = '邮箱或密码错误'
-              break
-          }
+          console.dir()
+          this.signinState = e.message
         }
       },
 
       async register () {
-        this.registerMsg = ''
+        this.registerState = ''
         if (!utils.validateEmail(this.signupData.email)) {
-          this.registerMsg = '邮箱格式错误，请检查后再试'
+          this.registerState = 'email not valid'
           return
         } else if (this.signupData.password !== this.signupData.repeatPassword) {
-          this.registerMsg = '两次密码输入不一致，请检查后再试'
+          this.registerState = 'repeat password not match'
           return
         } else if (!utils.validatePassword(this.signupData.password)) {
-          this.registerMsg = '密码格式错误，至少需要8位，包含小写字母及数字'
+          this.registerState = 'password not valid'
           return
         }
 
-        this.registerMsg = '请稍候...'
+        this.registerState = 'fetching'
         try {
           await api.developer.signup(this.signupData.email, this.signupData.password)
-          this.registerMsg = '一封包含验证链接的邮件已经发送到您填写的邮箱，请查看邮件并跟随邮件内指引操作。'
+          this.registerState = 'success'
         } catch (e) {
-          // TODO: display different msg for errors
-          this.signinMsg = '登陆失败'
+          console.dir(e)
+          this.registerState = e.message
         }
       }
     },
