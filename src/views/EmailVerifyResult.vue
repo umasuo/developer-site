@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  import api from 'src/api'
+
   export default {
     name: 'EmailVerifyResult',
 
@@ -23,8 +25,9 @@
         // result query param should be one of: success, failed
         const verifyResult = this.$route.query.result
 
-        if (verifyResult) {
-          return verifyResult
+        if (verifyResult === 'success') {
+          api.developer.signout()
+          return 'success'
         } else {
           return 'failed'
         }

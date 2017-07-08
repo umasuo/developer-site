@@ -49,7 +49,8 @@
 </template>
 
 <script>
-  import api from '@/api'
+  import api from 'src/api'
+
   export default {
     name: 'ResetPwd',
 
@@ -96,12 +97,8 @@
         }
 
         try {
-          const data = {
-            developerId: this.$route.query.developerId,
-            token: this.$route.query.token,
-            newPassword: this.reset.password
-          }
-          await api.developer.resetEmail(data)
+          await api.developer.resetPassword(this.$route.query.developerId, this.$route.query.token, this.reset.password)
+          api.developer
           this.reset.state = 'success'
         } catch (e) {
           console.dir(e)

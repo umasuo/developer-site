@@ -1,5 +1,5 @@
-import client from '@/api/client'
-import developer from '@/api/developer'
+import client from 'src/api/client'
+import developer from 'src/api/developer'
 
 export default {
   client, // config the axios http library & store api state and persist them in localstorage

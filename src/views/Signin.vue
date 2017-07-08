@@ -80,8 +80,8 @@
 </template>
 
 <script>
-  import utils from '@/utils'
-  import api from '@/api'
+  import utils from 'src/utils'
+  import api from 'src/api'
 
   export default {
     name: 'Signin',
@@ -119,6 +119,7 @@
         this.signinMsg = '请稍候...'
         try {
           await api.developer.signin(this.signinData.email, this.signinData.password)
+          this.$store.commit('setDeveloper', api.client.session.developerView)
           this.$router.replace({ name: 'Dashboard' })
         } catch (e) {
           // TODO: display different msg for errors

@@ -16,4 +16,4 @@ export default {
 }
 </script>
 
-<style src="@/scss/main.scss" lang="scss"></style>
+<style src="src/scss/main.scss" lang="scss"></style>

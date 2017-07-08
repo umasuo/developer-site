@@ -1,5 +1,5 @@
-import client, { http } from '@/api/client'
-import utils from '@/utils'
+import client, { http } from 'src/api/client'
+import utils from 'src/utils'
 
 function validateCertificate (email, password) {
   if (!utils.validatePassword(password)) {
@@ -34,8 +34,32 @@ export default {
     client.setSession(signinResponse.data)
   },
 
-  resentVerifyEmail (developerId) {
+  signout () {
+    try {
+      http.delete(`developers/${client.session.developerView.id}/signout`)
+    } catch (e) {
+      // Something wrong when signout, app should still run properly
+    }
+    client.setSession()
+  },
 
+  async reverifyEmail (developerId) {
+    await http.post(`developers/${developerId}/verify`)
+  },
+
+  async changePassword (oldPassword, newPassword) {
+    const data = {
+      version: client.session.developerView.version,
+      actions: [
+        {
+          action: 'changePassword',
+          oldPassword,
+          newPassword
+        }
+      ]
+    }
+    const developerView = (await http.put('developers/' + client.session.developerView.id, data)).data
+    client.setDeveloper(developerView)
   },
 
   async requestResetEmail (email) {
@@ -49,11 +73,16 @@ export default {
     await http.post('developers/reset-password', queryParams)
   },
 
-  async resetEmail (data) {
-    if (!utils.validatePassword(data.newPassword)) {
+  async resetPassword (id, pwd, token) {
+    if (!utils.validatePassword(pwd)) {
       throw new Error('password not valid')
     }
 
+    const data = {
+      developerId: id,
+      token: token,
+      newPassword: pwd
+    }
     await http.put('developers/reset-password', data)
   }
 }

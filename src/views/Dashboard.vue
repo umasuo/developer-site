@@ -134,9 +134,9 @@
 </template>
 
 <script>
-  import LineChart from '@/components/common/LineChart'
-  import TabPanel from '@/components/common/TabPanel'
-  import TabPanelItem from '@/components/common/TabPanelItem'
+  import LineChart from 'src/components/common/LineChart'
+  import TabPanel from 'src/components/common/TabPanel'
+  import TabPanelItem from 'src/components/common/TabPanelItem'
 
   export default {
     name: 'Dashboard',

@@ -119,8 +119,8 @@
 
 <script>
   import $ from 'jquery'
-  import ProductDefinitionRow from '@/components/ProductDefinitionRow'
-  import ProductCreate from '@/components/ProductCreate'
+  import ProductDefinitionRow from 'src/components/ProductDefinitionRow'
+  import ProductCreate from 'src/components/ProductCreate'
 
   export default {
     name: 'ProductDefinitions',

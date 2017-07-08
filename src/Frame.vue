@@ -70,8 +70,8 @@
 </template>
 
 <script>
-  import NavMenu from '@/components/FrameNavMenu'
-  import TopNav from '@/components/FrameTopNav'
+  import NavMenu from 'src/components/FrameNavMenu'
+  import TopNav from 'src/components/FrameTopNav'
 
   export default {
     name: 'Frame',

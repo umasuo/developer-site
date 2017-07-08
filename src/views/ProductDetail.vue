@@ -214,14 +214,14 @@
 
 <script>
   import $ from 'jquery'
-  import ProductStdFuncManager from '@/components/ProductStdFuncManager'
-  import ProductBasicInfo from '@/components/ProductBasicInfo'
-  import ProductStdFunc from '@/components/ProductStdFunc'
-  import ProductCustomFunc from '@/components/ProductCustomFunc'
-  import ProductData from '@/components/ProductData'
-  import ProductFuncEditor from '@/components/ProductFuncEditor'
-  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
-  import WizardSteps from '@/components/common/WizardSteps'
+  import ProductStdFuncManager from 'src/components/ProductStdFuncManager'
+  import ProductBasicInfo from 'src/components/ProductBasicInfo'
+  import ProductStdFunc from 'src/components/ProductStdFunc'
+  import ProductCustomFunc from 'src/components/ProductCustomFunc'
+  import ProductData from 'src/components/ProductData'
+  import ProductFuncEditor from 'src/components/ProductFuncEditor'
+  import DataDefinitionEditor from 'src/components/DataDefinitionEditor'
+  import WizardSteps from 'src/components/common/WizardSteps'
 
   export default {
     name: 'ProductDetail',

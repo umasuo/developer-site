@@ -1096,22 +1096,22 @@ table.dataTable td.focus {
   margin-left: 10px;
 }
 .paginate_disabled_previous {
-  background: url('~@/assets/imgs/back_disabled.png') no-repeat top left;
+  background: url('~src/assets/imgs/back_disabled.png') no-repeat top left;
 }
 .paginate_enabled_previous {
-  background: url('~@/assets/imgs/back_enabled.png') no-repeat top left;
+  background: url('~src/assets/imgs/back_enabled.png') no-repeat top left;
 }
 .paginate_enabled_previous:hover {
-  background: url('~@/assets/imgs/back_enabled_hover.png') no-repeat top left;
+  background: url('~src/assets/imgs/back_enabled_hover.png') no-repeat top left;
 }
 .paginate_disabled_next {
-  background: url('~@/assets/imgs/forward_disabled.png') no-repeat top right;
+  background: url('~src/assets/imgs/forward_disabled.png') no-repeat top right;
 }
 .paginate_enabled_next {
-  background: url('~@/assets/imgs/forward_enabled.png') no-repeat top right;
+  background: url('~src/assets/imgs/forward_enabled.png') no-repeat top right;
 }
 .paginate_enabled_next:hover {
-  background: url('~@/assets/imgs/forward_enabled_hover.png') no-repeat top right;
+  background: url('~src/assets/imgs/forward_enabled_hover.png') no-repeat top right;
 }
 table.display {
   margin: 0 auto;
@@ -3285,7 +3285,7 @@ ul.project_files li a i {
   right: 0;
   bottom: 0;
   left: 0;
-  background: #fff url("~@/assets/imgs/loading.gif") no-repeat center center;
+  background: #fff url("~src/assets/imgs/loading.gif") no-repeat center center;
   opacity: .75;
   filter: alpha(opacity=75);
   z-index: 20140628;

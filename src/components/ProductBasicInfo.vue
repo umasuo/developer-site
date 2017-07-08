@@ -96,7 +96,7 @@
 </template>
 
 <script>
-  import ImageUploader from '@/components/common/ImageUploader'
+  import ImageUploader from 'src/components/common/ImageUploader'
 
   export default {
     name: 'ProductBasicInfo',

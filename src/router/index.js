@@ -1,32 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import api from 'src/api'
 
-import Frame from '@/Frame'
-import SinglePage from '@/SinglePage'
+import Frame from 'src/Frame'
+import SinglePage from 'src/SinglePage'
 
-import Signin from '@/views/Signin'
-import EmailVerifyResult from '@/views/EmailVerifyResult'
-import ResetPwd from '@/views/ResetPwd'
-import Dashboard from '@/views/Dashboard'
+import Signin from 'src/views/Signin'
+import EmailVerifyResult from 'src/views/EmailVerifyResult'
+import ResetPwd from 'src/views/ResetPwd'
+import Dashboard from 'src/views/Dashboard'
 
-// import DeveloperInfo from '@/views/DeveloperInfo'
-import DeveloperPassword from '@/views/DeveloperPassword'
+// import DeveloperInfo from 'src/views/DeveloperInfo'
+import DeveloperPassword from 'src/views/DeveloperPassword'
 
-import ProductDefinitions from '@/views/ProductDefinitions'
-import ProductDetail from '@/views/ProductDetail'
-import DeviceManager from '@/views/DeviceManager'
+import ProductDefinitions from 'src/views/ProductDefinitions'
+import ProductDetail from 'src/views/ProductDetail'
+import DeviceManager from 'src/views/DeviceManager'
 
-// import DataDefinitions from '@/views/DataDefinitions'
-// import DataSummary from '@/views/DataSummary'
-// import DataProcessor from '@/views/DataProcessor'
+// import DataDefinitions from 'src/views/DataDefinitions'
+// import DataSummary from 'src/views/DataSummary'
+// import DataProcessor from 'src/views/DataProcessor'
 
-import UserManager from '@/views/UserManager'
-import FeedbackManager from '@/views/FeedbackManager'
-import MessageManager from '@/views/MessageManager'
+import UserManager from 'src/views/UserManager'
+import FeedbackManager from 'src/views/FeedbackManager'
+import MessageManager from 'src/views/MessageManager'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   linkActiveClass: 'current-page',
   routes: [
@@ -38,17 +39,26 @@ export default new Router({
         {
           path: 'signin',
           name: 'Signin',
-          component: Signin
+          component: Signin,
+          meta: {
+            requiresAuth: false
+          }
         },
         {
           path: 'email-varify',
           name: 'EmailVarifyResult',
-          component: EmailVerifyResult
+          component: EmailVerifyResult,
+          meta: {
+            requiresAuth: false
+          }
         },
         {
           path: 'reset-pwd',
           name: 'ResetPwd',
-          component: ResetPwd
+          component: ResetPwd,
+          meta: {
+            requiresAuth: false
+          }
         }
       ]
     },
@@ -60,23 +70,35 @@ export default new Router({
         {
           path: 'dashboard',
           name: 'Dashboard',
-          component: Dashboard
+          component: Dashboard,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'manage-devices',
           name: 'ManageDevices',
-          component: DeviceManager
+          component: DeviceManager,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'product-definitions',
           name: 'ProductDefinitions',
-          component: ProductDefinitions
+          component: ProductDefinitions,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'product-definitions/:pid',
           name: 'ProductDetail',
           component: ProductDetail,
-          props: true // decouple component from route
+          props: true, // decouple component from route
+          meta: {
+            requiresAuth: true
+          }
         },
         // {
         //   path: 'data-summary',
@@ -102,24 +124,50 @@ export default new Router({
         {
           path: 'developer-password',
           name: 'DeveloperPassword',
-          component: DeveloperPassword
+          component: DeveloperPassword,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'user-manager',
           name: 'UserManager',
-          component: UserManager
+          component: UserManager,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'feedback-manager',
           name: 'FeedbackManager',
-          component: FeedbackManager
+          component: FeedbackManager,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'message',
           name: 'MessageManager',
-          component: MessageManager
+          component: MessageManager,
+          meta: {
+            requiresAuth: true
+          }
         }
       ]
     }
   ]
 })
+
+router.beforeEach((to, form, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!api.client.isAuthorized) {
+      next({name: 'Signin'})
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

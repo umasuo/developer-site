@@ -35,7 +35,7 @@
 
 <script>
   import $ from 'jquery'
-  import ProductFuncEditor from '@/components/ProductFuncEditor'
+  import ProductFuncEditor from 'src/components/ProductFuncEditor'
 
   export default {
     name: 'ProductStdFunc',

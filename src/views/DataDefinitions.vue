@@ -54,8 +54,8 @@
 
 <script>
   import $ from 'jquery'
-  import DataDefinitionEditor from '@/components/DataDefinitionEditor'
-  import DataDefinitionRow from '@/components/DataDefinitionRow'
+  import DataDefinitionEditor from 'src/components/DataDefinitionEditor'
+  import DataDefinitionRow from 'src/components/DataDefinitionRow'
 
   export default {
     name: 'DataDefinitions',
