@@ -117,8 +117,21 @@
         }
 
         this.signinMsg = '请稍候...'
-        await api.DeveloperController.signin(this.signinData.email, this.signinData.password)
-        this.$router.replace({ name: 'Dashboard' })
+        try {
+          await api.developer.signin(this.signinData.email, this.signinData.password)
+          this.$router.replace({ name: 'Dashboard' })
+        } catch (e) {
+          // TODO: display different msg for errors
+          console.dir(e)
+          switch (e.message) {
+            case 'Request failed with status code 404':
+              this.signinMsg = '用户不存在'
+              break
+            case 'Request failed with status code 401':
+              this.signinMsg = '邮箱或密码错误'
+              break
+          }
+        }
       },
 
       async register () {
@@ -135,8 +148,13 @@
         }
 
         this.registerMsg = '请稍候...'
-        await api.developer.signup(this.signupData.email, this.signupData.password)
-        this.registerMsg = '一封包含验证链接的邮件已经发送到您填写的邮箱，请查看邮件并跟随邮件内指引操作。'
+        try {
+          await api.developer.signup(this.signupData.email, this.signupData.password)
+          this.registerMsg = '一封包含验证链接的邮件已经发送到您填写的邮箱，请查看邮件并跟随邮件内指引操作。'
+        } catch (e) {
+          // TODO: display different msg for errors
+          this.signinMsg = '登陆失败'
+        }
       }
     },
 
