@@ -73,7 +73,7 @@
                 </tr>
               </thead>
               <tbody>
-                <ProductDefinitionRow v-for="product in products" :product="product"></ProductDefinitionRow>
+                <ProductDefinitionRow v-for="product in products" :product="product" :key="product.id"></ProductDefinitionRow>
               </tbody>
             </table>
 

@@ -26,7 +26,8 @@
       {{ product.status }}
     </td>
     <td style="width: 100px;">
-      <router-link :to="{ name: 'ProductDetail', params: { pid: '123' } }" href="javascript:;">编辑</router-link>
+      <router-link :to="{ name: 'ProductDetail', params: { pid: product.id } }" href="javascript:;">编辑</router-link>
+      <!-- TODO: confirm delete dialog -->
       <a href="javascript:;" @click="deleteProduct(product)">删除</a>
     </td>
   </tr>
