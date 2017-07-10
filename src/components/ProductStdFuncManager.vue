@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade data-editor" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade data-editor" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -9,34 +9,21 @@
           <h4 class="modal-title">管理标准功能</h4>
         </div>
         <div class="modal-body">
+
           <div class="form-inline">
-            <div class="checkbox eva-std-func-checkbox">
+            <div class="checkbox eva-std-func-checkbox" v-for="stdFunc in availableFuncs">
               <label>
-                <input type="checkbox"> 开关
+                <input type="checkbox" v-model="selectedFuncs" :value="stdFunc.id"> {{ stdFunc.name }}
               </label>
             </div>
-
-            <div class="checkbox eva-std-func-checkbox">
-              <label>
-                <input type="checkbox"> 工作状态
-              </label>
-            </div>
-
-            <div class="checkbox eva-std-func-checkbox">
-              <label>
-                <input type="checkbox"> 负离子
-              </label>
-            </div>
-
-            <div class="checkbox eva-std-func-checkbox">
-              <label>
-                <input type="checkbox"> 目标温度
-              </label>
+            <div v-if="availableFuncs.length === 0">
+              <p class="text-warning text-center">没有可用的标准功能</p>
             </div>
           </div>
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">确定</button>
+          <button type="submit" class="btn btn-primary" @click.prevent="selectStdFuncs">确定</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         </div>
 
@@ -46,8 +33,55 @@
 </template>
 
 <script>
+  import $ from 'jquery'
+  import api from 'src/api'
+  import { mapActions } from 'vuex'
+
   export default {
-    name: 'ProductStdFuncManager'
+    name: 'ProductStdFuncManager',
+
+    props: ['product', 'productType'],
+
+    data () {
+      return {
+        selectedFuncs: []
+      }
+    },
+
+    computed: {
+      availableFuncs () {
+        const usedFunctionIds = this.product.functions.map(func => {
+          return func.functionId
+        })
+
+        return this.productType.functions.filter(typeFunc => {
+          return !usedFunctionIds.includes(typeFunc.functionId)
+        })
+      }
+    },
+
+    methods: {
+      ...mapActions(['updateProduct']),
+
+      async selectStdFuncs () {
+        if (this.selectedFuncs.length === 0) {
+          $(this.$refs.modal).modal('hide')
+          return
+        }
+
+        try {
+          await this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction({action: 'copyFunction', functionIds: this.selectedFuncs})
+                        .request
+          })
+          $(this.$refs.modal).modal('hide')
+        } catch (e) {
+          // TODO: handle errors
+        }
+      }
+    }
   }
 </script>
 

@@ -159,8 +159,8 @@
         const updateAction =
           // elegant way to get a subset of a object
           // https://stackoverflow.com/a/39333479/2202891
-          (({name, description, icon, openable, type, firmwareVersion, model, wifiModel}) =>
-          ({action: 'updateProduct', name, description, icon, openable, type, firmwareVersion, model, wifiModel}))(this.productBasicInfo)
+          (({name, description, icon, openable, type, firmwareVersion, model, wifiModule}) =>
+          ({action: 'updateProduct', name, description, icon, openable, type, firmwareVersion, model, wifiModule}))(this.productBasicInfo)
 
         this.updateProduct({
           product: this.product,

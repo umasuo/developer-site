@@ -12,12 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">2</th>
-        <td>工作模式</td>
+      <tr v-for="func in product.functions">
+        <th scope="row">{{ func.functionId }}</th>
+        <td>{{ func.name }}</td>
         <td>Mode</td>
-        <td>可下发可上报</td>
-        <td>枚举型</td>
+        <td>{{ func.transferType }}</td>
+        <td>{{ func.dataType.type }}</td>
+        <!-- TODO: need to make a computed property for this field -->
         <td>枚举值auto, manual, smart, ECO</td>
         <td>
           <a href="javascript:;" @click="showEditor">编辑</a>
@@ -26,7 +27,7 @@
             <ProductFuncEditor mode="standard" ref="editor"></ProductFuncEditor>
           </portal>
 
-          <a href="javascript:;">删除</a>
+          <a href="javascript:;" @click="removeFunction(func.id)">删除</a>
         </td>
       </tr>
     </tbody>
@@ -35,10 +36,14 @@
 
 <script>
   import $ from 'jquery'
+  import api from 'src/api'
+  import { mapActions } from 'vuex'
   import ProductFuncEditor from 'src/components/ProductFuncEditor'
 
   export default {
     name: 'ProductStdFunc',
+
+    props: ['product'],
 
     data () {
       return {
@@ -46,7 +51,13 @@
       }
     },
 
+    created () {
+      console.dir(this.product)
+    },
+
     methods: {
+      ...mapActions(['updateProduct']),
+
       showEditor () {
         const vm = this
         this.isShowingEditor = true
@@ -55,6 +66,15 @@
             vm.isShowingEditor = false
           })
         }, 0)
+      },
+
+      removeFunction (functionId) {
+        this.updateProduct({
+          product: this.product,
+          request: api.buildRequest(this.product.version)
+                      .addAction({ action: 'removeFunction', functionIds: [functionId] })
+                      .request
+        })
       }
     },
 

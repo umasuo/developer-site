@@ -82,14 +82,14 @@
               <button class="btn btn-xs btn-primary" @click="showStdFuncManager">管理</button>
             </h2>
 
-            <portal to="modals" v-if="isShowingStdFuncManager">
-              <ProductStdFuncManager ref="stdFuncManager"></ProductStdFuncManager>
+            <portal to="modals" v-if="isShowingStdFuncManager && productType">
+              <ProductStdFuncManager ref="stdFuncManager" :product="product" :productType="productType"></ProductStdFuncManager>
             </portal>
 
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <ProductStdFunc></ProductStdFunc>
+            <ProductStdFunc v-if="product" :product="product"></ProductStdFunc>
           </div>
         </div>
       </div>
@@ -246,15 +246,20 @@
     computed: {
       product () {
         return this.$store.getters.getProductById(this.pid)
+      },
+
+      productType () {
+        return this.$store.getters.getProductTypeById(this.product.productTypeId)
       }
     },
 
     created () {
       this.fetchProducts()
+      this.fetchProductTypes()
     },
 
     methods: {
-      ...mapActions(['fetchProducts']),
+      ...mapActions(['fetchProducts', 'fetchProductTypes']),
 
       showStdFuncManager () {
         const vm = this
