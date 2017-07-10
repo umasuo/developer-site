@@ -4,6 +4,29 @@ import product from 'src/api/product'
 
 export default {
   client, // config the axios http library & store api state and persist them in localstorage
+  buildRequest (version) {
+    class RequestBuilder {
+      _request = {
+        version: undefined,
+        actions: []
+      }
+
+      constructor (version) {
+        this._request.version = version
+      }
+
+      addAction (data) {
+        this._request.actions.push(data)
+        return this
+      }
+
+      get request () {
+        return this._request
+      }
+    }
+
+    return new RequestBuilder(version)
+  },
 
   // api endpoints import http (axios instance) from Client, set and get state to Client,
   developer,

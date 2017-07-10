@@ -36,29 +36,8 @@
             <p class="eva-line-through"><span>或快速创建</span></p>
 
             <ul class="eva-quick-prod">
-              <li>
-                <a href="javascript:;" @click="createProd('开关')">开关</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('电灯')">电灯</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('手环')">手环</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('空调')">空调</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('计步器')">计步器</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('体重计')">体重计</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('平衡车')">平衡车</a>
-              </li>
-              <li>
-                <a href="javascript:;" @click="createProd('空气净化器')">空气净化器</a>
+              <li v-for="productType in recommandProductTypes">
+                <a href="javascript:;" @click="createProd(productType)">{{productType.name}}</a>
               </li>
             </ul>
 
@@ -106,7 +85,7 @@
               </tr>
               </thead>
               <tbody>
-                <ProductDefinitionRow></ProductDefinitionRow>
+                <!--<ProductDefinitionRow v-for="product in products"></ProductDefinitionRow>-->
               </tbody>
             </table>
 
@@ -118,6 +97,7 @@
 </template>
 
 <script>
+  import { mapActions, mapState, mapGetters } from 'vuex'
   import $ from 'jquery'
   import ProductDefinitionRow from 'src/components/ProductDefinitionRow'
   import ProductCreate from 'src/components/ProductCreate'
@@ -131,8 +111,25 @@
       }
     },
 
+    created () {
+      this.fetchProductTypes()
+      this.fetchProducts()
+    },
+
+    computed: {
+      ...mapState(['productTypes']),
+      ...mapGetters(['categorizedProductTypes']),
+
+      recommandProductTypes () {
+        if (!this.categorizedProductTypes || !this.categorizedProductTypes['大家电']) return []
+        return this.categorizedProductTypes['大家电']
+      }
+    },
+
     methods: {
-      createProd (type = '') {
+      ...mapActions(['fetchProductTypes', 'fetchProducts']),
+
+      createProd (type) {
         this.isShowCreateModal = true
         const vm = this
         setTimeout(() => {

@@ -39,7 +39,7 @@
     <div :class="step === 1 ? 'col-xs-12' : 'col-xs-4'">
       <div class="x_panel">
         <div class="x_content">
-          <ProductBasicInfo></ProductBasicInfo>
+          <ProductBasicInfo :product="product"></ProductBasicInfo>
         </div>
       </div>
 
@@ -214,6 +214,7 @@
 
 <script>
   import $ from 'jquery'
+  import { mapActions } from 'vuex'
   import ProductStdFuncManager from 'src/components/ProductStdFuncManager'
   import ProductBasicInfo from 'src/components/ProductBasicInfo'
   import ProductStdFunc from 'src/components/ProductStdFunc'
@@ -226,6 +227,13 @@
   export default {
     name: 'ProductDetail',
 
+    props: {
+      pid: {
+        type: String,
+        required: true
+      }
+    },
+
     data () {
       return {
         isShowingStdFuncManager: false,
@@ -235,7 +243,19 @@
       }
     },
 
+    computed: {
+      product () {
+        return this.$store.getters.getProductById(this.pid)
+      }
+    },
+
+    created () {
+      this.fetchProducts()
+    },
+
     methods: {
+      ...mapActions(['fetchProducts']),
+
       showStdFuncManager () {
         const vm = this
         this.isShowingStdFuncManager = true
@@ -264,13 +284,6 @@
             vm.isShowingDataDefinition = false
           })
         })
-      }
-    },
-
-    props: {
-      pid: {
-        required: true,
-        type: String
       }
     },
 

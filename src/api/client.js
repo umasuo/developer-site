@@ -2,7 +2,7 @@ import axios from 'axios'
 import storejs from 'store'
 
 export const http = axios.create({
-  baseURL: 'http://192.168.1.46:8804/v1/',
+  baseURL: 'http://192.168.1.46:8805/v1/',
   timeout: 5000
 })
 

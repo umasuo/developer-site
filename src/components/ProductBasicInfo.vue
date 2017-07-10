@@ -1,28 +1,45 @@
 <template>
-  <div>
+  <div v-if="product">
     <template v-if="state === 'viewer'">
       <div class="eva-product-basic-info-media">
-        <img class="eva-product-basic-info-media__media" src="http://fakeimg.pl/64x64/">
+        <img class="eva-product-basic-info-media__media" :src="product.icon">
 
         <div class="eva-product-basic-info-media__content">
-          <h3>产品名 <button class="btn btn-xs btn-default" @click="state = 'editor'">编辑产品信息</button></h3>
+          <h3>{{ product.name }} <button class="btn btn-xs btn-default" @click="state = 'editor'">编辑产品信息</button></h3>
 
           <p>
-            <span class="label label-default">PID: 123</span>
-            <span class="label label-default">类型: 冰箱</span>
-            <span class="label label-default">传输类型: WIFI</span>
-            <span class="label label-default">状态: 开发中</span>
+            <span class="label label-default">PID: {{ product.id }}</span>
+            <span class="label label-default" v-if="productType">类型: {{ productType.name }}</span>
+            <span class="label label-default">传输类型: {{ product.type }}</span>
+            <span class="label label-default">状态: {{ product.status }}</span>
           </p>
         </div>
       </div>
 
       <dl>
-        <dt>产品型号:</dt>
-        <dd>未设置</dd>
-        <dt>模组型号:</dt>
-        <dd>未设置</dd>
-        <dt>产品备注:</dt>
-        <dd>无</dd>
+        <template>
+          <dt>产品型号:</dt>
+          <dd v-if="product.model">{{ product.model }}</dd>
+          <dd v-else>未设置</dd>
+        </template>
+
+        <template>
+          <dt>固件版本:</dt>
+          <dd v-if="product.firmwareVersion">{{ product.firmwareVersion }}</dd>
+          <dd v-else>未设置</dd>
+        </template>
+
+        <template>
+          <dt>模组型号:</dt>
+          <dd v-if="product.wifiModule">{{ product.wifiModule }}</dd>
+          <dd v-else>未设置</dd>
+        </template>
+
+        <template>
+          <dt>产品备注:</dt>
+          <dd v-if="product.description">{{ product.description }}</dd>
+          <dd v-else>无</dd>
+        </template>
       </dl>
     </template>
 
@@ -31,77 +48,88 @@
         <div class="form-group">
           <label class="control-label col-xs-3">图标：</label>
           <div class="col-xs-9">
-            <ImageUploader imgSrc="http://fakeimg.pl/64x64/"></ImageUploader>
+            <!-- TODO: 上传图片 -->
+            <ImageUploader :imgSrc="productBasicInfo.icon"></ImageUploader>
           </div>
         </div>
 
         <div class="form-group">
           <label class="control-label col-xs-3">产品名：</label>
           <div class="col-xs-9">
-            <input class="form-control" type="text" value="产品名">
+            <input class="form-control" type="text" v-model="productBasicInfo.name">
           </div>
         </div>
 
         <div class="form-group">
           <label class="control-label col-xs-3">类型：</label>
           <div class="col-xs-9 eva-product-basic-info-editor__readonly">
-            冰箱
+            {{ productType.name }}
           </div>
         </div>
 
         <div class="form-group">
           <label class="control-label col-xs-3">PID：</label>
           <div class="col-xs-9 eva-product-basic-info-editor__readonly">
-            123
+            {{ productBasicInfo.id }}
           </div>
         </div>
 
         <div class="form-group">
           <label class="control-label col-xs-3">传输类型：</label>
           <div class="col-xs-9 eva-product-basic-info-editor__readonly">
-            WIFI
+            {{ productBasicInfo.type }}
           </div>
         </div>
 
         <div class="form-group">
           <label class="control-label col-xs-3">产品型号：</label>
           <div class="col-xs-9">
-            <input class="form-control" type="text" placeholder="可按产品实际型号输入">
+            <input class="form-control" type="text" v-model="productBasicInfo.model" placeholder="可按产品实际型号输入">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-xs-3">产品型号：</label>
+          <label class="control-label col-xs-3">固件版本：</label>
           <div class="col-xs-9">
-            <select class="form-control">
-              <option value="">ABC-01</option>
-              <option value="">ABC-02</option>
-              <option value="">ABC-03</option>
+            <input class="form-control" type="text" v-model="productBasicInfo.firmwareVersion" placeholder="请填写产品的固件版本信息">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-xs-3">模组型号：</label>
+          <div class="col-xs-9">
+            <select class="form-control"  v-model="productBasicInfo.wifiModule">
+              <option value="null">未设置</option>
+              <option value="1">ABC-01</option>
+              <option value="2">ABC-02</option>
+              <option value="3">ABC-03</option>
             </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-xs-3">产品型号：</label>
+          <label class="control-label col-xs-3">产品备注：</label>
           <div class="col-xs-9">
-            <input class="form-control" type="text" placeholder="如产品特点，销售地区，创建人等">
+            <input class="form-control" type="text" v-model="productBasicInfo.description" placeholder="如产品特点，销售地区，创建人等">
           </div>
         </div>
 
-        <button class="btn btn-primary" @click.prevent="updateAndBackToViewer">保存</button>
-        <button class="btn btn-default" @click.prevent="state = 'viewer'">取消</button>
+        <button type="submit" class="btn btn-primary" @click.prevent="updateAndBackToViewer">保存</button>
+        <button type="button" class="btn btn-default" @click.prevent="state = 'viewer'">取消</button>
       </form>
     </template>
   </div>
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import api from 'src/api'
   import ImageUploader from 'src/components/common/ImageUploader'
 
   export default {
     name: 'ProductBasicInfo',
 
-    props: ['value'],
+    props: ['product'],
 
     data () {
       return {
@@ -110,16 +138,36 @@
     },
 
     computed: {
+      productType () {
+        return this.$store.getters.getProductTypeById(this.product.productTypeId)
+      },
+
       productBasicInfo () {
-        return Object.assign({}, this.value)
+        return Object.assign({}, this.product)
       }
     },
 
-    methods: {
-      updateAndBackToViewer () {
-        this.productBasicInfo = {}
-        this.$emit('input', this.productBasicInfo)
+    created () {
+      this.fetchProductTypes()
+      this.fetchProducts()
+    },
 
+    methods: {
+      ...mapActions(['fetchProductTypes', 'fetchProducts', 'updateProduct']),
+
+      updateAndBackToViewer () {
+        const updateAction =
+          // a super elegant way to get a subset of a object
+          // https://stackoverflow.com/a/39333479/2202891
+          (({name, description, icon, openable, type, firmwareVersion, model, wifiModel}) =>
+          ({action: 'updateProduct', name, description, icon, openable, type, firmwareVersion, model, wifiModel}))(this.productBasicInfo)
+
+        this.updateProduct({
+          product: this.product,
+          request: api.buildRequest(this.product.version)
+                      .addAction(updateAction)
+                      .request
+        })
         this.state = 'viewer'
       }
     },
