@@ -62,30 +62,18 @@
 
             <table class="table">
               <thead>
-              <!--<tr>-->
-                <!--<th>产品icon</th>-->
-                <!--<th>产品名称</th>-->
-                <!--<th>产品类型</th>-->
-                <!--<th>产品介绍</th>-->
-                <!--<th>联网类型</th>-->
-                <!--<th>是否开放</th>-->
-                <!--<th>功能定义</th>-->
-                <!--<th>数据定义</th>-->
-                <!--<th>产品状态</th>-->
-                <!--<th>操作</th>-->
-              <!--</tr>-->
-              <tr>
-                <th>图标</th>
-                <th>名称</th>
-                <th>类型</th>
-                <th>介绍</th>
-                <th>联网类型</th>
-                <th>状态</th>
-                <th>操作</th>
-              </tr>
+                <tr>
+                  <th>图标</th>
+                  <th>名称</th>
+                  <th>类型</th>
+                  <th>介绍</th>
+                  <th>联网类型</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
               </thead>
               <tbody>
-                <!--<ProductDefinitionRow v-for="product in products"></ProductDefinitionRow>-->
+                <ProductDefinitionRow v-for="product in products" :product="product"></ProductDefinitionRow>
               </tbody>
             </table>
 
@@ -117,7 +105,7 @@
     },
 
     computed: {
-      ...mapState(['productTypes']),
+      ...mapState(['productTypes', 'products']),
       ...mapGetters(['categorizedProductTypes']),
 
       recommandProductTypes () {

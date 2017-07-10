@@ -37,6 +37,11 @@ const mutations = {
     // next two line is fine, see https://vuejs.org/v2/guide/list.html#Mutation-Methods for more detail
     // Vue.set(state.products, index, newProduct)
     state.products.splice(index, 1, newProduct)
+  },
+
+  deleteProduct (state, product) {
+    const index = state.products.indexOf(product)
+    state.products.splice(index, 1)
   }
 }
 
@@ -67,6 +72,11 @@ const actions = {
     const updatedProduct = await api.product.updateProduct(product.id, request)
     commit('updateProduct', {oldProduct: product, newProduct: updatedProduct})
     return updatedProduct
+  },
+
+  async deleteProduct ({state, commit}, product) {
+    await api.product.deleteProduct(product.id, product.version)
+    commit('deleteProduct', product)
   }
 }
 

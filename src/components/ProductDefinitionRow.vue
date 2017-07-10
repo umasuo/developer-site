@@ -1,48 +1,76 @@
 <template>
-  <tr>
-    <td>
-      <img src="http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png"></img>
+  <tr class="eva-product-definition-row">
+    <td class="eva-product-definition-row__icon" style="width: 50px;">
+      <img :src="product.icon"></img>
     </td>
-    <td>
-      产品名1
+    <td style="width: 200px;">
+      {{ product.name }}
     </td>
+
+    <template>
+      <td style="width: 80px;" v-if="productType">
+        {{ productType.name }}
+      </td>
+      <td style="width: 80px;" v-else>加载中...</td>
+    </template>
+
     <td>
-      手环
+      <div class="eva-product-definition-row__desc">
+        {{ product.description }} asdfasdfasdfasdfasdfa sdfasdfasdfas dfasdfadsfasdfasdfadaf sdasdfasdfasdfasdfas dfasdfasdfasd fasdfasdfasdfa dsfasdfasdfada fsdasdfasdfa sdfasdfasdfasdfasdfas dfasdfasdfasdfadsfasdfasdfadafsdasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfasdfasdfadafsdasdf
+      </div>
     </td>
-    <td>
-      产品介绍产品介绍产品介绍产品介绍。
+    <td style="width: 80px;">
+      {{ product.type }}
     </td>
-    <td>
-      WIFI
+    <td style="width: 80px;">
+      {{ product.status }}
     </td>
-    <td>
-       上线
-    </td>
-    <td>
+    <td style="width: 100px;">
       <router-link :to="{ name: 'ProductDetail', params: { pid: '123' } }" href="javascript:;">编辑</router-link>
-      <a href="javascript:;">删除</a>
+      <a href="javascript:;" @click="deleteProduct(product)">删除</a>
     </td>
   </tr>
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
-    name: 'ProductDefinitionRow'
+    name: 'ProductDefinitionRow',
+
+    props: ['product'],
+
+    computed: {
+      productType () {
+        return this.$store.getters.getProductTypeById(this.product.productTypeId)
+      }
+    },
+
+    created () {
+      this.fetchProductTypes()
+    },
+
+    methods: {
+      ...mapActions(['fetchProductTypes', 'deleteProduct'])
+    }
   }
 </script>
 
 <style lang="scss">
-  .product-row {
-    &__name {
-      border: solid white 1px;
+  .eva-product-definition-row {
+    width: 100%;
 
-      &:hover {
-        border-color: lightgray;
+    &__icon {
+      padding: 4px !important;
+      img {
+        height: 29px;
       }
+    }
 
-      &--editing {
-        border-color: #aaa !important;
-      }
+    &__desc {
+      word-break: break-all;
+      overflow: hidden;
+      height: 21px;
     }
   }
 </style>

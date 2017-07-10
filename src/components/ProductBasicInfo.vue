@@ -157,7 +157,7 @@
 
       updateAndBackToViewer () {
         const updateAction =
-          // a super elegant way to get a subset of a object
+          // elegant way to get a subset of a object
           // https://stackoverflow.com/a/39333479/2202891
           (({name, description, icon, openable, type, firmwareVersion, model, wifiModel}) =>
           ({action: 'updateProduct', name, description, icon, openable, type, firmwareVersion, model, wifiModel}))(this.productBasicInfo)

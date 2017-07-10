@@ -24,8 +24,8 @@ export default {
     return product
   },
 
-  async deleteProduct (pid) {
-    await http.delete('products/' + pid)
+  async deleteProduct (pid, version) {
+    await http.delete(`products/${pid}?version=${version}`)
   },
 
   async fetchProduct (pid) {
