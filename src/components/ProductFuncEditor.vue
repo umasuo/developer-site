@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade data-editor" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade data-editor" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -14,73 +14,73 @@
             <div class="form-group">
               <label class="col-xs-3 control-label"><span class="required">*</span> 功能点名称：</label>
               <div class="col-xs-9">
-                <input type="text" class="form-control" placeholder="工作模式">
+                <input type="text" class="form-control" v-model="editingFunc.name">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-3 control-label"><span class="required">*</span> 功能 ID：</label>
               <div class="col-xs-9">
-                <input type="text" class="form-control" placeholder="工作模式" :disabled="mode === 'standard'">
+                <input type="text" class="form-control" v-model="editingFunc.functionId" :disabled="mode === 'standard'">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-3 control-label"><span class="required">*</span> 数据类型：</label>
               <div class="col-xs-9">
-                <label class="eva-radio-label"><input type="radio" value="bool" v-model="dataType" :disabled="mode === 'standard'"> 布尔型</label>
-                <label class="eva-radio-label"><input type="radio" value="number" v-model="dataType" :disabled="mode === 'standard'"> 数值型</label>
-                <label class="eva-radio-label"><input type="radio" value="enum" v-model="dataType" :disabled="mode === 'standard'"> 枚举型</label>
-                <!--<label class="eva-radio-label"><input type="radio" value="error" v-model="dataType" :disabled="mode === 'standard'"> 故障型</label>-->
-                <label class="eva-radio-label"><input type="radio" value="string" v-model="dataType" :disabled="mode === 'standard'"> 字符型</label>
-                <label class="eva-radio-label"><input type="radio" value="raw" v-model="dataType" :disabled="mode === 'standard'"> RAW型</label>
+                <label class="eva-radio-label"><input type="radio" value="boolean" v-model="editingFunc.dataType.type" :disabled="mode === 'standard'"> 布尔型</label>
+                <label class="eva-radio-label"><input type="radio" value="value" v-model="editingFunc.dataType.type" :disabled="mode === 'standard'"> 数值型</label>
+                <label class="eva-radio-label"><input type="radio" value="enum" v-model="editingFunc.dataType.type" :disabled="mode === 'standard'"> 枚举型</label>
+                <!--<label class="eva-radio-label"><input type="radio" value="error" v-model="editingFunc.dataType.type" :disabled="mode === 'standard'"> 故障型</label>-->
+                <label class="eva-radio-label"><input type="radio" value="string" v-model="editingFunc.dataType.type" :disabled="mode === 'standard'"> 字符型</label>
+                <!--<label class="eva-radio-label"><input type="radio" value="raw" v-model="editingFunc.dataType.type" :disabled="mode === 'standard'"> RAW型</label>-->
               </div>
             </div>
 
             <!-- Fields for number type -->
-            <template v-if="dataType === 'number'">
+            <template v-if="editingFunc.dataType.type === 'value'">
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 数值范围：</label>
                 <div class="col-xs-9 form-inline">
-                  <input type="text" class="form-control" placeholder="请输入整数"> -
-                  <input type="text" class="form-control" placeholder="请输入整数">
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.startValue"> -
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.endValue">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 间距：</label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="请输入整数">
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.interval">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 倍数：</label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="请输入整数">
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.multiple">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label">单位：</label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="">
+                  <input type="text" class="form-control" placeholder="" v-model="numberType.unit">
                 </div>
               </div>
             </template>
 
             <!-- Fields for enum type -->
-            <template v-else-if="dataType === 'enum'">
+            <template v-else-if="editingFunc.dataType.type === 'enum'">
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 枚举值：</label>
                 <div class="col-xs-9">
-                  <textarea class="form-control" placeholder="将枚举值填入此处，用英文逗号分隔"></textarea>
+                  <textarea class="form-control" v-model="enumValues" placeholder="将枚举值填入此处，用英文逗号分隔"></textarea>
                 </div>
               </div>
             </template>
 
             <!-- Fields for error type -->
-            <!--<template v-else-if="dataType === 'error'">-->
+            <!--<template v-else-if="editingFunc.dataType === 'error'">-->
               <!--<div class="form-group">-->
                 <!--<label class="col-xs-3 control-label"><span class="required">*</span> 故障值：</label>-->
                 <!--<div class="col-xs-9">-->
@@ -91,7 +91,7 @@
             <!--</template>-->
 
             <!-- Fields for string type -->
-            <template v-else-if="dataType === 'string' || dataType === 'raw'">
+            <template v-else-if="editingFunc.dataType.type === 'string'">
               <div class="form-group">
                 <label class="col-xs-3 control-label">最大长度：</label>
                 <div class="col-xs-9">
@@ -103,23 +103,23 @@
             <div class="form-group">
               <label class="col-xs-3 control-label"><span class="required">*</span> 数据传输类型：</label>
               <div class="col-xs-9">
-                <label class="eva-radio-label"><input type="radio" value="updown" v-model="transType" :disabled="dataType === 'error'"> 可下发可上报</label>
-                <label class="eva-radio-label"><input type="radio" value="up" v-model="transType" ref="upTransType"> 只上报</label>
-                <label class="eva-radio-label"><input type="radio" value="down" v-model="transType" :disabled="dataType === 'error'"> 只下发</label>
+                <label class="eva-radio-label"><input type="radio" value="UPDOWN" v-model="editingFunc.transferType" :disabled="editingFunc.dataType === 'error'"> 可下发可上报</label>
+                <label class="eva-radio-label"><input type="radio" value="UP" v-model="editingFunc.transferType"> 只上报</label>
+                <label class="eva-radio-label"><input type="radio" value="DOWN" v-model="editingFunc.transferType" :disabled="editingFunc.dataType === 'error'"> 只下发</label>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-3 control-label">描述：</label>
               <div class="col-xs-9">
-                <textarea class="form-control" placeholder="根据产品实际功能来设定"></textarea>
+                <textarea class="form-control" v-model="editingFunc.description" placeholder="根据产品实际功能来设定"></textarea>
               </div>
             </div>
           </form>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">确定</button>
+          <button type="submit" class="btn btn-primary" @click.prevent="submit">确定</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         </div>
 
@@ -129,6 +129,10 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import api from 'src/api'
+  import $ from 'jquery'
+
   export default {
     name: 'ProductFuncEditor',
 
@@ -136,13 +140,30 @@
       mode: {
         default: 'standard',
         type: String
-      }
+      },
+      func: {
+        type: Object,
+        default () {
+          return {
+            dataType: {
+              type: 'value'
+            },
+            command: ''
+          }
+        }
+      },
+      product: Object
     },
 
     data () {
+      const numberType = this.func.dataType.type === 'value' ? this.func.dataType : {type: 'value'}
+      const enumType = this.func.dataType.type === 'enum' ? this.func.dataType : {type: 'enum'}
+
       return {
-        dataType: '', // bool, number, enum, error, string, raw,
-        transType: ''
+        editingFunc: Object.assign({}, this.func),
+        enumType,
+        numberType,
+        enumValues: enumType.values && enumType.values.join(',')
       }
     },
 
@@ -159,11 +180,37 @@
       }
     },
 
-    watch: {
-      dataType (newType) {
-        if (newType === 'error') {
-          this.transType = 'up'
+    methods: {
+      ...mapActions(['updateProduct']),
+
+      async submit () {
+        let dataType = {}
+        if (this.editingFunc.dataType.type === 'enum') {
+          dataType = {dataType: this.enumType}
+        } else if (this.editingFunc.dataType.type === 'value') {
+          dataType = {dataType: this.numberType}
         }
+
+        const actionName = this.mode === 'createCustom' ? 'addFunction' : 'updateFunction'
+        try {
+          await this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction({action: actionName, ...this.editingFunc, ...dataType})
+                        .request
+          })
+          $(this.$refs.modal).modal('hide')
+        } catch (e) {
+          console.dir(e)
+          // TODO: handle errors
+        }
+      }
+    },
+
+    watch: {
+      enumValues (values) {
+        // TODO: 检查枚举值不能重复
+        this.enumType.values = values.split(',')
       }
     }
   }

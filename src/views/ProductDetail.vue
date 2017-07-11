@@ -102,13 +102,13 @@
             </h2>
 
             <portal to="modals" v-if="isCreatingCustomFunc">
-              <ProductFuncEditor mode="createCustom" ref="createCustomFuncModal"></ProductFuncEditor>
+              <ProductFuncEditor mode="createCustom" :product="product" :productType="productType" ref="createCustomFuncModal"></ProductFuncEditor>
             </portal>
 
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <ProductCustomFunc></ProductCustomFunc>
+            <ProductCustomFunc v-if="product" :product="product"></ProductCustomFunc>
           </div>
         </div>
       </div>
