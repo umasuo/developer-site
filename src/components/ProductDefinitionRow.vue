@@ -48,11 +48,23 @@
     },
 
     created () {
-      this.fetchProductTypes()
+      this.fetchProductTypesAction()
     },
 
     methods: {
-      ...mapActions(['fetchProductTypes', 'deleteProduct'])
+      ...mapActions({
+        fetchProductTypesAction: 'fetchProductTypes',
+        deleteProductAction: 'deleteProduct'
+      }),
+
+      deleteProduct (product) {
+        try {
+          this.deleteProductAction(product)
+        } catch (e) {
+          console.dir(e)
+          // TODO: 发售状态不能删除
+        }
+      }
     }
   }
 </script>
