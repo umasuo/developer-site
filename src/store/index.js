@@ -5,8 +5,10 @@ import api from 'src/api'
 
 Vue.use(Vuex)
 
+let userTimezone = (new Date().getTimezoneOffset() / -60)
+userTimezone = userTimezone > 0 ? 'GMT+' + userTimezone.toString() : 'GMT' + userTimezone.toString()
 const state = {
-  timezone: storejs.get('timezone'),
+  timezone: storejs.get('timezone') || userTimezone,
   productTypes: undefined,
   products: undefined
 }

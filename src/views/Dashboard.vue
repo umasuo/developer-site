@@ -2,20 +2,21 @@
   <div>
     <div class="row tile_count">
       <div class="col-md-3 col-sm-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> 新激活设备（今日）</span>
-        <div class="count">290</div>
+        <span class="count_top"><i class="fa fa-plus"></i> 新激活设备（今日）</span>
+        <div class="count">{{ dailyDeviceIncrease }}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i> 在线设备</span>
-        <div class="count green">43409</div>
+        <div class="count green">{{ dailyDeviceActive }}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> 新增用户（今日）</span>
-        <div class="count">{{dailyUserReport}}</div>
+        <div class="count">{{ dailyUserIncrease }}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> 新用户反馈（今日）</span>
-        <div class="count">4,567</div>
+        <!-- <span class="count_top"><i class="fa fa-user"></i> 新用户反馈（今日）</span> -->
+        <span class="count_top"><i class="fa fa-users"></i> 总用户数</span>
+        <div class="count">{{ dailyUserTotal }}</div>
       </div>
     </div>
 
@@ -40,15 +41,14 @@
 
               <div class="form-group">
                 <label>选择时间周期：
-              <select class="form-control">
-                  <option>过去7天</option>
-                  <option>过去一个月</option>
-                  <option>过去三个月</option>
-                </select>
+                  <select class="form-control" v-model="reportType">
+                    <option value="weekly">过去7天</option>
+                    <option value="monthly">过去30天</option>
+                  </select>
                 </label>
               </div>
 
-              <button class="form-control btn-default" @click.prevent="">查询</button>
+              <button class="form-control btn-default" @click.prevent="fetchReport">查询</button>
             </form>
           </div>
         </div>
@@ -59,32 +59,32 @@
       <div class="col-xs-12">
         <TabPanel>
           <TabPanelItem title="新增设备" active=true>
-            <LineChart class="eva-chart"></LineChart>
+            <LineChart class="eva-chart" v-if="deviceIncrease" :chartData="deviceIncrease"></LineChart>
           </TabPanelItem>
 
           <TabPanelItem title="活跃设备">
-            <LineChart class="eva-chart"></LineChart>
+            <LineChart class="eva-chart" v-if="deviceActive" :chartData="deviceActive"></LineChart>
           </TabPanelItem>
 
           <TabPanelItem title="总设备">
-            <LineChart class="eva-chart"></LineChart>
+            <LineChart class="eva-chart" v-if="deviceTotal" :chartData="deviceTotal"></LineChart>
           </TabPanelItem>
 
           <TabPanelItem title="新增用户">
-            <LineChart class="eva-chart"></LineChart>
+            <LineChart class="eva-chart" v-if="userIncrease" :chartData="userIncrease"></LineChart>
           </TabPanelItem>
 
           <TabPanelItem title="活跃用户">
-            <LineChart class="eva-chart"></LineChart>
+            <LineChart class="eva-chart" v-if="userActive" :chartData="userActive"></LineChart>
           </TabPanelItem>
 
           <TabPanelItem title="总用户">
-            <LineChart class="eva-chart"></LineChart>
+            <LineChart class="eva-chart" v-if="userTotal" :chartData="userTotal"></LineChart>
           </TabPanelItem>
 
-          <TabPanelItem title="新增反馈">
-            <LineChart class="eva-chart"></LineChart>
-          </TabPanelItem>
+          <!-- <TabPanelItem title="新增反馈">
+            <LineChart class="eva-chart" v-if="deviceIncrease" :chartData="deviceIncrease"></LineChart>
+          </TabPanelItem> -->
         </TabPanel>
       </div>
     </div>
@@ -93,7 +93,7 @@
       <div class="col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>报表 <small>显示最近30天</small></h2>
+            <h2>报表</h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -108,19 +108,19 @@
                     <th>新增用户</th>
                     <th>活跃用户</th>
                     <th>总用户</th>
-                    <th>新增反馈</th>
+                    <!-- <th>新增反馈</th> -->
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="wildcard in 12">
-                    <th scope="row">{{ new Date().toLocaleDateString() }}</th>
-                    <td>123</td>
-                    <td>234</td>
-                    <td>345</td>
-                    <td>123</td>
-                    <td>234</td>
-                    <td>345</td>
-                    <td>123</td>
+                  <tr v-for="(date, index) in dates" :key="date">
+                    <th scope="row">{{ labels[index] }}</th>
+                    <td>{{ report[date].deviceIncrease }}</td>
+                    <td>{{ report[date].deviceActive }}</td>
+                    <td>{{ report[date].deviceTotal }}</td>
+                    <td>{{ report[date].userIncrease }}</td>
+                    <td>{{ report[date].userActive }}</td>
+                    <td>{{ report[date].userTotal }}</td>
+                    <!-- <td>123</td> -->
                   </tr>
                 </tbody>
               </table>
@@ -134,6 +134,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import moment from 'moment'
 import api from 'src/api'
 import LineChart from 'src/components/common/LineChart'
 import TabPanel from 'src/components/common/TabPanel'
@@ -144,20 +146,139 @@ export default {
 
   data () {
     return {
-      dailyUser: [],
-      UserReport: []
+      reportType: 'weekly',
+      userReport: [],
+      deviceReport: [],
+
+      report: null,
+      dates: null,
+      labels: null,
+
+      deviceIncrease: null,
+      deviceActive: null,
+      deviceTotal: null,
+      userIncrease: null,
+      userActive: null,
+      userTotal: null
     }
   },
 
   computed: {
+    ...mapState(['timezone']),
+
+    // 今日用户报表
     dailyUserReport () {
-      return this.fetchUserReport('daily')
+      return this.fetchUserReport('daily', this.timezone)
+    },
+
+    // 今日新增加用户
+    dailyUserIncrease () {
+      if (!Array.isArray(this.dailyUserReport)) return 0
+
+      return this.dailyUserReport[0].increaseNumber
+    },
+
+    // 当前总用户数
+    dailyUserTotal () {
+      if (!Array.isArray(this.dailyUserReport)) return 0
+
+      return this.dailyUserReport[0].totalNumber || 0
+    },
+
+    // 今日设备报表
+    dailyDeviceReport () {
+      return this.fetchDeviceReport('daily', this.timezone)
+    },
+
+    // 今日新增加（新激活）设备
+    dailyDeviceIncrease () {
+      if (!Array.isArray(this.dailyDeviceReport)) return 0
+
+      return this.dailyDeviceReport[0].increaseNumber || 0
+    },
+
+    // 当前活动设备
+    dailyDeviceActive () {
+      if (!Array.isArray(this.dailyDeviceReport)) return 0
+
+      return this.dailyDeviceReport[0].activeNumber || 0
     }
+  },
+
+  mounted () {
+    this.fetchReport()
   },
 
   methods: {
     fetchUserReport (type) {
-      this.UserReport = api.userReport.fetchUserReport(type)
+      return api.userReport.fetchUserReport(type, this.timezone)
+    },
+
+    fetchDeviceReport (type) {
+      return api.deviceReport.fetchDeviceReport(type, this.timezone)
+    },
+
+    // 按选择时间周期获取报表数据
+    async fetchReport () {
+      const promises = []
+      // promises.push(this.fetchUserReport(this.reportType, this.timezone))
+      // promises.push(this.fetchDeviceReport(this.reportType, this.timezone))
+      // TODO: uncomment and remove following two row after api ready
+      promises.push(this.fetchUserReport('daily', this.timezone))
+      promises.push(this.fetchDeviceReport('daily', this.timezone))
+
+      const [userReport, deviceReport] = await Promise.all(promises)
+
+      const report = {}
+      userReport.forEach(element => {
+        report[element.date] = report[element.date] || {}
+        report[element.date].userIncrease = element.increaseNumber
+        report[element.date].userActive = element.activeNumber
+        report[element.date].userTotal = element.totalNumber
+      })
+      deviceReport.forEach(element => {
+        debugger
+        report[element.date] = report[element.date] || {}
+        report[element.date].deviceIncrease = element.increaseNumber
+        report[element.date].deviceActive = element.activeNumber
+        report[element.date].deviceTotal = element.totalNumber
+      })
+      this.report = report
+
+      this.dates = userReport.map(day => {
+        return day.date
+      }).sort()
+
+      // TODO: remove after api ready
+      if (this.reportType) this.dates = this.dates.slice(-7)
+
+      this.labels = this.dates.map(date => {
+        const utcOffset = parseInt(this.timezone.substr(3))
+        const dateWithOffset = moment(date.toString(), 'X').utcOffset(utcOffset)
+
+        return dateWithOffset.format('YYYY-MM-DD')
+      })
+
+      const keys = ['userIncrease', 'userActive', 'userTotal', 'deviceIncrease', 'deviceActive', 'deviceTotal']
+      keys.forEach(key => {
+        this[key] = {
+          labels: this.labels,
+          datasets: [
+            {
+              data: this.dates.map(date => report[date][key])
+            }
+          ]
+        }
+      })
+
+      /*
+      deviceIncrease: null,
+      deviceActive: null,
+      deviceTotal: null,
+      userIncrease: null,
+      userActive: null,
+      userTotal: null
+      */
     }
   },
 

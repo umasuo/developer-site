@@ -11,12 +11,12 @@
             <form class="form-inline">
               <div class="form-group">
                 <label>用户ID:
-                  <input type="text" class="form-control"/>
+                  <input type="text" class="form-control" v-model="id"/>
                 </label>
               </div>
               <div class="form-group">
                 <label>用户手机:
-                  <input type="text" class="form-control"/>
+                  <input type="text" class="form-control" v-model="phone"/>
                 </label>
               </div>
 
@@ -47,10 +47,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>123</td>
-                  <td>18507555555</td>
-                  <td>2017/7/5 下午2:17:00</td>
+                <tr v-for="user in users">
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>{{ user.registerTime | formatTime }}</td>
                 </tr>
               </tbody>
             </table>
@@ -63,8 +63,49 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  import api from 'src/api'
+  import moment from 'moment'
+
   export default {
-    name: 'UserManager'
+    name: 'UserManager',
+
+    data () {
+      return {
+        phone: null,
+        id: null,
+
+        users: null
+      }
+    },
+
+    computed: {
+      ...mapState(['timezone'])
+    },
+
+    created () {
+      this.fetchUsers()
+    },
+
+    filters: {
+      registerTime (timestamp) {
+        return moment(timestamp)
+          .utcOffset(parseInt(this.timezone.substr(3)))
+          .format('YYYY-MM-DD')
+      }
+    },
+
+    methods: {
+      async fetchUsers () {
+        if (this.phone) {
+          this.users = await api.user.fetchUserByPhone(this.phone)
+        } else if (this.id) {
+          this.users = await api.user.fetchUserByPhone(this.id)
+        } else {
+          this.users = await api.user.fetchUsers()
+        }
+      }
+    }
   }
 </script>
 

@@ -15,8 +15,7 @@ export default Line.extend({
           labels: ['label 1', 'label 2', 'label 3'],
           datasets: [
             {
-              label: 'Dataset 1',
-              data: [300, 600, 1500]
+              data: [300, 500, 1500]
             }
           ]
         }
