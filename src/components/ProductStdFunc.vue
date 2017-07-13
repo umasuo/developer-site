@@ -16,7 +16,6 @@
         <td>{{ func.name }}</td>
         <td>{{ func.transferType | stringifyTransferType }}</td>
         <td>{{ func.dataType | stringifyDataType }}</td>
-        <!-- TODO: need to make a computed property for this field -->
         <td>{{ func.dataType | stringifyDataTypeValue }}</td>
         <td>
           <a href="javascript:;" @click="showEditor(index)">编辑</a>

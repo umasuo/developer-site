@@ -113,24 +113,44 @@
         </div>
       </div>
 
+      <!-- TODO: 标准数据 -->
       <div class="col-sm-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>数据
-            <button class="btn btn-xs btn-primary" @click="showAddDataModal">添加</button>
-          </h2>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>标准数据
+              <button class="btn btn-xs btn-primary" @click="showStdDataModal">管理</button>
+            </h2>
 
-          <portal to="modals" v-if="isShowingDataDefinition">
-            <DataDefinitionEditor ref="dataDefinitionModal"></DataDefinitionEditor>
-          </portal>
+            <portal to="modals" v-if="isShowingStdDataManager && productType">
+              <ProductStdDataManager ref="stdDataManager" :product="product" :productType="productType"></ProductStdDataManager>
+            </portal>
 
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <ProductData></ProductData>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <ProductData v-if="product" mode="stdData" :product="product"></ProductData>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div class="col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>自定义数据
+              <button class="btn btn-xs btn-primary" @click="showAddDataModal" :product="product">添加</button>
+            </h2>
+
+            <portal to="modals" v-if="isShowingDataDefinition">
+              <DataDefinitionEditor ref="dataDefinitionModal" :product="product"></DataDefinitionEditor>
+            </portal>
+
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <ProductData v-if="product" mode="customData" :product="product"></ProductData>
+          </div>
+        </div>
+      </div>
     </template>
 
     <template v-else-if="step === 2">
@@ -223,6 +243,7 @@
   import ProductFuncEditor from 'src/components/ProductFuncEditor'
   import DataDefinitionEditor from 'src/components/DataDefinitionEditor'
   import WizardSteps from 'src/components/common/WizardSteps'
+  import ProductStdDataManager from 'src/components/ProductStdDataManager'
 
   export default {
     name: 'ProductDetail',
@@ -239,6 +260,7 @@
         isShowingStdFuncManager: false,
         isCreatingCustomFunc: false,
         isShowingDataDefinition: false,
+        isShowingStdDataManager: false,
         step: 1
       }
     },
@@ -281,6 +303,16 @@
         })
       },
 
+      showStdDataModal () {
+        const vm = this
+        this.isShowingStdDataManager = true
+        setTimeout(() => {
+          $(this.$refs.stdDataManager.$el).modal('show').on('hidden.bs.modal', () => {
+            vm.isShowingStdDataManager = false
+          })
+        })
+      },
+
       showAddDataModal () {
         const vm = this
         this.isShowingDataDefinition = true
@@ -300,7 +332,8 @@
       ProductStdFuncManager,
       ProductFuncEditor,
       DataDefinitionEditor,
-      WizardSteps
+      WizardSteps,
+      ProductStdDataManager
     }
   }
 </script>

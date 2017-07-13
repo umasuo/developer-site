@@ -10,3 +10,4 @@ selenium-debug.log
 .eslintignore
 .eslintrc.js
 .vscode/
+jsconfig.json

@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> 新增用户（今日）</span>
-        <div class="count">230</div>
+        <div class="count">{{dailyUserReport}}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> 新用户反馈（今日）</span>
@@ -134,19 +134,39 @@
 </template>
 
 <script>
-  import LineChart from 'src/components/common/LineChart'
-  import TabPanel from 'src/components/common/TabPanel'
-  import TabPanelItem from 'src/components/common/TabPanelItem'
+import api from 'src/api'
+import LineChart from 'src/components/common/LineChart'
+import TabPanel from 'src/components/common/TabPanel'
+import TabPanelItem from 'src/components/common/TabPanelItem'
 
-  export default {
-    name: 'Dashboard',
+export default {
+  name: 'Dashboard',
 
-    components: {
-      LineChart,
-      TabPanel,
-      TabPanelItem
+  data () {
+    return {
+      dailyUser: [],
+      UserReport: []
     }
+  },
+
+  computed: {
+    dailyUserReport () {
+      return this.fetchUserReport('daily')
+    }
+  },
+
+  methods: {
+    fetchUserReport (type) {
+      this.UserReport = api.userReport.fetchUserReport(type)
+    }
+  },
+
+  components: {
+    LineChart,
+    TabPanel,
+    TabPanelItem
   }
+}
 </script>
 
 <style>

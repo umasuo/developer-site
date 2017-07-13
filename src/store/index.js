@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import storejs from 'store'
 import api from 'src/api'
 
 Vue.use(Vuex)
 
 const state = {
-  developer: undefined,
+  timezone: storejs.get('timezone'),
   productTypes: undefined,
   products: undefined
 }
@@ -42,6 +43,11 @@ const mutations = {
   deleteProduct (state, product) {
     const index = state.products.indexOf(product)
     state.products.splice(index, 1)
+  },
+
+  updateTimezone (state, timezone) {
+    state.timezone = timezone
+    storejs.set('timezone', timezone)
   }
 }
 

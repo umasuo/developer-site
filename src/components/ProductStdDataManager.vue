@@ -1,0 +1,97 @@
+<template>
+  <div class="modal fade data-editor" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title">管理标准数据</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-inline">
+            <div class="checkbox eva-std-func-checkbox" v-for="stdData in availableDatas">
+              <label>
+                <input type="checkbox" v-model="selectedDatas" :value="stdData.id"> {{ stdData.name }}
+              </label>
+            </div>
+            <div v-if="availableDatas.length === 0">
+              <p class="text-warning text-center">没有可用的标准数据</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" @click.prevent="selectStdDatas">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import $ from 'jquery'
+  import api from 'src/api'
+  import { mapActions } from 'vuex'
+
+  export default {
+    name: 'ProductStdFuncManager',
+
+    props: ['product', 'productType'],
+
+    data () {
+      return {
+        selectedDatas: []
+      }
+    },
+
+    computed: {
+      availableDatas () {
+        const usedDataIds = this.product.dataDefinitions.map(data => {
+          return data.dataId
+        })
+
+        return this.productType.data.filter(typeData => {
+          return !usedDataIds.includes(typeData.dataId)
+        })
+      }
+    },
+
+    methods: {
+      ...mapActions(['updateProduct']),
+
+      async selectStdDatas () {
+        if (this.selectedDatas.length === 0) {
+          $(this.$refs.modal).modal('hide')
+          return
+        }
+
+        try {
+          await this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction({action: 'copyDataDefinition', dataDefinitionIds: this.selectedDatas})
+                        .request
+          })
+          $(this.$refs.modal).modal('hide')
+        } catch (e) {
+          // TODO: handle errors
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  .eva-std-func-checkbox {
+    border: 1px solid #ddd;
+    margin: 0 10px 15px 0 !important;
+
+    > label {
+      padding: 5px !important;
+    }
+  }
+</style>

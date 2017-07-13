@@ -55,8 +55,8 @@
 
           <div class="form-group">
             <label>时区:
-              <select>
-                <option v-for="gmt in 27" :value="gmt">GMT{{ (gmt - 13 < 0 ? '' : '+') + (gmt - 13) }}</option>
+              <select :value="timezone" @input="updateTimezone">
+                <option v-for="gmt in 25" :value="'GMT' + (gmt - 13 < 0 ? '' : '+') + (gmt - 13)">GMT{{ (gmt - 13 < 0 ? '' : '+') + (gmt - 13) }}</option>
               </select>
             </label>
           </div>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import NavMenu from 'src/components/FrameNavMenu'
   import TopNav from 'src/components/FrameTopNav'
 
@@ -135,6 +136,16 @@
             toHref: '/document'
           }
         ]
+      }
+    },
+
+    computed: {
+      ...mapState(['timezone'])
+    },
+
+    methods: {
+      updateTimezone (e) {
+        this.$store.commit('updateTimezone', e.target.value)
       }
     },
 

@@ -21,9 +21,9 @@
             <textarea class="form-control" v-model="editingDataDefinition.description" required></textarea>
 
             <label>数据定义 <small>(使用 <a href="http://json-schema.org/" target="_blank">JSON Schema</a> drafts-04 描述数据格式)</small> :</label>
-            <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataType, null, 2) }}</div>
+            <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataSchema, null, 2) }}</div>
 
-            <button type="button" class="btn btn-primary" @click="checkSchemaAndGenerateJson">更新范例数据</button>
+            <button type="button" class="btn btn-primary" @click="generateJson">更新范例数据</button>
             <span v-if="errMsg">格式有误
               <a href="javascript:;" class="text-danger" @click="showErrMsg = !showErrMsg">显示详细错误信息</a>
             </span>
@@ -43,7 +43,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="finishEditing">保存</button>
+          <button type="button" class="btn btn-primary" @click="finishEditing">保存</button>
         </div>
 
       </div>
@@ -52,10 +52,13 @@
 </template>
 
 <script>
+  import $ from 'jquery'
   import brace from 'brace'
   import Ajv from 'ajv'
   import draft4 from 'ajv/lib/refs/json-schema-draft-04'
   import jsf from 'json-schema-faker'
+  import api from 'src/api'
+  import { mapActions } from 'vuex'
   import 'brace/mode/json'
   import 'brace/theme/monokai'
 
@@ -66,23 +69,33 @@
   export default {
     name: 'DataDefinitionEditor',
 
-    props: ['dataDefinition'],
+    props: {
+      product: {
+        type: Object,
+        require: true
+      },
+
+      productData: {
+        type: Object,
+        require: false
+      }
+    },
 
     data () {
       let isAddingNew = false
       let editingDataDefinition
 
-      if (this.dataDefinition) {
-        editingDataDefinition = Object.assign({}, this.dataDefinition)
+      if (this.productData) {
+        editingDataDefinition = Object.assign({}, this.productData)
       } else {
         isAddingNew = true
 
+        // demo json schema for new data definition
         editingDataDefinition = {
-          developerId: 'developer1',
           dataId: 'newDataId',
           name: '范例数据定义',
           description: '范例数据定义，修改以创建新的数据定义',
-          dataType: {
+          dataSchema: {
             id: 'node',
             type: 'object',
             properties: {
@@ -96,6 +109,7 @@
                 }
               }
             },
+            openable: false,
             required: ['title']
           }
         }
@@ -117,25 +131,63 @@
     },
 
     methods: {
+      ...mapActions(['updateProduct']),
+
       finishEditing () {
-        // TODO: Implement me
+        try {
+          this.parseSchema()
+        } catch (e) {
+          this.errMsg = e.message
+          return
+        }
+
+        const actionName = this.isAddingNew ? 'addDataDefinition' : 'updateDataDefinition'
+        let action
+        if (this.isAddingNew) {
+          action = {action: actionName, ...this.editingDataDefinition}
+        } else {
+          action = {action: actionName, dataDefinitionId: this.productData.id, ...this.editingDataDefinition, openable: false}
+        }
+
+        try {
+          this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction(action)
+                        .request
+          })
+          $(this.$refs.modal).modal('hide')
+        } catch (e) {
+          console.dir(e)
+          // TODO: handle errors
+        }
       },
 
-      checkSchemaAndGenerateJson () {
-        this.errMsg = null
-
+      parseSchema () {
         const schema = JSON.parse(this.editor.getValue())
         const ajv = new Ajv({allErrors: true})
         ajv.addMetaSchema(draft4)
         const valid = ajv.validateSchema(schema)
 
         if (!valid) {
-          this.errMsg = ajv.errorsText(ajv.errors, { separator: '\n' }) + '\najv validateSchema errors:\n' +
+          const errorMsg = ajv.errorsText(ajv.errors, { separator: '\n' }) + '\najv validateSchema errors:\n' +
             JSON.stringify(ajv.errors, null, 2)
+          throw new Error(errorMsg)
         } else {
-          this.editingDataDefinition.dataType = schema
+          this.editingDataDefinition.dataSchema = schema
+          return schema
+        }
+      },
+
+      generateJson () {
+        this.errMsg = null
+
+        try {
+          const schema = this.parseSchema()
           const result = jsf(schema)
           this.demoJson = JSON.stringify(result, null, 2)
+        } catch (e) {
+          this.errMsg = e.message
         }
       }
     }
