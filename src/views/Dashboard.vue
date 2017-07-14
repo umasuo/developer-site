@@ -154,12 +154,12 @@ export default {
       dates: null,
       labels: null,
 
-      dailyDeviceIncrease: null,
-      dailyDeviceActive: null,
-      dailyDeviceTotal: null,
-      dailyUserIncrease: null,
-      dailyUserActive: null,
-      dailyUserTotal: null,
+      dailyDeviceIncrease: 0,
+      dailyDeviceActive: 0,
+      dailyDeviceTotal: 0,
+      dailyUserIncrease: 0,
+      dailyUserActive: 0,
+      dailyUserTotal: 0,
 
       deviceIncrease: null,
       deviceActive: null,
@@ -189,7 +189,6 @@ export default {
       promises.push(this.fetchDeviceReport('daily', this.timezone))
 
       const [userReports, deviceReports] = await Promise.all(promises)
-      console.log(userReports, deviceReports)
 
       const latestUserReport = userReports.slice(-1).pop()
       const latestDeviceReport = deviceReports.slice(-1).pop()
