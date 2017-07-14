@@ -120,10 +120,10 @@
                 name: '用户列表',
                 toName: 'UserManager'
               },
-              {
-                name: '告警信息',
-                toName: 'MessageManager'
-              },
+              // {
+              //   name: '告警信息',
+              //   toName: 'MessageManager'
+              // },
               {
                 name: '用户反馈',
                 toName: 'FeedbackManager'

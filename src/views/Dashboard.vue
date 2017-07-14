@@ -28,7 +28,7 @@
           <div class="x_content">
 
             <form class="form-inline">
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>选择产品类型：
                   <select class="form-control">
                     <option>所有产品</option>
@@ -37,7 +37,7 @@
                     <option>产品3</option>
                   </select>
                 </label>
-              </div>
+              </div> -->
 
               <div class="form-group">
                 <label>选择时间周期：
@@ -154,6 +154,13 @@ export default {
       dates: null,
       labels: null,
 
+      dailyDeviceIncrease: null,
+      dailyDeviceActive: null,
+      dailyDeviceTotal: null,
+      dailyUserIncrease: null,
+      dailyUserActive: null,
+      dailyUserTotal: null,
+
       deviceIncrease: null,
       deviceActive: null,
       deviceTotal: null,
@@ -164,52 +171,42 @@ export default {
   },
 
   computed: {
-    ...mapState(['timezone']),
-
-    // 今日用户报表
-    dailyUserReport () {
-      return this.fetchUserReport('daily', this.timezone)
-    },
-
-    // 今日新增加用户
-    dailyUserIncrease () {
-      if (!Array.isArray(this.dailyUserReport)) return 0
-
-      return this.dailyUserReport[0].increaseNumber
-    },
-
-    // 当前总用户数
-    dailyUserTotal () {
-      if (!Array.isArray(this.dailyUserReport)) return 0
-
-      return this.dailyUserReport[0].totalNumber || 0
-    },
-
-    // 今日设备报表
-    dailyDeviceReport () {
-      return this.fetchDeviceReport('daily', this.timezone)
-    },
-
-    // 今日新增加（新激活）设备
-    dailyDeviceIncrease () {
-      if (!Array.isArray(this.dailyDeviceReport)) return 0
-
-      return this.dailyDeviceReport[0].increaseNumber || 0
-    },
-
-    // 当前活动设备
-    dailyDeviceActive () {
-      if (!Array.isArray(this.dailyDeviceReport)) return 0
-
-      return this.dailyDeviceReport[0].activeNumber || 0
-    }
+    ...mapState(['timezone'])
   },
 
   mounted () {
     this.fetchReport()
+    this.fetchDailyReport()
   },
 
   methods: {
+    async fetchDailyReport () {
+      const promises = []
+      // promises.push(this.fetchUserReport(this.reportType, this.timezone))
+      // promises.push(this.fetchDeviceReport(this.reportType, this.timezone))
+      // TODO: uncomment and remove following two row after api ready
+      promises.push(this.fetchUserReport('daily', this.timezone))
+      promises.push(this.fetchDeviceReport('daily', this.timezone))
+
+      const [userReports, deviceReports] = await Promise.all(promises)
+      console.log(userReports, deviceReports)
+
+      const latestUserReport = userReports.slice(-1).pop()
+      const latestDeviceReport = deviceReports.slice(-1).pop()
+
+      if (latestDeviceReport) {
+        this.dailyDeviceIncrease = latestDeviceReport.increaseNumber
+        this.dailyDeviceActive = latestDeviceReport.activeNumber
+        this.dailyDeviceTotal = latestDeviceReport.totalNumber
+      }
+
+      if (latestUserReport) {
+        this.dailyUserIncrease = latestUserReport.increaseNumber
+        this.dailyUserActive = latestUserReport.activeNumber
+        this.dailyUserTotal = latestUserReport.totalNumber
+      }
+    },
+
     fetchUserReport (type) {
       return api.userReport.fetchUserReport(type, this.timezone)
     },
@@ -237,7 +234,6 @@ export default {
         report[element.date].userTotal = element.totalNumber
       })
       deviceReport.forEach(element => {
-        debugger
         report[element.date] = report[element.date] || {}
         report[element.date].deviceIncrease = element.increaseNumber
         report[element.date].deviceActive = element.activeNumber
@@ -250,7 +246,7 @@ export default {
       }).sort()
 
       // TODO: remove after api ready
-      if (this.reportType) this.dates = this.dates.slice(-7)
+      if (this.reportType === 'weekly') this.dates = this.dates.slice(-7)
 
       this.labels = this.dates.map(date => {
         const utcOffset = parseInt(this.timezone.substr(3))
