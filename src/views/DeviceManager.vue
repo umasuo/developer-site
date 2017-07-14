@@ -70,40 +70,25 @@
                   <th>出厂ID</th>
                   <th>所属产品</th>
                   <th>所属用户</th>
-                  <th>激活状态</th>
+                  <th>绑定状态</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr v-for="device in devices" :key="device.deviceId">
                   <td>
-                    <img src="http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png"/>
+                    <!-- TODO: 换个默认icon -->
+                    <img :src="device.icon || 'http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png'"/>
                   </td>
 
-                  <td>123</td>
+                  <td>{{ device.deviceId }}</td>
 
-                  <td>123</td>
+                  <td>{{ device.unionId }}</td>
 
-                  <td>手环</td>
+                  <td>{{ device.productName }}</td>
 
-                  <td>18507555555</td>
+                  <td>{{ device.userPhone }}</td>
 
-                  <td>未激活</td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <img src="http://icons.iconarchive.com/icons/pixelresort/wall-e/32/EVE-icon.png"/>
-                  </td>
-
-                  <td>123</td>
-
-                  <td>123</td>
-
-                  <td>手环</td>
-
-                  <td>18507555555</td>
-
-                  <td>于 2017/7/5 激活</td>
+                  <td>{{ formatStatus(device) }}</td>
                 </tr>
               </tbody>
             </table>
@@ -116,8 +101,48 @@
 </template>
 
 <script>
+  import api from 'src/api'
+  import { mapState } from 'vuex'
+  import moment from 'moment'
+
   export default {
-    name: 'DeviceInfo'
+    name: 'DeviceInfo',
+
+    data () {
+      return {
+        devices: []
+      }
+    },
+
+    computed: {
+      ...mapState(['timezone'])
+    },
+
+    created () {
+      this.fetchDevices()
+    },
+
+    methods: {
+      async fetchDevices () {
+        this.devices = await api.device.fetchDevices()
+      },
+
+      formatStatus (device) {
+        if (device.status === 'BIND') {
+          return '于 ' +
+            moment(device.bindTime.toString(), 'x')
+              .utcOffset(parseInt(this.timezone.substr(3)))
+              .format('YYYY/MM/DD') +
+            ' 绑定'
+        } else {
+          return '于 ' +
+            moment(device.unbindTime.toString(), 'x')
+              .utcOffset(parseInt(this.timezone.substr(3)))
+              .format('YYYY/MM/DD') +
+            ' 解绑'
+        }
+      }
+    }
   }
 </script>
 
