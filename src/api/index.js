@@ -5,6 +5,7 @@ import userReport from 'src/api/userReport'
 import deviceReport from 'src/api/deviceReport'
 import user from 'src/api/user'
 import device from 'src/api/device'
+import feedback from 'src/api/feedback'
 
 export default {
   client, // config the axios http library & store api state and persist them in localstorage
@@ -38,5 +39,6 @@ export default {
   userReport,
   deviceReport,
   user,
-  device
+  device,
+  feedback
 }

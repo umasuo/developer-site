@@ -14,8 +14,8 @@
                   <label>产品:
                     <select class="form-control">
                       <option value="all" selected="selected">所有产品</option>
-                      <option value="id1" >手环</option>
-                      <option value="id2" >体重秤</option>
+                      <!-- <option value="id1" >手环</option>
+                      <option value="id2" >体重秤</option> -->
                     </select>
                   </label>
                 </div>
@@ -24,15 +24,17 @@
                   <label>反馈类型:
                     <select class="form-control">
                       <option value="all" selected="selected">所有类型</option>
-                      <option value="id1" >类型1</option>
-                      <option value="id2" >类型2</option>
+                      <option value="id1" >咨询</option>
+                      <option value="id2" >感谢</option>
+                      <option value="id2" >投诉</option>
+                      <option value="id2" >报错</option>
                     </select>
                   </label>
                 </div>
 
                 <div class="form-group">
                   <label class="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox1" value="option1"> 是否处理
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> 是否已处理
                   </label>
                 </div>
               </div>
@@ -78,28 +80,32 @@
               <thead>
                 <tr>
                   <th>用户手机</th>
+                  <th>反馈类型</th>
                   <th>设备ID</th>
-                  <th>设备类型</th>
+                  <!-- TODO: show this -->
+                  <!-- <th>设备类型</th> -->
                   <th>标题</th>
                   <th>反馈时间</th>
-                  <th>处理人员</th>
+                  <!-- TODO: show this -->
+                  <!-- <th>处理人员</th> -->
                   <th>处理时间</th>
-                  <th>状态</th>
-                  <th>操作</th>
+                  <!-- <th>状态</th> -->
+                  <!-- <th>操作</th> -->
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>18507555555</td>
-                  <td>123</td>
-                  <td>手环</td>
-                  <td>手环屏幕无法点亮</td>
-                  <td>2017/7/5 下午3:18:14</td>
-                  <td>admin</td>
-                  <td>2017/7/5 下午3:18:15</td>
-                  <td>已处理</td>
+                <tr v-for="feedback in feedbacks" :key="feedback.id">
+                  <td>{{ feedback.phone }}</td>
+                  <td>{{ feedback.type | formatFeedbackType }}</td>
+                  <td>{{ feedback.deviceId }}</td>
+                  <!-- <td> </td> -->
+                  <td>{{ feedback.title }}</td>
+                  <td>{{ formatFeedbackDate(feedback.createdAt) }}</td>
+                  <!-- <td>admin</td> -->
+                  <td>{{ formatFeedbackDate(feedback.lastModifiedAt) }}</td>
+                  <!-- <td>{{ feedback.developerStatus }}</td> -->
                   <!-- TODO: 完成处理反馈 modal-->
-                  <td><a href="javascript:;">处理反馈</a></td>
+                  <!-- <td><a href="javascript:;">处理反馈</a></td> -->
                 </tr>
               </tbody>
             </table>
@@ -112,8 +118,49 @@
 </template>
 
 <script>
+  import api from 'src/api'
+  import moment from 'moment'
+  import { mapState } from 'vuex'
+
   export default {
-    name: 'FeedbackManager'
+    name: 'FeedbackManager',
+
+    data () {
+      return {
+        feedbacks: []
+      }
+    },
+
+    computed: {
+      ...mapState(['timezone'])
+    },
+
+    created () {
+      this.fetchFeedbacks()
+    },
+
+    methods: {
+      async fetchFeedbacks () {
+        this.feedbacks = await api.feedback.fetchFeedbacks()
+      },
+
+      formatFeedbackDate (timestamp) {
+        return moment(timestamp.toString(), 'x')
+          .utcOffset(parseInt(this.timezone.substr(3)))
+          .format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+
+    filters: {
+      formatFeedbackType (type) {
+        switch (type) {
+          case 'QUESTION': return '咨询'
+          case 'THANKS': return '感谢'
+          case 'COMPLAIN': return '投诉'
+          case 'ERROR': return '报错'
+        }
+      }
+    }
   }
 </script>
 
