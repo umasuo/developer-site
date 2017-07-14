@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: developer-site
-          image: 'reactivesw/developer-site:1.0.0'
+          image: 'umasuo/developer-site:1.0.0'
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
