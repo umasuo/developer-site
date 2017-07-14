@@ -48,9 +48,9 @@
               </thead>
               <tbody>
                 <tr v-for="user in users">
-                  <td>{{ user.id }}</td>
+                  <td>{{ user.userId }}</td>
                   <td>{{ user.phone }}</td>
-                  <td>{{ user.registerTime | formatTime }}</td>
+                  <td>{{ formatTime(user.registerTime) }}</td>
                 </tr>
               </tbody>
             </table>
@@ -87,14 +87,6 @@
       this.fetchUsers()
     },
 
-    filters: {
-      registerTime (timestamp) {
-        return moment(timestamp)
-          .utcOffset(parseInt(this.timezone.substr(3)))
-          .format('YYYY-MM-DD')
-      }
-    },
-
     methods: {
       async fetchUsers () {
         if (this.phone) {
@@ -104,6 +96,12 @@
         } else {
           this.users = await api.user.fetchUsers()
         }
+      },
+
+      formatTime (timestamp) {
+        return moment(timestamp.toString(), 'x')
+          .utcOffset(parseInt(this.timezone.substr(3)))
+          .format('YYYY-MM-DD')
       }
     }
   }
