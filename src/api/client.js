@@ -2,7 +2,7 @@ import axios from 'axios'
 import storejs from 'store'
 
 export const http = axios.create({
-  baseURL: 'http://104.197.36.133/v1/',
+  baseURL: 'http://api.evacloud.cn/v1/',
   timeout: 5000
 })
 
