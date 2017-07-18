@@ -8,6 +8,11 @@
 @import "singlepage";
 @import "misc";
 
+body {
+   min-width: 1024px;
+   width: auto !important;
+}
+
 .x_title h2 .btn-xs {
   margin-bottom: 0;
 }
