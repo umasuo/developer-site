@@ -49,7 +49,7 @@
           <label class="control-label col-xs-3">图标：</label>
           <div class="col-xs-9">
             <!-- TODO: 上传图片 -->
-            <ImageUploader v-model="productBasicInfo.icon"></ImageUploader>
+            <ProductIconUploader v-model="productBasicInfo.icon"></ProductIconUploader>
           </div>
         </div>
 
@@ -124,7 +124,7 @@
 <script>
   import { mapActions } from 'vuex'
   import api from 'src/api'
-  import ImageUploader from 'src/components/common/ImageUploader'
+  import ProductIconUploader from 'src/components/ProductIconUploader'
 
   export default {
     name: 'ProductBasicInfo',
@@ -198,7 +198,7 @@
     },
 
     components: {
-      ImageUploader
+      ProductIconUploader
     }
   }
 </script>
