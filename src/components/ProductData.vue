@@ -59,7 +59,7 @@
     computed: {
       productDatas () {
         const category = this.mode === 'stdData' ? 'PLATFORM' : 'PRODUCT'
-        const datas = this.product.dataDefinitions
+        const datas = this.product.dataDefinitions || []
 
         return datas.filter(data => {
           return data.category === category
