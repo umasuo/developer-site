@@ -51,7 +51,7 @@
         </div>
         <div class="x_content form-horizontal">
           <div class="form-group">
-            <label class="col-xs-3 control-label">Token：</label>
+            <label class="col-xs-3 control-label">Union ID：</label>
             <div class="col-xs-9">
               <p class="control-text">afs323A23Afe3g</p>
             </div>
