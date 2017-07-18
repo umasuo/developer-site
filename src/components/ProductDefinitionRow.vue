@@ -77,6 +77,7 @@
       padding: 4px !important;
       img {
         height: 29px;
+        width: 29px;
       }
     }
 

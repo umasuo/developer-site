@@ -1,6 +1,6 @@
 <template>
   <div class="eva-img-uploader">
-    <img :src="curImg">
+    <img :src="curImg" class="eva-img-uploader__icon">
     <div class="eva-img-uploader__input-wrapper">
       <span class="eva-img-uploader__button">选择图标</span>
       <input type="file" @change="preview">
@@ -9,8 +9,15 @@
 </template>
 
 <script>
+  import dataURLtoBlob from 'blueimp-canvas-to-blob'
+  import api from 'src/api'
+
   export default {
     name: '',
+
+    model: {
+      prop: 'imgSrc'
+    },
 
     props: ['imgSrc'],
 
@@ -29,7 +36,7 @@
           const vm = this
           reader.onload = function (e) {
             const img = document.createElement('img')
-            img.onload = function (e) {
+            img.onload = async function (e) {
               const canvas = document.createElement('canvas')
 
               const size = 64
@@ -39,7 +46,12 @@
               ctx.drawImage(img, 0, 0, size, size)
 
               // TODO: I only display the scaled img here, to upload it as a file, check https://github.com/blueimp/JavaScript-Canvas-to-Blob.
-              vm.curImg = canvas.toDataURL('image/jpg')
+              const dataUrl = canvas.toDataURL('image/jpg')
+              vm.curImg = dataUrl
+              const blob = dataURLtoBlob(dataUrl)
+
+              const uploadedUrl = await api.files.uploadFile(blob)
+              vm.$emit('input', uploadedUrl)
             }
             img.src = e.target.result
           }
@@ -56,7 +68,7 @@
     width: $size;
     height: $size + 20px;
 
-    img {
+    &__icon {
       width: $size;
       height: $size;
     }

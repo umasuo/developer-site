@@ -49,7 +49,7 @@
           <label class="control-label col-xs-3">图标：</label>
           <div class="col-xs-9">
             <!-- TODO: 上传图片 -->
-            <ImageUploader :imgSrc="productBasicInfo.icon"></ImageUploader>
+            <ImageUploader v-model="productBasicInfo.icon"></ImageUploader>
           </div>
         </div>
 
@@ -217,6 +217,8 @@
       float: left;
       margin-right: 15px;
       margin-top: 10px;
+      width: 64px;
+      height: 64px;
     }
 
     &__content {

@@ -122,7 +122,7 @@
             name: this.create.name,
             type: this.create.type,
             productTypeId: this.selectedType.id,
-            icon: 'https://pic2.zhimg.com/327365721477828fbc254222934f13e5_im.jpg'
+            icon: 'https://storage.googleapis.com/test-20170716/84603f51-08f4-46ce-88aa-e8f104b403d1'
           })
 
           const vm = this
@@ -206,15 +206,12 @@
       }
 
       li {
-        $size: 50px;
-        width: $size;
-        height: $size;
         background-color: #eee;
-        border-radius: $size / 2;
+        border-radius: 3px;
         float: left;
         margin: 15px 0 0 15px;
-        line-height: $size;
         text-align: center;
+        padding: 10px 20px;
       }
     }
   }
