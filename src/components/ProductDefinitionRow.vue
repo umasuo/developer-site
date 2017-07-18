@@ -16,7 +16,7 @@
 
     <td>
       <div class="eva-product-definition-row__desc">
-        {{ product.description }} asdfasdfasdfasdfasdfa sdfasdfasdfas dfasdfadsfasdfasdfadaf sdasdfasdfasdfasdfas dfasdfasdfasd fasdfasdfasdfa dsfasdfasdfada fsdasdfasdfa sdfasdfasdfasdfasdfas dfasdfasdfasdfadsfasdfasdfadafsdasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfasdfasdfadafsdasdf
+        {{ product.description }}
       </div>
     </td>
     <td style="width: 80px;">
