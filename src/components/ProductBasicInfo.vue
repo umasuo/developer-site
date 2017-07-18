@@ -5,7 +5,7 @@
         <img class="eva-product-basic-info-media__media" :src="product.icon">
 
         <div class="eva-product-basic-info-media__content">
-          <h3>{{ product.name }} <button class="btn btn-xs btn-default" @click="showEditor">编辑产品信息</button></h3>
+          <h3>{{ product.name }} <button class="btn btn-xs btn-default" @click="state = 'editor'" v-if="!viewOnly">编辑产品信息</button></h3>
 
           <p>
             <span class="label label-default">PID: {{ product.id }}</span>
@@ -115,25 +115,32 @@
         </div>
 
         <button type="submit" class="btn btn-primary" @click.prevent="updateAndBackToViewer">保存</button>
-        <button type="button" class="btn btn-default" @click.prevent="state = 'viewer'">取消</button>
+        <button type="button" class="btn btn-default" @click.prevent="cancel">取消</button>
       </form>
     </template>
   </div>
 </template>
 
 <script>
-  import { mapActions, mapMutations } from 'vuex'
+  import { mapActions } from 'vuex'
   import api from 'src/api'
   import ImageUploader from 'src/components/common/ImageUploader'
 
   export default {
     name: 'ProductBasicInfo',
 
-    props: ['product'],
+    props: {
+      product: Object,
+      viewOnly: {
+        default: false,
+        type: Boolean
+      }
+    },
 
     data () {
       return {
-        state: 'viewer'
+        state: 'viewer',
+        editingProductBasicInfo: null
       }
     },
 
@@ -142,8 +149,13 @@
         return this.$store.getters.getProductTypeById(this.product.productTypeId)
       },
 
-      productBasicInfo () {
-        return Object.assign({}, this.product)
+      productBasicInfo: {
+        get () {
+          return this.editingProductBasicInfo || Object.assign({}, this.product)
+        },
+        set (product) {
+          this.editingProductBasicInfo = Object.assign({}, product)
+        }
       }
     },
 
@@ -154,12 +166,6 @@
 
     methods: {
       ...mapActions(['fetchProductTypes', 'fetchProducts', 'updateProduct']),
-      ...mapMutations(['setProductDetailWizardStep']),
-
-      showEditor () {
-        this.state = 'editor'
-        this.setProductDetailWizardStep(true)
-      },
 
       updateAndBackToViewer () {
         const updateAction =
@@ -175,7 +181,19 @@
                       .request
         })
         this.state = 'viewer'
-        this.setProductDetailWizardStep(false)
+      },
+
+      cancel () {
+        this.productBasicInfo = Object.assign({}, this.product)
+        this.state = 'viewer'
+      }
+    },
+
+    watch: {
+      viewOnly (isViewOnly) {
+        if (isViewOnly) {
+          this.cancel()
+        }
       }
     },
 

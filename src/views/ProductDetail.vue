@@ -31,7 +31,7 @@
         </ul>
 
         <div class="stepContainer">
-          <WizardSteps v-model="step" :max="3" :disable="isWizardStepsDisable"></WizardSteps>
+          <WizardSteps v-model="step" :max="3"></WizardSteps>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
     <div :class="step === 1 ? 'col-xs-12' : 'col-xs-4'">
       <div class="x_panel">
         <div class="x_content">
-          <ProductBasicInfo :product="product"></ProductBasicInfo>
+          <ProductBasicInfo :product="product" :viewOnly="step > 1"></ProductBasicInfo>
         </div>
       </div>
 
@@ -234,7 +234,7 @@
 
 <script>
   import $ from 'jquery'
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions } from 'vuex'
   import ProductStdFuncManager from 'src/components/ProductStdFuncManager'
   import ProductBasicInfo from 'src/components/ProductBasicInfo'
   import ProductStdFunc from 'src/components/ProductStdFunc'
@@ -266,10 +266,6 @@
     },
 
     computed: {
-      ...mapState({
-        isWizardStepsDisable: state => state.productDetail.isWizardStepsDisable
-      }),
-
       product () {
         return this.$store.getters.getProductById(this.pid)
       },
