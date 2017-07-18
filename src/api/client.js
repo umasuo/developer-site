@@ -1,5 +1,7 @@
 import axios from 'axios'
 import storejs from 'store'
+import router from 'src/router'
+import api from 'src/api'
 
 export const http = axios.create({
   baseURL: 'http://api.evacloud.cn/v1/',
@@ -7,6 +9,17 @@ export const http = axios.create({
 })
 
 // TODO: add a interceptor to handle Network Error globally
+http.interceptors.response.use(null, (error) => {
+  if (error.response) {
+    switch (error.response.status) {
+      case 401:
+        // Unauthorized, redirect to login page
+        api.developer.signout()
+        router.replace({name: 'Signin'})
+        break
+    }
+  }
+})
 
 const client = {
   // session consist of token and current logged user
