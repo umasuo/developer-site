@@ -10,7 +10,12 @@ userTimezone = userTimezone > 0 ? 'GMT+' + userTimezone.toString() : 'GMT' + use
 const state = {
   timezone: storejs.get('timezone') || userTimezone,
   productTypes: undefined,
-  products: undefined
+  products: undefined,
+
+  // state in views
+  productDetail: {
+    isWizardStepsDisable: false
+  }
 }
 
 const mutations = {
@@ -50,6 +55,10 @@ const mutations = {
   updateTimezone (state, timezone) {
     state.timezone = timezone
     storejs.set('timezone', timezone)
+  },
+
+  setProductDetailWizardStep (state, isDisable) {
+    state.productDetail.isWizardStepsDisable = isDisable
   }
 }
 

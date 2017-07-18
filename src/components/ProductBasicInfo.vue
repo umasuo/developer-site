@@ -5,7 +5,7 @@
         <img class="eva-product-basic-info-media__media" :src="product.icon">
 
         <div class="eva-product-basic-info-media__content">
-          <h3>{{ product.name }} <button class="btn btn-xs btn-default" @click="state = 'editor'">编辑产品信息</button></h3>
+          <h3>{{ product.name }} <button class="btn btn-xs btn-default" @click="showEditor">编辑产品信息</button></h3>
 
           <p>
             <span class="label label-default">PID: {{ product.id }}</span>
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapMutations } from 'vuex'
   import api from 'src/api'
   import ImageUploader from 'src/components/common/ImageUploader'
 
@@ -154,6 +154,12 @@
 
     methods: {
       ...mapActions(['fetchProductTypes', 'fetchProducts', 'updateProduct']),
+      ...mapMutations(['setProductDetailWizardStep']),
+
+      showEditor () {
+        this.state = 'editor'
+        this.setProductDetailWizardStep(true)
+      },
 
       updateAndBackToViewer () {
         const updateAction =
@@ -169,6 +175,7 @@
                       .request
         })
         this.state = 'viewer'
+        this.setProductDetailWizardStep(false)
       }
     },
 
