@@ -31,7 +31,7 @@
         </ul>
 
         <div class="stepContainer">
-          <WizardSteps v-model="step" :disabled="cannotModify" :max="3"></WizardSteps>
+          <WizardSteps v-model="step" :max="3"></WizardSteps>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
     <div :class="step === 1 ? 'col-xs-12' : 'col-xs-4'">
       <div class="x_panel">
         <div class="x_content">
-          <ProductBasicInfo :product="product" :viewOnly="step > 1"></ProductBasicInfo>
+          <ProductBasicInfo :product="product" :viewOnly="modifyDisabled || step > 1"></ProductBasicInfo>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
         <div class="x_panel">
           <div class="x_title">
             <h2>标准功能
-              <button class="btn btn-xs btn-primary" @click="showStdFuncManager">管理</button>
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showStdFuncManager">管理</button>
             </h2>
 
             <portal to="modals" v-if="isShowingStdFuncManager && productType">
@@ -89,7 +89,7 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <ProductStdFunc v-if="product" :product="product"></ProductStdFunc>
+            <ProductStdFunc v-if="product" :product="product" :viewOnly="modifyDisabled"></ProductStdFunc>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
         <div class="x_panel">
           <div class="x_title">
             <h2>自定义功能
-              <button class="btn btn-xs btn-primary" @click="showCreateCustomFuncModal">添加</button>
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showCreateCustomFuncModal">添加</button>
             </h2>
 
             <portal to="modals" v-if="isCreatingCustomFunc">
@@ -108,7 +108,7 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <ProductCustomFunc v-if="product" :product="product"></ProductCustomFunc>
+            <ProductCustomFunc v-if="product" :product="product" :viewOnly="modifyDisabled"></ProductCustomFunc>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
         <div class="x_panel">
           <div class="x_title">
             <h2>标准数据
-              <button class="btn btn-xs btn-primary" @click="showStdDataModal">管理</button>
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showStdDataModal">管理</button>
             </h2>
 
             <portal to="modals" v-if="isShowingStdDataManager && productType">
@@ -128,7 +128,7 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <ProductData v-if="product" mode="stdData" :product="product"></ProductData>
+            <ProductData v-if="product" mode="stdData" :viewOnly="modifyDisabled" :product="product"></ProductData>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@
         <div class="x_panel">
           <div class="x_title">
             <h2>自定义数据
-              <button class="btn btn-xs btn-primary" @click="showAddDataModal" :product="product">添加</button>
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showAddDataModal" :product="product">添加</button>
             </h2>
 
             <portal to="modals" v-if="isShowingDataDefinition">
@@ -147,7 +147,7 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <ProductData v-if="product" mode="customData" :product="product"></ProductData>
+            <ProductData v-if="product" mode="customData" :viewOnly="modifyDisabled" :product="product"></ProductData>
           </div>
         </div>
       </div>
@@ -262,7 +262,7 @@
         isShowingDataDefinition: false,
         isShowingStdDataManager: false,
         step: 1,
-        cannotModify: false
+        modifyDisabled: false
       }
     },
 
@@ -271,7 +271,7 @@
         const product = this.$store.getters.getProductById(this.pid)
         if (product && product.status !== 'DEVELOPING') {
           this.step = 3
-          this.cannotModify = true
+          this.modifyDisabled = true
         }
         return product
       },

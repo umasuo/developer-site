@@ -18,13 +18,13 @@
         <td>{{ func.dataType | stringifyDataType }}</td>
         <td>{{ func.dataType | stringifyDataTypeValue }}</td>
         <td>
-          <a href="javascript:;" @click="showEditor(index)">编辑</a>
+          <a href="javascript:;" @click="showEditor(index)" v-if="!viewOnly">编辑</a>
+          <a href="javascript:;" @click="removeFunction(func.id)" v-if="!viewOnly">删除</a>
+          <a href="javascript:;" @click="showEditor(index)" v-else>查看</a>
 
-          <portal to="modals" v-if="isShowingEditor">
-            <ProductFuncEditor mode="standard" id="product-std-func-editor" :product="product" :func="func"></ProductFuncEditor>
+          <portal to="modals" v-if="isShowingEditor && (showingEditorIndex === index)">
+            <ProductFuncEditor mode="standard" id="product-std-func-editor" :product="product" :func="func" :viewOnly="viewOnly"></ProductFuncEditor>
           </portal>
-
-          <a href="javascript:;" @click="removeFunction(func.id)">删除</a>
         </td>
       </tr>
     </tbody>
@@ -43,11 +43,12 @@
 
     mixins: [mixin],
 
-    props: ['product'],
+    props: ['product', 'viewOnly'],
 
     data () {
       return {
-        isShowingEditor: false
+        isShowingEditor: false,
+        showingEditorIndex: -1
       }
     },
 
@@ -65,9 +66,11 @@
       showEditor (index) {
         const vm = this
         this.isShowingEditor = true
+        this.showingEditorIndex = index
         setTimeout(() => {
           $('#product-std-func-editor').modal('show').on('hidden.bs.modal', () => {
             vm.isShowingEditor = false
+            vm.showingEditorIndex = -1
           })
         }, 0)
       },

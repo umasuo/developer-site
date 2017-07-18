@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button class="btn btn-default" :disabled="disabled || step <= 1" @click="previous">上一步</button>
-    <button class="btn btn-primary" :disabled="disabled || step >= max" @click="forward">下一步</button>
+    <button class="btn btn-default" :disabled="step <= 1" @click="previous">上一步</button>
+    <button class="btn btn-primary" :disabled="step >= max" @click="forward">下一步</button>
   </div>
 </template>
 
@@ -21,10 +21,6 @@
       step: {
         type: Number,
         default: 0
-      },
-      disabled: {
-        type: Boolean,
-        default: false
       }
     },
 

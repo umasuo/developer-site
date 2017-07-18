@@ -6,19 +6,19 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title">{{ isAddingNew ? '新增数据定义' :`编辑"${editingDataDefinition.name}"` }}</h4>
+          <h4 class="modal-title">{{ title }}</h4>
         </div>
         <div class="modal-body">
 
           <form>
             <label>Data ID :</label>
-            <input type="text" class="form-control" v-model="editingDataDefinition.dataId" required>
+            <input type="text" class="form-control" v-model="editingDataDefinition.dataId" required :disabled="viewOnly">
 
             <label>数据名 :</label>
-            <input type="text" class="form-control" v-model="editingDataDefinition.name" required>
+            <input type="text" class="form-control" v-model="editingDataDefinition.name" required :disabled="viewOnly">
 
             <label>描述 :</label>
-            <textarea class="form-control" v-model="editingDataDefinition.description" required></textarea>
+            <textarea class="form-control" v-model="editingDataDefinition.description" required :disabled="viewOnly"></textarea>
 
             <label>数据定义 <small>(使用 <a href="http://json-schema.org/" target="_blank">JSON Schema</a> drafts-04 描述数据格式)</small> :</label>
             <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataSchema, null, 2) }}</div>
@@ -37,13 +37,13 @@
             <div class="clear-fix"></div>
 
             <label>范例数据(根据定义随机生成) :</label>
-            <textarea class="form-control data-editor__demo" v-model="demoJson" readonly></textarea>
+            <textarea class="form-control data-editor__demo" v-model="demoJson" readonly :disabled="viewOnly"></textarea>
           </form>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary" @click="finishEditing">保存</button>
+          <button type="button" class="btn btn-primary" @click="finishEditing" v-if="!viewOnly">保存</button>
         </div>
 
       </div>
@@ -78,7 +78,9 @@
       productData: {
         type: Object,
         require: false
-      }
+      },
+
+      viewOnly: Boolean
     },
 
     data () {
@@ -124,10 +126,21 @@
       }
     },
 
+    computed: {
+      title () {
+        if (this.viewOnly) return `查看"${this.editingDataDefinition.name}"`
+
+        return this.isAddingNew ? '新增数据定义' : `编辑"${this.editingDataDefinition.name}"`
+      }
+    },
+
     mounted () {
       this.editor = brace.edit(this.$refs.dataEditor)
       this.editor.getSession().setMode('ace/mode/json')
       this.editor.setTheme('ace/theme/monokai')
+      if (this.viewOnly) {
+        this.editor.setReadOnly(true)
+      }
     },
 
     methods: {

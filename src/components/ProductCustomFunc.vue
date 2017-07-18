@@ -19,13 +19,14 @@
         <!-- TODO: need to make a computed property for this field -->
         <td>{{ func.dataType | stringifyDataTypeValue }}</td>
         <td>
-          <a href="javascript:;" @click="showEditor(index)">编辑</a>
+          <a href="javascript:;" @click="showEditor(index)" v-if="!viewOnly">编辑</a>
+          <a href="javascript:;" @click="removeFunction(func.id)" v-if="!viewOnly">删除</a>
+          <a href="javascript:;" @click="showEditor(index)" v-else>编辑</a>
 
           <portal to="modals" v-if="isShowingEditor">
-            <ProductFuncEditor mode="custom" id="product-custom-func-editor" :product="product" :func="func"></ProductFuncEditor>
+            <ProductFuncEditor mode="custom" id="product-custom-func-editor" :product="product" :func="func" :viewOnly="viewOnly"></ProductFuncEditor>
           </portal>
 
-          <a href="javascript:;" @click="removeFunction(func.id)">删除</a>
         </td>
       </tr>
     </tbody>
@@ -48,7 +49,8 @@
       product: {
         type: Object,
         required: true
-      }
+      },
+      viewOnly: Boolean
     },
 
     data () {

@@ -14,14 +14,14 @@
         <td>{{ data.name }}</td>
         <td>{{ data.description }}</td>
         <td>
-          <a href="javascript:;" @click="showEditor">编辑</a>
+          <a href="javascript:;" @click="showEditor" v-if="!viewOnly">编辑</a>
+          <!-- TODO: remove confirm dialog -->
+          <a href="javascript:;" @click="removeData(data.id)" v-if="!viewOnly">删除</a>
+          <a href="javascript:;" @click="showEditor" v-else>查看</a>
 
           <portal to="modals" v-if="isShowingEditor">
-            <DataDefinitionEditor id="product-data-editor" :product="product" :productData="data"></DataDefinitionEditor>
+            <DataDefinitionEditor id="product-data-editor" :product="product" :productData="data" :viewOnly="viewOnly"></DataDefinitionEditor>
           </portal>
-
-          <!-- TODO: remove confirm dialog -->
-          <a href="javascript:;" @click="removeData(data.id)">删除</a>
         </td>
       </tr>
     </tbody>
@@ -47,7 +47,9 @@
       product: {
         required: true,
         type: Object
-      }
+      },
+
+      viewOnly: Boolean
     },
 
     data () {
