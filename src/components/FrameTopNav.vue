@@ -75,7 +75,7 @@
             <!--</ul>-->
           <!--</li>-->
 
-          <li role="presentation" class="dropdown">
+          <!-- <li role="presentation" class="dropdown">
             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-bell-o"></i>
               <span class="badge bg-red">1</span>
@@ -101,7 +101,7 @@
                 </div>
               </li>
             </ul>
-          </li>
+          </li> -->
 
         </ul>
       </nav>
