@@ -31,7 +31,7 @@
         </ul>
 
         <div class="stepContainer">
-          <WizardSteps v-model="step" :max="3"></WizardSteps>
+          <WizardSteps v-model="step" :disabled="cannotModify" :max="3"></WizardSteps>
         </div>
       </div>
     </div>
@@ -261,13 +261,19 @@
         isCreatingCustomFunc: false,
         isShowingDataDefinition: false,
         isShowingStdDataManager: false,
-        step: 1
+        step: 1,
+        cannotModify: false
       }
     },
 
     computed: {
       product () {
-        return this.$store.getters.getProductById(this.pid)
+        const product = this.$store.getters.getProductById(this.pid)
+        if (product && product.status !== 'DEVELOPING') {
+          this.step = 3
+          this.cannotModify = true
+        }
+        return product
       },
 
       productType () {
