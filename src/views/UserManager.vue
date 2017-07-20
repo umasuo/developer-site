@@ -65,7 +65,6 @@
 <script>
   import { mapState } from 'vuex'
   import api from 'src/api'
-  import moment from 'moment'
 
   export default {
     name: 'UserManager',
@@ -98,7 +97,10 @@
         }
       },
 
-      formatTime (timestamp) {
+      async formatTime (timestamp) {
+        // lazyload moment
+        const moment = await import('moment')
+
         return moment(timestamp.toString(), 'x')
           .utcOffset(parseInt(this.timezone.substr(3)))
           .format('YYYY-MM-DD')

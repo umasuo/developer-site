@@ -102,6 +102,14 @@
     created () {
       this.fetchProductTypes()
       this.fetchProducts()
+
+      // prefetch libraries for DataDefinitionEditor
+      import(/* webpackChunkName: "data-definition-editor" */ 'brace').then(() => {
+        import(/* webpackChunkName: "data-definition-editor" */ 'brace/mode/json')
+      })
+      import(/* webpackChunkName: "data-definition-editor" */ 'ajv')
+      import(/* webpackChunkName: "data-definition-editor" */ 'ajv/lib/refs/json-schema-draft-04')
+      import(/* webpackChunkName: "data-definition-editor" */ 'json-schema-faker')
     },
 
     computed: {

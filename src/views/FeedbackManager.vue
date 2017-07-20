@@ -119,7 +119,6 @@
 
 <script>
   import api from 'src/api'
-  import moment from 'moment'
   import { mapState } from 'vuex'
 
   export default {
@@ -144,7 +143,10 @@
         this.feedbacks = await api.feedback.fetchFeedbacks()
       },
 
-      formatFeedbackDate (timestamp) {
+      async formatFeedbackDate (timestamp) {
+        // lazyload moment
+        const moment = await import('moment')
+
         return moment(timestamp.toString(), 'x')
           .utcOffset(parseInt(this.timezone.substr(3)))
           .format('YYYY-MM-DD HH:mm:ss')

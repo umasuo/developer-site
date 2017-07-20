@@ -53,18 +53,18 @@
 
 <script>
   import $ from 'jquery'
-  import brace from 'brace'
-  import Ajv from 'ajv'
-  import draft4 from 'ajv/lib/refs/json-schema-draft-04'
-  import jsf from 'json-schema-faker'
   import api from 'src/api'
   import { mapActions } from 'vuex'
-  import 'brace/mode/json'
-  import 'brace/theme/monokai'
 
-  jsf.option({
-    requiredOnly: false
-  })
+  // prefetch libraries for DataDefinitionEditor
+  // (async function () {
+  //   import(/* webpackChunkName: "data-definition-editor" */ 'brace').then(() => {
+  //     import(/* webpackChunkName: "data-definition-editor" */ 'brace/mode/json')
+  //   })
+  //   import(/* webpackChunkName: "data-definition-editor" */ 'ajv')
+  //   import(/* webpackChunkName: "data-definition-editor" */ 'ajv/lib/refs/json-schema-draft-04')
+  //   import(/* webpackChunkName: "data-definition-editor" */ 'json-schema-faker')
+  // })()
 
   export default {
     name: 'DataDefinitionEditor',
@@ -135,12 +135,14 @@
     },
 
     mounted () {
-      this.editor = brace.edit(this.$refs.dataEditor)
-      this.editor.getSession().setMode('ace/mode/json')
-      this.editor.setTheme('ace/theme/monokai')
-      if (this.viewOnly) {
-        this.editor.setReadOnly(true)
-      }
+      import(/* webpackChunkName: "data-definition-editor" */ 'brace').then(brace => {
+        import(/* webpackChunkName: "data-definition-editor" */ 'brace/mode/json')
+        this.editor = brace.edit(this.$refs.dataEditor)
+        this.editor.getSession().setMode('ace/mode/json')
+        if (this.viewOnly) {
+          this.editor.setReadOnly(true)
+        }
+      })
     },
 
     methods: {
@@ -176,9 +178,13 @@
         }
       },
 
-      parseSchema () {
+      async parseSchema () {
         const schema = JSON.parse(this.editor.getValue())
+        // import Ajv from 'ajv'
+        // import draft4 from 'ajv/lib/refs/json-schema-draft-04'
+        const Ajv = await import(/* webpackChunkName: "data-definition-editor" */ 'ajv')
         const ajv = new Ajv({allErrors: true})
+        const draft4 = await import(/* webpackChunkName: "data-definition-editor" */ 'ajv/lib/refs/json-schema-draft-04')
         ajv.addMetaSchema(draft4)
         const valid = ajv.validateSchema(schema)
 
@@ -192,11 +198,14 @@
         }
       },
 
-      generateJson () {
+      async generateJson () {
         this.errMsg = null
 
         try {
-          const schema = this.parseSchema()
+          const schema = await this.parseSchema()
+          // faker is a huge module, lazy load it
+          const jsf = await import(/* webpackChunkName: "data-definition-editor" */ 'json-schema-faker')
+          jsf.option({requiredOnly: false})
           const result = jsf(schema)
           this.demoJson = JSON.stringify(result, null, 2)
         } catch (e) {

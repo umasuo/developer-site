@@ -103,7 +103,6 @@
 <script>
   import api from 'src/api'
   import { mapState } from 'vuex'
-  import moment from 'moment'
 
   export default {
     name: 'DeviceInfo',
@@ -127,7 +126,10 @@
         this.devices = await api.device.fetchDevices()
       },
 
-      formatStatus (device) {
+      async formatStatus (device) {
+        // lazyload moment
+        const moment = await import('moment')
+
         if (device.status === 'BIND') {
           return '于 ' +
             moment(device.bindTime.toString(), 'x')

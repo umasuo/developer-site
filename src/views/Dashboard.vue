@@ -58,6 +58,7 @@
     <div class="row">
       <div class="col-xs-12">
         <TabPanel>
+          <p v-if="!isLineChartReady">正在加载...</p>
           <TabPanelItem title="新增设备" active=true>
             <LineChart class="eva-chart" v-if="deviceIncrease" :chartData="deviceIncrease"></LineChart>
           </TabPanelItem>
@@ -135,17 +136,19 @@
 
 <script>
 import { mapState } from 'vuex'
-import moment from 'moment'
 import api from 'src/api'
-import LineChart from 'src/components/common/LineChart'
 import TabPanel from 'src/components/common/TabPanel'
 import TabPanelItem from 'src/components/common/TabPanelItem'
+
+let vm = null
 
 export default {
   name: 'Dashboard',
 
   data () {
     return {
+      isLineChartReady: false,
+
       reportType: 'weekly',
       userReport: [],
       deviceReport: [],
@@ -172,6 +175,10 @@ export default {
 
   computed: {
     ...mapState(['timezone'])
+  },
+
+  created () {
+    vm = this
   },
 
   mounted () {
@@ -222,8 +229,9 @@ export default {
       // TODO: uncomment and remove following two row after api ready
       promises.push(this.fetchUserReport('daily', this.timezone))
       promises.push(this.fetchDeviceReport('daily', this.timezone))
+      promises.push(import('moment'))
 
-      const [userReport, deviceReport] = await Promise.all(promises)
+      const [userReport, deviceReport, moment] = await Promise.all(promises)
 
       const report = {}
       userReport.forEach(element => {
@@ -278,7 +286,11 @@ export default {
   },
 
   components: {
-    LineChart,
+    LineChart: async () => {
+      const component = (await import('src/components/common/LineChart')).default
+      vm.isLineChartReady = true
+      return component
+    },
     TabPanel,
     TabPanelItem
   }
