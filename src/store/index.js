@@ -94,6 +94,20 @@ const actions = {
   async deleteProduct ({state, commit}, product) {
     await api.product.deleteProduct(product.id, product.version)
     commit('deleteProduct', product)
+  },
+
+  async publishProduct ({state, commit}, product) {
+    await api.product.publishProduct(product.id, product.version)
+    const updatedProduct = {...product, ...{status: 'CHECKING', version: product.version + 1}}
+    commit('updateProduct', {oldProduct: product, newProduct: updatedProduct})
+    return updatedProduct
+  },
+
+  async revokeProduct ({state, commit}, product) {
+    await api.product.revokeProduct(product.id, product.version)
+    const updatedProduct = {...product, ...{status: 'REVOKED', version: product.version + 1}}
+    commit('updateProduct', {oldProduct: product, newProduct: updatedProduct})
+    return updatedProduct
   }
 }
 

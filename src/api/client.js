@@ -5,7 +5,7 @@ import api from 'src/api'
 
 export const http = axios.create({
   baseURL: 'http://api.evacloud.cn/v1/',
-  timeout: 5000
+  timeout: 30000
 })
 
 // TODO: add a interceptor to handle Network Error globally
@@ -19,6 +19,7 @@ http.interceptors.response.use(null, (error) => {
         break
     }
   }
+  throw error
 })
 
 const client = {

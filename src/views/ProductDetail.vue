@@ -53,25 +53,23 @@
           <div class="form-group">
             <label class="col-xs-3 control-label">Union ID：</label>
             <div class="col-xs-9">
-              <p class="control-text">afs323A23Afe3g</p>
+              <p class="control-text">{{ product.testUnion.unionId }}</p>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-xs-3 control-label">Secrect：</label>
+            <label class="col-xs-3 control-label">Secrect Key：</label>
             <div class="col-xs-9">
-              <p class="control-text">23rqlwekjrlkjll2kjijsdj</p>
+              <p class="control-text">{{ product.testUnion.secretKey }}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="x_panel" v-if="step === 3">
-        <div class="x_content text-center">
-          <button class="btn btn-lg btn-primary">发布产品</button>
-          <p>产品通过审核，成功发布后，功能将被锁定</p>
-        </div>
-      </div>
+      <ProductStatusControls :step="step" :product="product"></ProductStatusControls>
+
+      <!-- TODO: 改成已发布才显示 -->
+      <ProductGenerateUnionId v-if="step === 3" :productId="product.id"></ProductGenerateUnionId>
     </div>
 
     <template v-if="step === 1">
@@ -244,6 +242,8 @@
   import DataDefinitionEditor from 'src/components/DataDefinitionEditor'
   import WizardSteps from 'src/components/common/WizardSteps'
   import ProductStdDataManager from 'src/components/ProductStdDataManager'
+  import ProductGenerateUnionId from 'src/components/ProductGenerateUnionId'
+  import ProductStatusControls from 'src/components/ProductStatusControls'
 
   export default {
     name: 'ProductDetail',
@@ -339,7 +339,9 @@
       ProductFuncEditor,
       DataDefinitionEditor,
       WizardSteps,
-      ProductStdDataManager
+      ProductStdDataManager,
+      ProductGenerateUnionId,
+      ProductStatusControls
     }
   }
 </script>

@@ -36,5 +36,27 @@ export default {
   async fetchDeveloperProducts (developerId) {
     const products = (await http.get('products/')).data
     return products
+  },
+
+  async generateUnionId (productId, quantity) {
+    const ids = await http.post('devices/unions', {
+      productId,
+      quantity
+    })
+    return ids.data
+  },
+
+  async publishProduct (pid, version) {
+    const product = await http.put(`products/${pid}/status`, {
+      type: 'PUBLISH', version: version
+    })
+    return product
+  },
+
+  async revokeProduct (pid, version) {
+    const product = await http.put(`products/${pid}/status`, {
+      type: 'REVOKE', version: version
+    })
+    return product
   }
 }
