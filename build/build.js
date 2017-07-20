@@ -3,6 +3,7 @@ require('./check-versions')()
 process.env.NODE_ENV = 'production'
 
 var ora = require('ora')
+var fs = require('fs')
 var rm = require('rimraf')
 var path = require('path')
 var chalk = require('chalk')
@@ -16,6 +17,7 @@ spinner.start()
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, function (err, stats) {
+    fs.writeFile('./report.json', JSON.stringify(stats.toJson('normal')), 'utf8')
     spinner.stop()
     if (err) throw err
     process.stdout.write(stats.toString({

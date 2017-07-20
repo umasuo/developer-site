@@ -11,3 +11,4 @@ selenium-debug.log
 .eslintrc.js
 .vscode/
 jsconfig.json
+report.json
