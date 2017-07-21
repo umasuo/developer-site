@@ -115,12 +115,12 @@
                 <tbody>
                   <tr v-for="(date, index) in dates" :key="date">
                     <th scope="row">{{ labels[index] }}</th>
-                    <td>{{ report[date].deviceIncrease }}</td>
-                    <td>{{ report[date].deviceActive }}</td>
-                    <td>{{ report[date].deviceTotal }}</td>
-                    <td>{{ report[date].userIncrease }}</td>
-                    <td>{{ report[date].userActive }}</td>
-                    <td>{{ report[date].userTotal }}</td>
+                    <td>{{ report[date].deviceIncrease || 0 }}</td>
+                    <td>{{ report[date].deviceActive || 0 }}</td>
+                    <td>{{ report[date].deviceTotal || 0 }}</td>
+                    <td>{{ report[date].userIncrease || 0 }}</td>
+                    <td>{{ report[date].userActive || 0 }}</td>
+                    <td>{{ report[date].userTotal || 0 }}</td>
                     <!-- <td>123</td> -->
                   </tr>
                 </tbody>
