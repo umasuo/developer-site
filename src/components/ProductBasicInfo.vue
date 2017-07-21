@@ -159,13 +159,8 @@
       }
     },
 
-    created () {
-      this.fetchProductTypes()
-      this.fetchProducts()
-    },
-
     methods: {
-      ...mapActions(['fetchProductTypes', 'fetchProducts', 'updateProduct']),
+      ...mapActions(['updateProduct']),
 
       updateAndBackToViewer () {
         const updateAction =

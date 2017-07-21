@@ -47,13 +47,8 @@
       }
     },
 
-    created () {
-      this.fetchProductTypesAction()
-    },
-
     methods: {
       ...mapActions({
-        fetchProductTypesAction: 'fetchProductTypes',
         deleteProductAction: 'deleteProduct'
       }),
 
