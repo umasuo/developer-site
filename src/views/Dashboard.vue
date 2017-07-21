@@ -94,7 +94,10 @@
       <div class="col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>报表</h2>
+            <h2>报表
+              <button class="btn btn-xs btn-primary" @click="downloadReportCSV">下载报表（CSV）</button>
+            </h2>
+
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -139,6 +142,7 @@ import { mapState } from 'vuex'
 import api from 'src/api'
 import TabPanel from 'src/components/common/TabPanel'
 import TabPanelItem from 'src/components/common/TabPanelItem'
+import json2csv from 'json2csv'
 
 let vm = null
 
@@ -273,15 +277,24 @@ export default {
           ]
         }
       })
+    },
 
-      /*
-      deviceIncrease: null,
-      deviceActive: null,
-      deviceTotal: null,
-      userIncrease: null,
-      userActive: null,
-      userTotal: null
-      */
+    downloadReportCSV () {
+      const csv = json2csv({
+        data: this.dates.map(date => {
+          const dateObj = new Date(date * 1000) // server return date in seconds, new Date take date in milliseconds
+          return { date: dateObj.toISOString(), ...this.report[date] }
+        }),
+        fields: ['date', 'deviceActive', 'deviceIncrease', 'deviceTotal', 'userActive', 'userIncrease', 'userTotal']
+      })
+
+      const uriContent = 'data:application/octet-stream,' + encodeURIComponent(csv)
+      const link = document.createElement('a')
+      link.download = 'report.csv'
+      link.href = uriContent
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
   },
 
