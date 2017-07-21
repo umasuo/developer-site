@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import api from 'src/api'
+import $ from 'jquery'
 
 import Frame from 'src/Frame'
 import SinglePage from 'src/SinglePage'
@@ -159,6 +160,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, form, next) => {
+  $('.modal').modal('hide')
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!api.client.isAuthorized) {
       next({name: 'Signin'})
