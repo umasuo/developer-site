@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import i18n from './i18n'
 import PortalVue from 'portal-vue'
+import NProgress from 'nprogress'
+
+NProgress.configure({ showSpinner: false })
 
 Vue.use(PortalVue)
 

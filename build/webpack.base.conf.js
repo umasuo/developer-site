@@ -27,7 +27,8 @@ module.exports = {
     }
   },
   externals: {
-    jquery: 'jQuery'
+    jquery: 'jQuery',
+    nprogress: 'NProgress'
   },
   module: {
     rules: [

@@ -2,14 +2,35 @@ import axios from 'axios'
 import storejs from 'store'
 import router from 'src/router'
 import api from 'src/api'
+import NProgress from 'nprogress'
 
 export const http = axios.create({
   baseURL: 'http://api.evacloud.cn/v1/',
   timeout: 30000
 })
 
-// TODO: add a interceptor to handle Network Error globally
-http.interceptors.response.use(null, (error) => {
+http.interceptors.request.use(config => {
+  // start NProgress and increase a little bit
+  NProgress.start()
+  NProgress.inc()
+
+  // increase NProgress according to request progress
+  config.onDownloadProgress = progressEvent => {
+    const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
+    NProgress.set(percentCompleted)
+  }
+  return config
+})
+
+http.interceptors.response.use(response => {
+  // stop NProgress
+  NProgress.done()
+
+  return response
+}, error => {
+  // stop NProgress
+  NProgress.done()
+
   if (error.response) {
     switch (error.response.status) {
       case 401:
