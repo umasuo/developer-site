@@ -2,6 +2,9 @@
   <div>
     <div class="row">
       <div class="col-sm-12">
+
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+
         <div class="x_panel">
           <div class="x_title">
             <h2>过滤条件</h2>
@@ -66,6 +69,8 @@
   import { mapState } from 'vuex'
   import api from 'src/api'
 
+  let moment = null
+
   export default {
     name: 'UserManager',
 
@@ -74,7 +79,9 @@
         phone: null,
         id: null,
 
-        users: null
+        users: null,
+
+        message: ''
       }
     },
 
@@ -82,8 +89,16 @@
       ...mapState(['timezone'])
     },
 
-    created () {
-      this.fetchUsers()
+    async created () {
+      try {
+        const usersPromise = this.fetchUsers()
+        const momentPromise = import('moment')
+        moment = (await Promise.all([momentPromise, usersPromise]))[0]
+
+        this.$forceUpdate()
+      } catch (e) {
+        this.message = 'fail'
+      }
     },
 
     methods: {
@@ -97,9 +112,11 @@
         }
       },
 
-      async formatTime (timestamp) {
-        // lazyload moment
-        const moment = await import('moment')
+      formatTime (timestamp) {
+        // moment library might not loaded yet
+        if (!moment) {
+          return ''
+        }
 
         return moment(timestamp.toString(), 'x')
           .utcOffset(parseInt(this.timezone.substr(3)))
