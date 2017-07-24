@@ -175,7 +175,6 @@
         const schema = JSON.parse(this.editor.getValue())
 
         const {ajv} = await import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
-        debugger
         const valid = ajv.validateSchema(schema)
 
         if (!valid) {
@@ -193,10 +192,8 @@
 
         try {
           const schema = await this.parseSchema()
-          debugger
           // faker is a huge module, lazy load it
           const {faker} = await import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
-          debugger
           const result = faker(schema)
 
           this.demoJson = JSON.stringify(result, null, 2)
