@@ -12,7 +12,6 @@ import ResetPwd from 'src/views/ResetPwd'
 import Dashboard from 'src/views/Dashboard'
 
 // import DeveloperInfo from 'src/views/DeveloperInfo'
-import DeveloperPassword from 'src/views/DeveloperPassword'
 
 import ProductDefinitions from 'src/views/ProductDefinitions'
 import ProductDetail from 'src/views/ProductDetail'
@@ -122,14 +121,6 @@ const router = new Router({
         //   name: 'DeveloperInfo',
         //   component: DeveloperInfo
         // },
-        {
-          path: 'developer-password',
-          name: 'DeveloperPassword',
-          component: DeveloperPassword,
-          meta: {
-            requiresAuth: true
-          }
-        },
         {
           path: 'user-manager',
           name: 'UserManager',
