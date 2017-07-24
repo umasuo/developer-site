@@ -5,31 +5,30 @@ import api from 'src/api'
 import NProgress from 'nprogress'
 
 export const http = axios.create({
-  baseURL: 'http://api.evacloud.cn/v1/',
+  baseURL: 'http://api.evacloud.cnf/v1/',
   timeout: 30000
 })
 
 http.interceptors.request.use(config => {
   // start NProgress and increase a little bit
-  NProgress.start()
+  !NProgress.isStarted() && NProgress.start()
   NProgress.inc()
 
   // increase NProgress according to request progress
   config.onDownloadProgress = progressEvent => {
-    const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    NProgress.set(percentCompleted)
+    NProgress.inc()
   }
   return config
 })
 
 http.interceptors.response.use(response => {
   // stop NProgress
-  NProgress.done()
+  NProgress.isStarted() && NProgress.done()
 
   return response
 }, error => {
   // stop NProgress
-  NProgress.done()
+  NProgress.isStarted() && NProgress.done()
 
   if (error.response) {
     switch (error.response.status) {

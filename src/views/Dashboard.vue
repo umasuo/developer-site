@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <!-- TODO: show a x-steps-to-create-product wizard -->
+    <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
 
     <div class="row">
       <div class="col-xs-12">
@@ -58,7 +58,9 @@
     <div class="row">
       <div class="col-xs-12">
         <TabPanel>
-          <p v-if="!isLineChartReady">正在加载...</p>
+          <p v-if="linechart.message === 'loading'">正在加载...</p>
+          <p v-else-if="linechart.message === 'fail'">图表模块加载失败，请刷新重试</p>
+
           <TabPanelItem title="新增设备" active=true>
             <LineChart class="eva-chart" v-if="deviceIncrease" :chartData="deviceIncrease"></LineChart>
           </TabPanelItem>
@@ -151,7 +153,11 @@ export default {
 
   data () {
     return {
-      isLineChartReady: false,
+      linechart: {
+        message: ''
+      },
+
+      message: '',
 
       reportType: 'weekly',
       userReport: [],
@@ -192,6 +198,8 @@ export default {
 
   methods: {
     async fetchDailyReport () {
+      this.message = ''
+
       const promises = []
       // promises.push(this.fetchUserReport(this.reportType, this.timezone))
       // promises.push(this.fetchDeviceReport(this.reportType, this.timezone))
@@ -199,30 +207,34 @@ export default {
       promises.push(this.fetchUserReport('daily', this.timezone))
       promises.push(this.fetchDeviceReport('daily', this.timezone))
 
-      const [userReports, deviceReports] = await Promise.all(promises)
+      try {
+        const [userReports, deviceReports] = await Promise.all(promises)
 
-      const latestUserReport = userReports.slice(-1).pop()
-      const latestDeviceReport = deviceReports.slice(-1).pop()
+        const latestUserReport = userReports.slice(-1).pop()
+        const latestDeviceReport = deviceReports.slice(-1).pop()
 
-      if (latestDeviceReport) {
-        this.dailyDeviceIncrease = latestDeviceReport.increaseNumber
-        this.dailyDeviceActive = latestDeviceReport.activeNumber
-        this.dailyDeviceTotal = latestDeviceReport.totalNumber
-      }
+        if (latestDeviceReport) {
+          this.dailyDeviceIncrease = latestDeviceReport.increaseNumber
+          this.dailyDeviceActive = latestDeviceReport.activeNumber
+          this.dailyDeviceTotal = latestDeviceReport.totalNumber
+        }
 
-      if (latestUserReport) {
-        this.dailyUserIncrease = latestUserReport.increaseNumber
-        this.dailyUserActive = latestUserReport.activeNumber
-        this.dailyUserTotal = latestUserReport.totalNumber
+        if (latestUserReport) {
+          this.dailyUserIncrease = latestUserReport.increaseNumber
+          this.dailyUserActive = latestUserReport.activeNumber
+          this.dailyUserTotal = latestUserReport.totalNumber
+        }
+      } catch (e) {
+        this.message = 'fail'
       }
     },
 
-    fetchUserReport (type) {
-      return api.userReport.fetchUserReport(type, this.timezone)
+    async fetchUserReport (type) {
+      return await api.userReport.fetchUserReport(type, this.timezone)
     },
 
-    fetchDeviceReport (type) {
-      return api.deviceReport.fetchDeviceReport(type, this.timezone)
+    async fetchDeviceReport (type) {
+      return await api.deviceReport.fetchDeviceReport(type, this.timezone)
     },
 
     // 按选择时间周期获取报表数据
@@ -235,48 +247,52 @@ export default {
       promises.push(this.fetchDeviceReport('daily', this.timezone))
       promises.push(import('moment'))
 
-      const [userReport, deviceReport, moment] = await Promise.all(promises)
+      try {
+        const [userReport, deviceReport, moment] = await Promise.all(promises)
 
-      const report = {}
-      userReport.forEach(element => {
-        report[element.date] = report[element.date] || {}
-        report[element.date].userIncrease = element.increaseNumber
-        report[element.date].userActive = element.activeNumber
-        report[element.date].userTotal = element.totalNumber
-      })
-      deviceReport.forEach(element => {
-        report[element.date] = report[element.date] || {}
-        report[element.date].deviceIncrease = element.increaseNumber
-        report[element.date].deviceActive = element.activeNumber
-        report[element.date].deviceTotal = element.totalNumber
-      })
-      this.report = report
+        const report = {}
+        userReport.forEach(element => {
+          report[element.date] = report[element.date] || {}
+          report[element.date].userIncrease = element.increaseNumber
+          report[element.date].userActive = element.activeNumber
+          report[element.date].userTotal = element.totalNumber
+        })
+        deviceReport.forEach(element => {
+          report[element.date] = report[element.date] || {}
+          report[element.date].deviceIncrease = element.increaseNumber
+          report[element.date].deviceActive = element.activeNumber
+          report[element.date].deviceTotal = element.totalNumber
+        })
+        this.report = report
 
-      this.dates = userReport.map(day => {
-        return day.date
-      }).sort()
+        this.dates = userReport.map(day => {
+          return day.date
+        }).sort()
 
-      // TODO: remove after api ready
-      if (this.reportType === 'weekly') this.dates = this.dates.slice(-7)
+        // TODO: remove after api ready
+        if (this.reportType === 'weekly') this.dates = this.dates.slice(-7)
 
-      this.labels = this.dates.map(date => {
-        const utcOffset = parseInt(this.timezone.substr(3))
-        const dateWithOffset = moment(date.toString(), 'X').utcOffset(utcOffset)
+        this.labels = this.dates.map(date => {
+          const utcOffset = parseInt(this.timezone.substr(3))
+          const dateWithOffset = moment(date.toString(), 'X').utcOffset(utcOffset)
 
-        return dateWithOffset.format('YYYY-MM-DD')
-      })
+          return dateWithOffset.format('YYYY-MM-DD')
+        })
 
-      const keys = ['userIncrease', 'userActive', 'userTotal', 'deviceIncrease', 'deviceActive', 'deviceTotal']
-      keys.forEach(key => {
-        this[key] = {
-          labels: this.labels,
-          datasets: [
-            {
-              data: this.dates.map(date => report[date][key])
-            }
-          ]
-        }
-      })
+        const keys = ['userIncrease', 'userActive', 'userTotal', 'deviceIncrease', 'deviceActive', 'deviceTotal']
+        keys.forEach(key => {
+          this[key] = {
+            labels: this.labels,
+            datasets: [
+              {
+                data: this.dates.map(date => report[date][key])
+              }
+            ]
+          }
+        })
+      } catch (e) {
+        this.message = 'fail'
+      }
     },
 
     downloadReportCSV () {
@@ -300,9 +316,13 @@ export default {
 
   components: {
     LineChart: async () => {
-      const component = (await import('src/components/common/LineChart')).default
-      vm.isLineChartReady = true
-      return component
+      vm.linechart.message = 'loading'
+      try {
+        const component = (await import('src/components/common/LineChart')).default
+        return component
+      } catch (e) {
+        vm.linechart.message = 'fail'
+      }
     },
     TabPanel,
     TabPanelItem
