@@ -18,11 +18,10 @@
             <p class="text-warning" v-else-if="signinState === 'fetching'">请稍候...</p>
             <p class="text-warning" v-else-if="signinState === 'Request failed with status code 404'">用户不存在</p>
             <p class="text-warning" v-else-if="signinState === 'Request failed with status code 401'">邮箱或密码错误</p>
-            <p class="text-warning" v-else-if="signinState !== ''">未知错误</p>
+            <p class="text-warning" v-else-if="signinState !== ''">发生未知错误，请刷新后重试</p>
 
             <div>
               <button class="btn btn-default submit" type="submit" @click.prevent="signin" :disabled="signinState === 'fetching'">登陆</button>
-              <!-- TODO: router link 到"请求重置密码"页面（填写邮箱，发送重置链接；点了链接进入"重置密码"页面） -->
               <router-link class="reset_pass" :to="{name: 'ResetPwd', query: {step: 1}}">忘记密码？</router-link>
             </div>
 
@@ -65,7 +64,7 @@
             <p class="text-warning" v-else-if="registerState === 'password not valid'">密码格式错误，至少需要8位，包含小写字母及数字</p>
             <p class="text-warning" v-else-if="registerState === 'fetching'">请稍候...</p>
             <p class="text-warning" v-else-if="registerState === 'Request failed with status code 409'">该邮箱已经注册</p>
-            <p class="text-warning" v-else-if="registerState !== ''">未知错误</p>
+            <p class="text-warning" v-else-if="registerState !== ''">发生未知错误，请刷新后重试</p>
 
             <div>
               <button class="btn btn-default submit" type="submit" @click.prevent="register" :disabled="registerState === 'fetching'">注册</button>
@@ -136,7 +135,7 @@
           this.$store.commit('setDeveloper', api.client.session.developerView)
           this.$router.replace({ name: 'Dashboard' })
         } catch (e) {
-          console.dir()
+          console.dir(e)
           this.signinState = e.message
         }
       },

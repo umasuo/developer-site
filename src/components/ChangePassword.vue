@@ -15,7 +15,7 @@
               <p class="text-success" v-if="state === 'success'">修改密码成功！</p>
               <p class="text-warning" v-else-if="state === 'repeat password not match'">两次密码输入不一致，请检查后再试</p>
               <p class="text-warning" v-else-if="state === 'password not valid'">密码格式错误，至少需要8位，包含小写字母及数字</p>
-              <p class="text-warning" v-else-if="state !== ''">密码格式错误，至少需要8位，包含小写字母及数字</p>
+              <p class="text-warning" v-else-if="state !== ''">发生未知错误，请刷新后重试</p>
 
               <div class="form-group">
                 <label>
@@ -68,20 +68,23 @@
       async changePassword () {
         this.state = ''
 
-        if (this.newPassword !== this.repeatNewPassword) {
-          this.state = 'repeat password not match'
-          return
-        } else if (!utils.validatePassword(this.oldPassword) || !utils.validatePassword(this.newPassword)) {
-          this.state = 'password not valid'
-          return
-        }
-
         try {
+          if (this.newPassword !== this.repeatNewPassword) {
+            this.state = 'repeat password not match'
+            return
+          } else if (!utils.validatePassword(this.oldPassword) || !utils.validatePassword(this.newPassword)) {
+            this.state = 'password not valid'
+            return
+          }
+
           await api.developer.changePassword(this.oldPassword, this.newPassword)
           this.$store.commit('setDeveloper', api.client.session.developerView)
           this.state = 'success'
         } catch (e) {
           this.state = e.message
+        } finally {
+          this.newPassword = ''
+          this.repeatNewPassword = ''
         }
       }
     }

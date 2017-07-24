@@ -14,7 +14,7 @@
                  v-model="quantity" >
         </div>
         <p class="text-warnning" v-if="message === 'pending'">请稍候...</p>
-        <p class="text-warnning" v-else-if="message !== null">未知错误</p>
+        <p class="text-warnning" v-else-if="message !== null">发生未知错误，请刷新后重试</p>
       </form>
 
     </div>

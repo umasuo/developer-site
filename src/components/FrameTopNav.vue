@@ -12,7 +12,7 @@
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
               <li v-if="!isVerified">
-                <a href="javascript:;" @click="reverifyEmail"> 重发验证邮件</a>
+                <a href="javascript:;" @click="reverifyEmail"> 重发验证邮件{{emailCd}}</a>
 
                 <portal></portal>
                 <portal to="modals" v-if="isShowingResentVerifyEmail">
@@ -121,7 +121,8 @@
     data () {
       return {
         isShowingResentVerifyEmail: false,
-        isShowingChangePassword: false
+        isShowingChangePassword: false,
+        emailCdValue: -1
       }
     },
 
@@ -132,19 +133,48 @@
 
       email () {
         return api.client.session.developerView.email
+      },
+
+      emailCd () {
+        if (this.emailCdValue >= 0) {
+          return `(${this.emailCdValue})`
+        } else {
+          return ''
+        }
       }
     },
 
     methods: {
       async reverifyEmail () {
-        await api.developer.reverifyEmail(api.client.session.developerView.id)
-        this.isShowingResentVerifyEmail = true
-        const vm = this
-        setTimeout(() => {
-          $(this.$refs.resetVerifyEmailModal).modal('show').on('hidden.bs.modal', () => {
-            vm.isShowingResentVerifyEmail = false
-          })
-        }, 0)
+        if (this.emailCdValue >= 0) {
+          alert('请等待倒计时结束后再次发送')
+          return
+        }
+
+        try {
+          await api.developer.reverifyEmail(api.client.session.developerView.id)
+          this.isShowingResentVerifyEmail = true
+          const vm = this
+
+          // 设置倒计时
+          vm.emailCdValue = 60
+          const cdHandle = setInterval(() => {
+            vm.emailCdValue--
+            if (vm.emailCdValue < 0) {
+              clearInterval(cdHandle)
+            }
+          }, 1000)
+
+          // 提示发送成功
+          setTimeout(() => {
+            $(this.$refs.resetVerifyEmailModal).modal('show').on('hidden.bs.modal', () => {
+              vm.isShowingResentVerifyEmail = false
+            })
+          }, 0)
+        } catch (e) {
+          console.dir(e)
+          alert('发送验证邮件失败，可能是网络断开或请求过于频繁，请稍后再试')
+        }
       },
 
       showChangePassword () {

@@ -60,7 +60,7 @@
                 <p class="text-warning text-center" v-if="state === 'Request failed with status code 409'">已经存在相同名字的产品了</p>
 
                 <p class="text-warning text-center" v-else-if="state === 'name, productTypeId and type are required'">必须填写所有选项</p>
-                <p class="text-warning text-center" v-else-if="state !== ''">未知错误</p>
+                <p class="text-warning text-center" v-else-if="state !== ''">发生未知错误，请刷新后重试</p>
 
                 <button type="submit" class="btn btn-lg btn-primary btn-block" @click.prevent="createAndEdit">创建</button>
               </form>
