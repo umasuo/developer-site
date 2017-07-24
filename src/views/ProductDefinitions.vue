@@ -3,6 +3,8 @@
     <div class="row">
       <div class="col-sm-12">
 
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+
         <div class="eva-wizard eva-wizard--create-product form_wizard wizard_horizontal">
           <ul class="wizard_steps anchor">
             <li>
@@ -100,11 +102,14 @@
       }
     },
 
-    created () {
-      this.fetchProductTypes()
-      this.fetchProducts()
+    async created () {
+      try {
+        await Promise.all([this.fetchProductTypes(), this.fetchProducts()])
+      } catch (e) {
+        this.message = 'fail'
+      }
 
-      // prefetch libraries for DataDefinitionEditor
+      // prefetch libraries for DataDefinitionEditor, doesn't boarder if they fail to load now
       import(/* webpackChunkName: "data-editor" */ 'src/components/common/brace')
       import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
     },
