@@ -5,7 +5,7 @@ import api from 'src/api'
 import NProgress from 'nprogress'
 
 export const http = axios.create({
-  baseURL: 'http://api.evacloud.cnf/v1/',
+  baseURL: 'http://api.evacloud.cn/v1/',
   timeout: 30000
 })
 

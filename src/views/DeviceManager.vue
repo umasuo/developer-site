@@ -2,6 +2,9 @@
   <div>
     <div class="row">
       <div class="col-sm-12">
+
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+
         <div class="x_panel">
           <div class="x_title">
             <h2>过滤条件</h2>
@@ -104,11 +107,14 @@
   import api from 'src/api'
   import { mapState } from 'vuex'
 
+  let moment = null
+
   export default {
     name: 'DeviceInfo',
 
     data () {
       return {
+        message: '',
         devices: []
       }
     },
@@ -117,18 +123,32 @@
       ...mapState(['timezone'])
     },
 
-    created () {
+    async created () {
       this.fetchDevices()
+
+      try {
+        moment = await import('moment')
+        this.$forceUpdate()
+      } catch (e) {
+        console.dir(e)
+        this.message = 'fail'
+      }
     },
 
     methods: {
       async fetchDevices () {
-        this.devices = await api.device.fetchDevices()
+        try {
+          this.devices = await api.device.fetchDevices()
+        } catch (e) {
+          this.message = 'fail'
+        }
       },
 
-      async formatStatus (device) {
-        // lazyload moment
-        const moment = await import('moment')
+      formatStatus (device) {
+        // moment library might not loaded yet
+        if (!moment) {
+          return ''
+        }
 
         if (device.status === 'BIND') {
           return '于 ' +
