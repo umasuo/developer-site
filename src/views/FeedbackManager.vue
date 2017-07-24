@@ -2,6 +2,9 @@
   <div>
     <div class="row">
       <div class="col-sm-12">
+
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+
         <div class="x_panel">
           <div class="x_title">
             <h2>过滤条件</h2>
@@ -121,12 +124,16 @@
   import api from 'src/api'
   import { mapState } from 'vuex'
 
+  let moment = null
+
   export default {
     name: 'FeedbackManager',
 
     data () {
       return {
-        feedbacks: []
+        feedbacks: [],
+
+        message: ''
       }
     },
 
@@ -134,8 +141,16 @@
       ...mapState(['timezone'])
     },
 
-    created () {
-      this.fetchFeedbacks()
+    async created () {
+      try {
+        const feedbacksPromise = this.fetchFeedbacks()
+        const momentPromise = import('moment')
+        moment = (await Promise.all([momentPromise, feedbacksPromise]))[0]
+
+        this.$forceUpdate()
+      } catch (e) {
+        this.message = 'fail'
+      }
     },
 
     methods: {
@@ -143,9 +158,11 @@
         this.feedbacks = await api.feedback.fetchFeedbacks()
       },
 
-      async formatFeedbackDate (timestamp) {
-        // lazyload moment
-        const moment = await import('moment')
+      formatFeedbackDate (timestamp) {
+        // moment library might not loaded yet
+        if (!moment) {
+          return ''
+        }
 
         return moment(timestamp.toString(), 'x')
           .utcOffset(parseInt(this.timezone.substr(3)))
