@@ -150,7 +150,7 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, form, next) => {
+router.beforeEach((to, from, next) => {
   $('.modal').modal('hide')
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!api.client.isAuthorized) {

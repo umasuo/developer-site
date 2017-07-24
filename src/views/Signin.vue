@@ -118,6 +118,12 @@
       }
     },
 
+    created () {
+      if (api.client.isAuthorized) {
+        this.$router.replace({name: 'Dashboard'})
+      }
+    },
+
     methods: {
       async signin () {
         this.signinState = ''

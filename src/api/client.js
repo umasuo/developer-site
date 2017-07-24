@@ -22,12 +22,10 @@ http.interceptors.request.use(config => {
 })
 
 http.interceptors.response.use(response => {
-  // stop NProgress
   NProgress.isStarted() && NProgress.done()
 
   return response
 }, error => {
-  // stop NProgress
   NProgress.isStarted() && NProgress.done()
 
   if (error.response) {
