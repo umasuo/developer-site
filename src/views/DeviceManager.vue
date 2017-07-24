@@ -127,7 +127,7 @@
       this.fetchDevices()
 
       try {
-        moment = await import('moment')
+        moment = await import(/* webpackChunkName: "moment" */ 'moment')
         this.$forceUpdate()
       } catch (e) {
         console.dir(e)

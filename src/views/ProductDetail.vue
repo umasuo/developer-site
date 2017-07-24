@@ -284,6 +284,10 @@
     created () {
       this.fetchProducts()
       this.fetchProductTypes()
+
+      // prefetch libraries for DataDefinitionEditor
+      import(/* webpackChunkName: "data-editor" */ 'src/components/common/brace')
+      import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
     },
 
     methods: {

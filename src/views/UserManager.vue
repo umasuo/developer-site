@@ -92,7 +92,7 @@
     async created () {
       try {
         const usersPromise = this.fetchUsers()
-        const momentPromise = import('moment')
+        const momentPromise = import(/* webpackChunkName: "moment" */ 'moment')
         moment = (await Promise.all([momentPromise, usersPromise]))[0]
 
         this.$forceUpdate()

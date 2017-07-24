@@ -56,15 +56,9 @@
   import api from 'src/api'
   import { mapActions } from 'vuex'
 
-  // prefetch libraries for DataDefinitionEditor
-  // (async function () {
-  //   import(/* webpackChunkName: "data-definition-editor" */ 'brace').then(() => {
-  //     import(/* webpackChunkName: "data-definition-editor" */ 'brace/mode/json')
-  //   })
-  //   import(/* webpackChunkName: "data-definition-editor" */ 'ajv')
-  //   import(/* webpackChunkName: "data-definition-editor" */ 'ajv/lib/refs/json-schema-draft-04')
-  //   import(/* webpackChunkName: "data-definition-editor" */ 'json-schema-faker')
-  // })()
+  // prefetch libraries for DataDefinitionEditor (Copy these two line to other component)
+  // import(/* webpackChunkName: "data-editor" */ 'src/components/common/brace')
+  // import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
 
   export default {
     name: 'DataDefinitionEditor',
@@ -134,15 +128,14 @@
       }
     },
 
-    mounted () {
-      import(/* webpackChunkName: "data-definition-editor" */ 'brace').then(brace => {
-        import(/* webpackChunkName: "data-definition-editor" */ 'brace/mode/json')
-        this.editor = brace.edit(this.$refs.dataEditor)
-        this.editor.getSession().setMode('ace/mode/json')
-        if (this.viewOnly) {
-          this.editor.setReadOnly(true)
-        }
-      })
+    async mounted () {
+      const brace = (await import(/* webpackChunkName: "data-editor" */ 'src/components/common/brace')).default
+
+      this.editor = brace.edit(this.$refs.dataEditor)
+      this.editor.getSession().setMode('ace/mode/json')
+      if (this.viewOnly) {
+        this.editor.setReadOnly(true)
+      }
     },
 
     methods: {
@@ -180,12 +173,9 @@
 
       async parseSchema () {
         const schema = JSON.parse(this.editor.getValue())
-        // import Ajv from 'ajv'
-        // import draft4 from 'ajv/lib/refs/json-schema-draft-04'
-        const Ajv = await import(/* webpackChunkName: "data-definition-editor" */ 'ajv')
-        const ajv = new Ajv({allErrors: true})
-        const draft4 = await import(/* webpackChunkName: "data-definition-editor" */ 'ajv/lib/refs/json-schema-draft-04')
-        ajv.addMetaSchema(draft4)
+
+        const {ajv} = await import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
+        debugger
         const valid = ajv.validateSchema(schema)
 
         if (!valid) {
@@ -203,10 +193,12 @@
 
         try {
           const schema = await this.parseSchema()
+          debugger
           // faker is a huge module, lazy load it
-          const jsf = await import(/* webpackChunkName: "data-definition-editor" */ 'json-schema-faker')
-          jsf.option({requiredOnly: false})
-          const result = jsf(schema)
+          const {faker} = await import(/* webpackChunkName: "data-editor" */ 'src/components/common/jsonSchema')
+          debugger
+          const result = faker(schema)
+
           this.demoJson = JSON.stringify(result, null, 2)
         } catch (e) {
           this.errMsg = e.message

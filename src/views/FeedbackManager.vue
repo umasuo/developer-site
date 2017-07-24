@@ -144,7 +144,7 @@
     async created () {
       try {
         const feedbacksPromise = this.fetchFeedbacks()
-        const momentPromise = import('moment')
+        const momentPromise = import(/* webpackChunkName: "moment" */ 'moment')
         moment = (await Promise.all([momentPromise, feedbacksPromise]))[0]
 
         this.$forceUpdate()

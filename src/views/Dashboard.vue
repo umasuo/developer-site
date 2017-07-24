@@ -245,7 +245,7 @@ export default {
       // TODO: uncomment and remove following two row after api ready
       promises.push(this.fetchUserReport('daily', this.timezone))
       promises.push(this.fetchDeviceReport('daily', this.timezone))
-      promises.push(import('moment'))
+      promises.push(import(/* webpackChunkName: "moment" */ 'moment'))
 
       try {
         const [userReport, deviceReport, moment] = await Promise.all(promises)
@@ -318,7 +318,8 @@ export default {
     LineChart: async () => {
       vm.linechart.message = 'loading'
       try {
-        const component = (await import('src/components/common/LineChart')).default
+        const component = (await import(/* webpackChunkName: "LineChartComponent" */ 'src/components/common/LineChart')).default
+        vm.linechart.message = ''
         return component
       } catch (e) {
         vm.linechart.message = 'fail'
