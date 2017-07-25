@@ -23,6 +23,9 @@
 
         </div>
         <div class="modal-footer">
+          <p class="text-danger" v-if="message === 'fail'"><small>添加标准功能出错，请刷新重试</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+
           <button type="submit" class="btn btn-primary" @click.prevent="selectStdDatas">确定</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         </div>
@@ -44,7 +47,8 @@
 
     data () {
       return {
-        selectedDatas: []
+        selectedDatas: [],
+        message: ''
       }
     },
 
@@ -64,6 +68,8 @@
       ...mapActions(['updateProduct']),
 
       async selectStdDatas () {
+        this.message = ''
+
         if (this.selectedDatas.length === 0) {
           $(this.$refs.modal).modal('hide')
           return
@@ -78,7 +84,7 @@
           })
           $(this.$refs.modal).modal('hide')
         } catch (e) {
-          // TODO: handle errors
+          this.message = 'fail'
         }
       }
     }

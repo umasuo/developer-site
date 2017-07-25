@@ -1,9 +1,14 @@
 <template>
   <div class="eva-img-uploader">
     <img :src="curImg" class="eva-img-uploader__icon">
+
+    <p class="text-danger" v-if="message === 'failed to read file'"><small>加载失败</small></p>
+    <p class="text-danger" v-else-if="message === 'failed to upload'"><small>上传失败</small></p>
+    <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+
     <div class="eva-img-uploader__input-wrapper">
       <span class="eva-img-uploader__button">选择图标</span>
-      <input type="file" @change="preview">
+      <input type="file" accept=".jpg,.jpeg,.png" @change="preview">
     </div>
   </div>
 </template>
@@ -23,17 +28,20 @@
 
     data () {
       return {
-        curImg: this.imgSrc
+        curImg: this.imgSrc,
+
+        message: ''
       }
     },
 
     methods: {
       preview (e) {
         const input = e.target
+        const vm = this
 
         if (input.files && input.files[0]) {
           const reader = new FileReader()
-          const vm = this
+
           reader.onload = function (e) {
             const img = document.createElement('img')
             img.onload = async function (e) {
@@ -50,11 +58,20 @@
               vm.curImg = dataUrl
               const blob = dataURLtoBlob(dataUrl)
 
-              const uploadedUrl = await api.files.uploadFile(blob)
-              vm.$emit('input', uploadedUrl)
+              try {
+                const uploadedUrl = await api.files.uploadFile(blob)
+                vm.$emit('input', uploadedUrl)
+              } catch (e) {
+                vm.message = 'failed to upload'
+              }
             }
             img.src = e.target.result
           }
+
+          reader.onerror = function (e) {
+            vm.message = 'failed to read file'
+          }
+
           reader.readAsDataURL(input.files[0])
         }
       }
@@ -66,7 +83,7 @@
   .eva-img-uploader {
     $size: 64px;
     width: $size;
-    height: $size + 20px;
+    // height: $size + 20px;
 
     &__icon {
       width: $size;

@@ -114,6 +114,8 @@
           </div>
         </div>
 
+        <p class="text-danger" v-if="message === 'fail'"><small>保存失败，请刷新重试</small></p>
+
         <button type="submit" class="btn btn-primary" @click.prevent="updateAndBackToViewer">保存</button>
         <button type="button" class="btn btn-default" @click.prevent="cancel">取消</button>
       </form>
@@ -140,7 +142,9 @@
     data () {
       return {
         state: 'viewer',
-        editingProductBasicInfo: null
+        editingProductBasicInfo: null,
+
+        message: ''
       }
     },
 
@@ -169,13 +173,18 @@
           (({name, description, icon, openable, type, firmwareVersion, model, wifiModule}) =>
           ({action: 'updateProduct', name, description, icon, openable, type, firmwareVersion, model, wifiModule}))(this.productBasicInfo)
 
-        this.updateProduct({
-          product: this.product,
-          request: api.buildRequest(this.product.version)
-                      .addAction(updateAction)
-                      .request
-        })
-        this.state = 'viewer'
+        try {
+          this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction(updateAction)
+                        .request
+          })
+          this.state = 'viewer'
+        } catch (e) {
+          console.dir(e)
+          this.message = 'fail'
+        }
       },
 
       cancel () {

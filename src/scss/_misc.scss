@@ -45,3 +45,7 @@
     width: 20%;
   }
 }
+
+#nprogress .bar {
+  z-index: 1041;  // make NProgressbar higher than bootstrap modal backdrop
+}

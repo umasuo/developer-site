@@ -72,13 +72,17 @@
     methods: {
       ...mapActions(['updateProduct']),
 
-      removeData (id) {
-        this.updateProduct({
-          product: this.product,
-          request: api.buildRequest(this.product.version)
-                      .addAction({action: 'removeDataDefinition', dataDefinitionId: id})
-                      .request
-        })
+      async removeData (id) {
+        try {
+          await this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction({action: 'removeDataDefinition', dataDefinitionId: id})
+                        .request
+          })
+        } catch (e) {
+          alert('出现错误，删除操作失败')
+        }
       },
 
       showEditor () {

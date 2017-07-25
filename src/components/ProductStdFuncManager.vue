@@ -8,8 +8,8 @@
           </button>
           <h4 class="modal-title">管理标准功能</h4>
         </div>
-        <div class="modal-body">
 
+        <div class="modal-body">
           <div class="form-inline">
             <div class="checkbox eva-std-func-checkbox" v-for="stdFunc in availableFuncs">
               <label>
@@ -20,9 +20,12 @@
               <p class="text-warning text-center">没有可用的标准功能</p>
             </div>
           </div>
-
         </div>
+
         <div class="modal-footer">
+          <p class="text-danger" v-if="message === 'fail'"><small>添加标准功能出错，请刷新重试</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+
           <button type="submit" class="btn btn-primary" @click.prevent="selectStdFuncs">确定</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         </div>
@@ -44,7 +47,8 @@
 
     data () {
       return {
-        selectedFuncs: []
+        selectedFuncs: [],
+        message: ''
       }
     },
 
@@ -64,6 +68,7 @@
       ...mapActions(['updateProduct']),
 
       async selectStdFuncs () {
+        this.message = ''
         if (this.selectedFuncs.length === 0) {
           $(this.$refs.modal).modal('hide')
           return
@@ -78,7 +83,7 @@
           })
           $(this.$refs.modal).modal('hide')
         } catch (e) {
-          // TODO: handle errors
+          this.message = 'fail'
         }
       }
     }

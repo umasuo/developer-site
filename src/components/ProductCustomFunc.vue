@@ -80,13 +80,17 @@
         }, 0)
       },
 
-      removeFunction (functionId) {
-        this.updateProduct({
-          product: this.product,
-          request: api.buildRequest(this.product.version)
-                      .addAction({ action: 'removeFunction', functionIds: [functionId] })
-                      .request
-        })
+      async removeFunction (functionId) {
+        try {
+          await this.updateProduct({
+            product: this.product,
+            request: api.buildRequest(this.product.version)
+                        .addAction({ action: 'removeFunction', functionIds: [functionId] })
+                        .request
+          })
+        } catch (e) {
+          alert('出现错误，删除操作失败')
+        }
       }
     },
 

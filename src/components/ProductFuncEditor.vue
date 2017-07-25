@@ -42,29 +42,29 @@
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 数值范围：</label>
                 <div class="col-xs-9 form-inline">
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.startValue" disabled="viewOnly"> -
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.endValue" disabled="viewOnly">
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.startValue" :disabled="viewOnly"> -
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.endValue" :disabled="viewOnly">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 间距：</label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.interval" disabled="viewOnly">
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.interval" :disabled="viewOnly">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 倍数：</label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.multiple" disabled="viewOnly">
+                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.multiple" :disabled="viewOnly">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label">单位：</label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="" v-model="numberType.unit" disabled="viewOnly">
+                  <input type="text" class="form-control" placeholder="" v-model="numberType.unit" :disabled="viewOnly">
                 </div>
               </div>
             </template>
@@ -74,7 +74,9 @@
               <div class="form-group">
                 <label class="col-xs-3 control-label"><span class="required">*</span> 枚举值：</label>
                 <div class="col-xs-9">
-                  <textarea class="form-control" v-model="enumValues" placeholder="将枚举值填入此处，用英文逗号分隔" disabled="viewOnly"></textarea>
+                  <textarea class="form-control" v-model="enumValues" placeholder="将枚举值填入此处，用英文逗号分隔" :disabled="viewOnly"></textarea>
+                  <p class="text-danger" v-if="enumMessage === 'enum duplicated'"><small>枚举值不允许重复，保存时将会自动去重</small></p>
+                  <p class="text-danger" v-else-if="enumMessage !== ''"><small>未知错误</small></p>
                 </div>
               </div>
             </template>
@@ -119,6 +121,9 @@
 
         </div>
         <div class="modal-footer">
+          <p class="text-danger" v-if="message === 'fail'"><small>提交失败，请刷新重试</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+
           <button type="submit" class="btn btn-primary" @click.prevent="submit" v-if="!viewOnly">确定</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ viewOnly ? '关闭' : '取消' }}</button>
         </div>
@@ -157,14 +162,17 @@
     },
 
     data () {
-      const numberType = this.func.dataType.type === 'value' ? this.func.dataType : {type: 'value'}
-      const enumType = this.func.dataType.type === 'enum' ? this.func.dataType : {type: 'enum'}
+      const numberType = this.func.dataType.type === 'value' ? {...this.func.dataType} : {type: 'value'}
+      const enumType = this.func.dataType.type === 'enum' ? {...this.func.dataType} : {type: 'enum'}
 
       return {
-        editingFunc: Object.assign({}, this.func),
+        editingFunc: {...this.func},
         enumType,
         numberType,
-        enumValues: enumType.values && enumType.values.join(',')
+        enumValues: enumType.values && enumType.values.join(','),
+        enumMessage: '',
+
+        message: ''
       }
     },
 
@@ -207,15 +215,25 @@
           $(this.$refs.modal).modal('hide')
         } catch (e) {
           console.dir(e)
-          // TODO: handle errors
+          this.message = 'fail'
         }
       }
     },
 
     watch: {
-      enumValues (values) {
-        // TODO: 检查枚举值不能重复
-        this.enumType.values = values.split(',')
+      enumValues (valuesString) {
+        this.enumMessage = ''
+        const values = valuesString.split(',')
+
+        // remove duplicate values
+        const seen = {}
+        const enums = values.filter(item => seen.hasOwnProperty(item) ? false : (seen[item] = true))
+
+        if (enums.length < values.length) {
+          this.enumMessage = 'enum duplicated'
+        }
+
+        this.enumType.values = enums
       }
     }
   }

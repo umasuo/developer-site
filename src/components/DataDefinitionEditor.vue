@@ -42,6 +42,9 @@
 
         </div>
         <div class="modal-footer">
+          <p class="text-danger" v-if="message === 'fail'"><small>提交失败，请刷新重试</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
           <button type="button" class="btn btn-primary" @click="finishEditing" v-if="!viewOnly">保存</button>
         </div>
@@ -116,7 +119,9 @@
         isAddingNew,
         errMsg: null,
         showErrMsg: false,
-        demoJson: ''
+        demoJson: '',
+
+        message: ''
       }
     },
 
@@ -167,7 +172,7 @@
           $(this.$refs.modal).modal('hide')
         } catch (e) {
           console.dir(e)
-          // TODO: handle errors
+          this.message = 'fail'
         }
       },
 
