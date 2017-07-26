@@ -12,7 +12,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "docker": "node build/docker.js"
+    "docker": "node build/docker.js",
+    "fakeserver": "json-server --watch build/fakeserver/db.json --routes build/fakeserver/routes.json"
   },
   "dependencies": {
     "ajv": "^5.1.5",
