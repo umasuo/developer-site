@@ -54,6 +54,8 @@
 
     computed: {
       availableDatas () {
+        if (!this.productType.data) return []
+
         const usedDataIds = this.product.dataDefinitions.map(data => {
           return data.dataId
         })

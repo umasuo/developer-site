@@ -10,7 +10,7 @@
 
       <!-- 审核中 -->
       <template v-else-if="product.status === 'CHECKING'">
-        <button class="btn btn-lg btn-primary">取消发布 (暂无）</button>
+        <button class="btn btn-lg btn-primary">取消发布</button>
         <p>正在审核中，已经锁定产品所有功能</p>
       </template>
 

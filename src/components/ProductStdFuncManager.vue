@@ -58,6 +58,8 @@
           return func.functionId
         })
 
+        if (!this.productType.functions) return []
+
         return this.productType.functions.filter(typeFunc => {
           return !usedFunctionIds.includes(typeFunc.functionId)
         })

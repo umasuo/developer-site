@@ -122,7 +122,7 @@
             name: this.create.name,
             type: this.create.type,
             productTypeId: this.selectedType.id,
-            icon: 'https://storage.googleapis.com/test-20170716/84603f51-08f4-46ce-88aa-e8f104b403d1'
+            icon: 'http://evacloud-20170725.oss-cn-shenzhen.aliyuncs.com/ffba2349-2a38-4e40-a4f6-bb42369ba298'
           })
 
           const vm = this

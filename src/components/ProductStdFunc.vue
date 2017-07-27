@@ -96,7 +96,7 @@
             return '枚举值：' + dataType.values.join(',')
           case 'value':
             return `数值：从${dataType.startValue}到${dataType.endValue}，间隔${dataType.interval}，倍数${dataType.multiple}` +
-              (dataType.unit && ('单位' + dataType.unit))
+              (dataType.unit ? ('单位' + dataType.unit) : '')
           case 'boolean':
             return '布尔值'
           case 'string':
