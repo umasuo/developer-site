@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-12">
 
-      <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+      <div class="alert alert-danger" role="alert" v-if="message === 'fail'">{{$t('misc.fetch_data_fail')}}</div>
 
       <div class="eva-wizard form_wizard wizard_horizontal">
         <ul class="wizard_steps anchor">
@@ -10,7 +10,7 @@
               <span class="wizard_step" :class="step === 1 ? 'selected' : 'done'">
                 <span class="step_no">1</span>
                 <span class="step_descr">
-                  产品定义<br>
+                  {{$t('product_definition.product_definition')}}<br>
                 </span>
               </span>
           </li>
@@ -18,7 +18,7 @@
               <span class="wizard_step" :class="{ selected: step === 2, done: step > 2, disabled: step < 2}">
                 <span class="step_no">2</span>
                 <span class="step_descr">
-                  开发调试<br>
+                  {{$t('product_definition.develop')}}<br>
                 </span>
               </span>
           </li>
@@ -26,7 +26,7 @@
               <span class="wizard_step" :class="step === 3 ? 'selected' : 'disabled'">
                 <span class="step_no">3</span>
                 <span class="step_descr">
-                  批量投产<br>
+                  {{$t('product_definition.production')}}<br>
                 </span>
               </span>
           </li>
@@ -47,20 +47,20 @@
 
       <div class="x_panel" v-if="step === 2">
         <div class="x_title">
-          <h2>凭据</h2>
+          <h2>{{$t('product_definition.credential')}}</h2>
 
           <div class="clearfix"></div>
         </div>
         <div class="x_content form-horizontal">
           <div class="form-group">
-            <label class="col-xs-3 control-label">Union ID：</label>
+            <label class="col-xs-3 control-label">{{$t('product_definition.union_id')}}: </label>
             <div class="col-xs-9">
               <p class="control-text">{{ product.testUnion.unionId }}</p>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-xs-3 control-label">Secrect Key：</label>
+            <label class="col-xs-3 control-label">{{$t('product_definition.secrect_key')}}: </label>
             <div class="col-xs-9">
               <p class="control-text">{{ product.testUnion.secretKey }}</p>
             </div>
@@ -78,8 +78,8 @@
       <div class="col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>标准功能
-              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showStdFuncManager">管理</button>
+            <h2>{{$t('product_definition.std_func')}}
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showStdFuncManager">{{$t('misc.manage')}}</button>
             </h2>
 
             <portal to="modals" v-if="isShowingStdFuncManager && productType">
@@ -97,8 +97,8 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>自定义功能
-              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showCreateCustomFuncModal">添加</button>
+            <h2>{{$t('product_definition.custom_func')}}
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showCreateCustomFuncModal">{{$t('misc.add')}}</button>
             </h2>
 
             <portal to="modals" v-if="isCreatingCustomFunc">
@@ -117,8 +117,8 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>标准数据
-              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showStdDataModal">管理</button>
+            <h2>{{$t('product_definition.std_data')}}
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showStdDataModal">{{$t('misc.manage')}}</button>
             </h2>
 
             <portal to="modals" v-if="isShowingStdDataManager && productType">
@@ -136,8 +136,8 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>自定义数据
-              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showAddDataModal" :product="product">添加</button>
+            <h2>{{$t('product_definition.custom_data')}}
+              <button class="btn btn-xs btn-primary" v-if="!modifyDisabled" @click="showAddDataModal" :product="product">{{$t('misc.add')}}</button>
             </h2>
 
             <portal to="modals" v-if="isShowingDataDefinition">
@@ -157,7 +157,7 @@
       <div class="col-sm-8">
         <div class="x_panel">
           <div class="x_title">
-            <h2>调试设备</h2>
+            <h2>{{$t('product_definition.debug_device')}}</h2>
 
             <div class="clearfix"></div>
           </div>
@@ -166,7 +166,7 @@
               <div class="eva-dev-device">
                 <img src="http://fakeimg.pl/200x200/?text=Fake Photo">
                 <h5>Wi-Fi 联网模块／型号：QWERSADF</h5>
-                <button class="btn btn-lg btn-primary">购买开发设备</button> <!-- TODO:链接到淘宝 -->
+                <button class="btn btn-lg btn-primary">{{$t('product_definition.buy_dev_device')}}</button> <!-- TODO:链接到淘宝 -->
               </div>
             </div>
           </div>
@@ -178,13 +178,13 @@
       <div class="col-sm-8">
         <div class="x_panel">
           <div class="x_title">
-            <h2>购买模块</h2>
+            <h2>{{$t('product_definition.buy_module')}}</h2>
 
             <div class="clearfix"></div>
           </div>
           <div class="x_content form-horizontal">
             <div class="form-group">
-              <label class="col-xs-2 control-label"><span class="required">*</span> 选择模块：</label>
+              <label class="col-xs-2 control-label"><span class="required">*</span> {{$t('product_definition.choose_module')}}: </label>
               <div class="col-xs-10">
                 <label class="eva-radio-label"><input type="radio" value="1" name="devicetype"> DEMOTYPE1</label>
                 <label class="eva-radio-label"><input type="radio" value="2" name="devicetype"> DEMOTYPE2</label>
@@ -193,37 +193,37 @@
             </div>
 
             <div class="form-group">
-              <label class="col-xs-2 control-label"><span class="required">*</span> 采购数量：</label>
+              <label class="col-xs-2 control-label"><span class="required">*</span> {{$t('product_definition.buy_quantity')}}: </label>
               <div class="col-xs-10">
                 <input class="form-control" type="text">
               </div>
             </div>
 
-            <p class="eva-line-through eva-line-through__whitebg"><span>收货信息</span></p>
+            <p class="eva-line-through eva-line-through__whitebg"><span>{{$t('product_definition.shipping_info')}}</span></p>
 
             <div class="form-group">
-              <label class="col-xs-2 control-label"><span class="required">*</span> 收货人姓名：</label>
-              <div class="col-xs-10">
-                <input class="form-control" type="text">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-2 control-label"><span class="required">*</span> 联系电话：</label>
+              <label class="col-xs-2 control-label"><span class="required">*</span> {{$t('product_definition.shipping_name')}}: </label>
               <div class="col-xs-10">
                 <input class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-xs-2 control-label"><span class="required">*</span> 收货地址：</label>
+              <label class="col-xs-2 control-label"><span class="required">*</span> {{$t('product_definition.shipping_phone')}}: </label>
+              <div class="col-xs-10">
+                <input class="form-control" type="text">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-xs-2 control-label"><span class="required">*</span> {{$t('product_definition.shipping_addr')}}: </label>
               <div class="col-xs-10">
                 <textarea class="form-control"></textarea>
               </div>
             </div>
 
             <div class="text-center">
-              <a href="javascript:;" class="btn btn-lg btn-primary">提交采购申请</a>
+              <a href="javascript:;" class="btn btn-lg btn-primary">{{$t('product_definition.submit_buy_request')}}</a>
             </div>
           </div>
         </div>

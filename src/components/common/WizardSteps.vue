@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button class="btn btn-default" :disabled="step <= 1" @click="previous">上一步</button>
-    <button class="btn btn-primary" :disabled="step >= max" @click="forward">下一步</button>
+    <button class="btn btn-default" :disabled="step <= 1" @click="previous">{{$t('misc.previous_step')}}</button>
+    <button class="btn btn-primary" :disabled="step >= max" @click="forward">{{$t('misc.next_step')}}</button>
   </div>
 </template>
 

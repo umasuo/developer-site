@@ -12,10 +12,10 @@
       <span class="eva-single-page-top__brand"> Eva Cloud</span>
 
       <div class="eva-single-page-top__right">
-        <label>选择语言:
+        <label>{{$t('app.lang')}}:
           <select>
-            <option value="zh_cn">中文</option>
-            <option value="us_en">English</option>
+            <option value="zh_cn">{{$t('app.lang_options.zh_cn')}}</option>
+            <option value="en_us">{{$t('app.lang_options.en_us')}}</option>
           </select>
         </label>
       </div>
@@ -23,7 +23,7 @@
 
     <router-view></router-view>
 
-    <div class="eva-single-page-footer">网站备案号: 12312412321523 公司信息</div>
+    <div class="eva-single-page-footer">{{$t('app.icp_license')}}</div>
   </div>
 </template>
 

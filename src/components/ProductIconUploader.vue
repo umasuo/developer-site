@@ -2,12 +2,12 @@
   <div class="eva-img-uploader">
     <img :src="curImg" class="eva-img-uploader__icon">
 
-    <p class="text-danger" v-if="message === 'failed to read file'"><small>加载失败</small></p>
-    <p class="text-danger" v-else-if="message === 'failed to upload'"><small>上传失败</small></p>
-    <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+    <p class="text-danger" v-if="message === 'failed to read file'"><small>{{$t('product_definition.basic_info.load_fail')}}</small></p>
+    <p class="text-danger" v-else-if="message === 'failed to upload'"><small>{{$t('product_definition.basic_info.upload_fail')}}</small></p>
+    <p class="text-danger" v-else-if="message !== ''"><small>{{$t('product_definition.basic_info.unknow_error')}}</small></p>
 
     <div class="eva-img-uploader__input-wrapper">
-      <span class="eva-img-uploader__button">选择图标</span>
+      <span class="eva-img-uploader__button">{{$t('product_definition.basic_info.select_icon')}}</span>
       <input type="file" accept=".jpg,.jpeg,.png" @change="preview">
     </div>
   </div>

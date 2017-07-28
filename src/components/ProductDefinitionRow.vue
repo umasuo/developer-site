@@ -11,7 +11,7 @@
       <td style="width: 80px;" v-if="productType">
         {{ productType.name }}
       </td>
-      <td style="width: 80px;" v-else>加载中...</td>
+      <td style="width: 80px;" v-else>{{$t('misc.loading')}}</td>
     </template>
 
     <td>
@@ -26,9 +26,9 @@
       {{ product.status }}
     </td>
     <td style="width: 100px;">
-      <router-link :to="{ name: 'ProductDetail', params: { pid: product.id } }" href="javascript:;">编辑</router-link>
+      <router-link :to="{ name: 'ProductDetail', params: { pid: product.id } }" href="javascript:;">{{$t('misc.edit')}}</router-link>
       <!-- TODO: confirm delete dialog -->
-      <a href="javascript:;" @click="deleteProduct(product)">删除</a>
+      <a href="javascript:;" @click="deleteProduct(product)">{{$t('misc.delete')}}</a>
     </td>
   </tr>
 </template>

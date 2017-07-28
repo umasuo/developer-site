@@ -12,7 +12,7 @@
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right">
               <li v-if="!isVerified">
-                <a href="javascript:;" @click="reverifyEmail"> 重发验证邮件{{emailCd}}</a>
+                <a href="javascript:;" @click="reverifyEmail"> {{$t('auth.resent_verify_email')}}{{emailCd}}</a>
 
                 <portal></portal>
                 <portal to="modals" v-if="isShowingResentVerifyEmail">
@@ -21,13 +21,11 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="myModalLabel">发送成功</h4>
+                          <h4 class="modal-title" id="myModalLabel">{{$t('auth.resent_success')}}</h4>
                         </div>
-                        <div class="modal-body">
-                          一封验证邮件已发送至您的邮箱。
-                        </div>
+                        <div class="modal-body">{{$t('auth.go_verify_email')}}</div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">{{$t('misc.confirm')}}</button>
                         </div>
                       </div>
                     </div>
@@ -35,14 +33,13 @@
                 </portal>
               </li>
               <li>
-                <!-- TODO: route link 到修改密码页面 -->
-                <a href="javascript:;" @click="showChangePassword"> 修改密码</a>
+                <a href="javascript:;" @click="showChangePassword"> {{$t('auth.change_pwd')}}</a>
 
                 <portal to="modals" v-if="isShowingChangePassword">
                   <ChangePassword ref="changePasswordModal"></ChangePassword>
                 </portal>
               </li>
-              <li><a href="javascript:;" @click="signout"><i class="fa fa-sign-out pull-right"></i> 注销</a></li>
+              <li><a href="javascript:;" @click="signout"><i class="fa fa-sign-out pull-right"></i> {{$t('auth.logout')}}</a></li>
             </ul>
           </li>
 
@@ -147,7 +144,7 @@
     methods: {
       async reverifyEmail () {
         if (this.emailCdValue >= 0) {
-          alert('请等待倒计时结束后再次发送')
+          alert(this.$t('auth.wait_for_cd'))
           return
         }
 
@@ -173,7 +170,7 @@
           }, 0)
         } catch (e) {
           console.dir(e)
-          alert('发送验证邮件失败，可能是网络断开或请求过于频繁，请稍后再试')
+          alert(this.$t('auth.might_cd_wrong'))
         }
       },
 

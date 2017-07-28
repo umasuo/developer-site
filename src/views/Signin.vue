@@ -5,31 +5,31 @@
       <div class="form login_form" v-show="!showRegister">
         <section class="login_content">
           <form>
-            <h1 class="eva-line-through-title">登陆</h1>
+            <h1 class="eva-line-through-title">{{$t('auth.login')}}</h1>
             <div>
-              <input type="text" class="form-control" placeholder="邮箱" v-model="signinData.email" required="" />
+              <input type="text" class="form-control" :placeholder="$t('auth.email')" v-model="signinData.email" required="" />
             </div>
             <div>
-              <input type="password" class="form-control" placeholder="密码" v-model="signinData.password" required="" />
+              <input type="password" class="form-control" :placeholder="$t('auth.pwd')" v-model="signinData.password" required="" />
             </div>
 
-            <p class="text-warning" v-if="signinState === 'email not valid'">邮箱格式错误，请检查后再试</p>
-            <p class="text-warning" v-else-if="signinState === 'password not valid'">密码格式错误，至少需要8位，包含小写字母及数字</p>
-            <p class="text-warning" v-else-if="signinState === 'fetching'">请稍候...</p>
-            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 404'">用户不存在</p>
-            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 401'">邮箱或密码错误</p>
-            <p class="text-warning" v-else-if="signinState !== ''">发生未知错误，请刷新后重试</p>
+            <p class="text-warning" v-if="signinState === 'email not valid'">{{$t('auth.email_format_wrong')}}</p>
+            <p class="text-warning" v-else-if="signinState === 'password not valid'">{{$t('auth.pwd_format_wrong')}}</p>
+            <p class="text-warning" v-else-if="signinState === 'fetching'">{{$t('misc.pls_wait')}}</p>
+            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 404'">{{$t('auth.account_not_exist')}}</p>
+            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 401'">{{$t('credential_wrong')}}</p>
+            <p class="text-warning" v-else-if="signinState !== ''">{{$t('misc.unknow_error')}}</p>
 
             <div>
-              <button class="btn btn-default submit" type="submit" @click.prevent="signin" :disabled="signinState === 'fetching'">登陆</button>
-              <router-link class="reset_pass" :to="{name: 'ResetPwd', query: {step: 1}}">忘记密码？</router-link>
+              <button class="btn btn-default submit" type="submit" @click.prevent="signin" :disabled="signinState === 'fetching'">{{$t('auth.login')}}</button>
+              <router-link class="reset_pass" :to="{name: 'ResetPwd', query: {step: 1}}">{{$t('auth.forgot')}}</router-link>
             </div>
 
             <div class="clearfix"></div>
 
             <div class="separator">
-              <p class="change_link">还没有账户？
-                <a href="#" class="to_register" @click.prevent="showRegister = true"> 注册一个 </a>
+              <p class="change_link">{{$t('auth.no_account')}}
+                <a href="#" class="to_register" @click.prevent="showRegister = true"> {{$t('auth.go_register')}} </a>
               </p>
 
               <div class="clearfix"></div>
@@ -48,33 +48,34 @@
       <div id="register" class="animate form registration_form" v-show="showRegister">
         <section class="login_content">
           <form>
-            <h1>注册账号</h1>
+            <h1>{{$t('auth.register')}}</h1>
             <div>
-              <input type="text" class="form-control" placeholder="邮箱" v-model="signupData.email" required />
+              <input type="text" class="form-control" :placeholder="$t('auth.email')" v-model="signupData.email" required />
             </div>
             <div>
-              <input type="password" class="form-control" placeholder="密码" v-model="signupData.password" required />
+              <input type="password" class="form-control" :placeholder="$t('auth.pwd')" v-model="signupData.password" required />
             </div>
             <div>
-              <input type="password" class="form-control" placeholder="重复密码" v-model="signupData.repeatPassword" required />
+              <input type="password" class="form-control" :placeholder="$t('auth.repeat_pwd')" v-model="signupData.repeatPassword" required />
             </div>
 
-            <p class="text-warning" v-if="registerState === 'success'">一封包含验证链接的邮件已经发送到您填写的邮箱，请查看邮件并跟随邮件内指引操作。</p>
-            <p class="text-warning" v-else-if="registerState === 'email not valid'">邮箱格式错误，请检查后再试</p>
-            <p class="text-warning" v-else-if="registerState === 'password not valid'">密码格式错误，至少需要8位，包含小写字母及数字</p>
-            <p class="text-warning" v-else-if="registerState === 'fetching'">请稍候...</p>
-            <p class="text-warning" v-else-if="registerState === 'Request failed with status code 409'">该邮箱已经注册</p>
-            <p class="text-warning" v-else-if="registerState !== ''">发生未知错误，请刷新后重试</p>
+            <p class="text-warning" v-if="registerState === 'success'">{{$t('auth.go_verify_email')}}</p>
+            <p class="text-warning" v-else-if="registerState === 'email not valid'">{{$t('auth.email_format_wrong')}}</p>
+            <p class="text-warning" v-else-if="registerState === 'password not valid'">{{$t('auth.pwd_format_wrong')}}</p>
+            <p class="text-warning" v-else-if="registerState === 'repeat password not match'">{{$t('auth.rpwd_not_match')}}</p>
+            <p class="text-warning" v-else-if="registerState === 'fetching'">{{$t('misc.pls_wait')}}</p>
+            <p class="text-warning" v-else-if="registerState === 'Request failed with status code 409'">{{$t('auth.email_taken')}}</p>
+            <p class="text-warning" v-else-if="registerState !== ''">{{$t('misc.unknow_error')}}</p>
 
             <div>
-              <button class="btn btn-default submit" type="submit" @click.prevent="register" :disabled="registerState === 'fetching'">注册</button>
+              <button class="btn btn-default submit" type="submit" @click.prevent="register" :disabled="registerState === 'fetching'">{{$t('auth.register')}}</button>
             </div>
 
             <div class="clearfix"></div>
 
             <div class="separator">
-              <p class="change_link">已经有一个账号了?
-                <a href="#" class="to_register" @click.prevent="showRegister = false"> 登陆 </a>
+              <p class="change_link">{{$t('auth.has_account')}}
+                <a href="#" class="to_register" @click.prevent="showRegister = false"> {{$t('auth.login')}} </a>
               </p>
 
               <div class="clearfix"></div>

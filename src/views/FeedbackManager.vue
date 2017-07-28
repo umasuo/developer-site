@@ -3,64 +3,64 @@
     <div class="row">
       <div class="col-sm-12">
 
-        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">{{$t('misc.fetch_data_fail')}}</div>
 
         <div class="x_panel">
           <div class="x_title">
-            <h2>过滤条件</h2>
+            <h2>{{$t('misc.filter_options')}}</h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <form class="form-inline">
               <div>
                 <div class="form-group">
-                  <label>产品:
+                  <label>{{$t('device_manage.product')}}:
                     <select class="form-control">
-                      <option value="all" selected="selected">所有产品</option>
-                      <!-- <option value="id1" >手环</option>
-                      <option value="id2" >体重秤</option> -->
+                      <option value="all" selected="selected">{{$t('device_manage.p_all_product')}}</option>
+                      <!-- <option value="id1" >{{$t('device_manage.p_band')}}</option>
+                      <option value="id2" >{{$t('device_manage.p_weight')}</option> -->
                     </select>
                   </label>
                 </div>
 
                 <div class="form-group">
-                  <label>反馈类型:
+                  <label>{{$t('feedback_manage.type')}}:
                     <select class="form-control">
-                      <option value="all" selected="selected">所有类型</option>
-                      <option value="id1" >咨询</option>
-                      <option value="id2" >感谢</option>
-                      <option value="id2" >投诉</option>
-                      <option value="id2" >报错</option>
+                      <option value="all" selected="selected">{{$t('feedback_manage.t_all')}}</option>
+                      <option value="id1" >{{$t('feedback_manage.t_question')}}</option>
+                      <option value="id2" >{{$t('feedback_manage.t_thanks')}}</option>
+                      <option value="id2" >{{$t('feedback_manage.t_complain')}}</option>
+                      <option value="id2" >{{$t('feedback_manage.t_error')}}</option>
                     </select>
                   </label>
                 </div>
 
                 <div class="form-group">
                   <label class="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox1" value="option1"> 是否已处理
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> {{$t('feedback_manage.is_handled')}}
                   </label>
                 </div>
               </div>
 
               <div>
                 <div class="form-group">
-                  <label>用户手机:
+                  <label>{{$t('device_manage.user_phone')}}:
                     <input type="text" class="form-control"/>
                   </label>
                 </div>
                 <div class="form-group">
-                  <label>出厂ID:
+                  <label>{{$t('device_manage.union_id')}}:
                     <input type="text" class="form-control"/>
                   </label>
                 </div>
                 <div class="form-group">
-                  <label>设备ID:
+                  <label>{{$t('device_manage.device_id')}}:
                     <input type="text" class="form-control"/>
                   </label>
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-default">搜索</button>
+              <button type="submit" class="btn btn-default">{{$t('misc.search')}}</button>
             </form>
           </div>
         </div>
@@ -73,7 +73,7 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>用户反馈列表</h2>
+            <h2>{{$t('feedback_manage.feedback_list')}}</h2>
 
             <div class="clearfix"></div>
           </div>
@@ -82,16 +82,16 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>用户手机</th>
-                  <th>反馈类型</th>
-                  <th>设备ID</th>
+                  <th>{{$t('device_manage.user_phone')}}</th>
+                  <th>{{$t('feedback_manage.type')}}</th>
+                  <th>{{$t('device_manage.device_id')}}</th>
                   <!-- TODO: show this -->
                   <!-- <th>设备类型</th> -->
-                  <th>标题</th>
-                  <th>反馈时间</th>
+                  <th>{{$t('misc.title')}}</th>
+                  <th>{{$t('feedback_manage.feedback_date')}}</th>
                   <!-- TODO: show this -->
                   <!-- <th>处理人员</th> -->
-                  <th>处理时间</th>
+                  <th>{{$t('feedback_manage.handle_date')}}</th>
                   <!-- <th>状态</th> -->
                   <!-- <th>操作</th> -->
                 </tr>
@@ -173,10 +173,10 @@
     filters: {
       formatFeedbackType (type) {
         switch (type) {
-          case 'QUESTION': return '咨询'
-          case 'THANKS': return '感谢'
-          case 'COMPLAIN': return '投诉'
-          case 'ERROR': return '报错'
+          case 'QUESTION': return this.$t('feedback_manage.t_question')
+          case 'THANKS': return this.$t('feedback_manage.t_thanks')
+          case 'COMPLAIN': return this.$t('feedback_manage.t_complain')
+          case 'ERROR': return this.$t('feedback_manage.t_error')
         }
       }
     }

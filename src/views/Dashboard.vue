@@ -2,25 +2,25 @@
   <div>
     <div class="row tile_count">
       <div class="col-md-3 col-sm-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-plus"></i> 新激活设备（今日）</span>
+        <span class="count_top"><i class="fa fa-plus"></i> {{$t('dashboard.today_new_device')}}</span>
         <div class="count">{{ dailyDeviceIncrease }}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> 在线设备</span>
+        <span class="count_top"><i class="fa fa-clock-o"></i> {{$t('dashboard.today_active_device')}}</span>
         <div class="count green">{{ dailyDeviceActive }}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> 新增用户（今日）</span>
+        <span class="count_top"><i class="fa fa-user"></i> {{$t('dashboard.today_increase_user')}}</span>
         <div class="count">{{ dailyUserIncrease }}</div>
       </div>
       <div class="col-md-3 col-sm-6 tile_stats_count">
         <!-- <span class="count_top"><i class="fa fa-user"></i> 新用户反馈（今日）</span> -->
-        <span class="count_top"><i class="fa fa-users"></i> 总用户数</span>
+        <span class="count_top"><i class="fa fa-users"></i> {{$t('dashboard.today_total_user')}}</span>
         <div class="count">{{ dailyUserTotal }}</div>
       </div>
     </div>
 
-    <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+    <div class="alert alert-danger" role="alert" v-if="message === 'fail'">{{$t('misc.fetch_data_fail')}}</div>
 
     <div class="row">
       <div class="col-xs-12">
@@ -40,15 +40,15 @@
               </div> -->
 
               <div class="form-group">
-                <label>选择时间周期：
+                <label>{{$t('dashboard.select_time')}}
                   <select class="form-control" v-model="reportType">
-                    <option value="weekly">过去7天</option>
-                    <option value="monthly">过去30天</option>
+                    <option value="weekly">{{$t('dashboard.week')}}</option>
+                    <option value="monthly">{{$t('dashboard.month')}}</option>
                   </select>
                 </label>
               </div>
 
-              <button class="form-control btn-default" @click.prevent="fetchReport">查询</button>
+              <button class="form-control btn-default" @click.prevent="fetchReport">{{$t('misc.search')}}</button>
             </form>
           </div>
         </div>
@@ -58,30 +58,30 @@
     <div class="row">
       <div class="col-xs-12">
         <TabPanel>
-          <p v-if="linechart.message === 'loading'">正在加载...</p>
-          <p v-else-if="linechart.message === 'fail'">图表模块加载失败，请刷新重试</p>
+          <p v-if="linechart.message === 'loading'">{{$t('misc.loading')}}</p>
+          <p v-else-if="linechart.message === 'fail'">{{$t('dashboard.chart_fail')}}</p>
 
-          <TabPanelItem title="新增设备" active=true>
+          <TabPanelItem :title="$t('dashboard.device_increase')" active=true>
             <LineChart class="eva-chart" v-if="deviceIncrease" :chartData="deviceIncrease"></LineChart>
           </TabPanelItem>
 
-          <TabPanelItem title="活跃设备">
+          <TabPanelItem :title="$t('dashboard.device_active')">
             <LineChart class="eva-chart" v-if="deviceActive" :chartData="deviceActive"></LineChart>
           </TabPanelItem>
 
-          <TabPanelItem title="总设备">
+          <TabPanelItem :title="$t('dashboard.device_total')">
             <LineChart class="eva-chart" v-if="deviceTotal" :chartData="deviceTotal"></LineChart>
           </TabPanelItem>
 
-          <TabPanelItem title="新增用户">
+          <TabPanelItem :title="$t('dashboard.user_increase')">
             <LineChart class="eva-chart" v-if="userIncrease" :chartData="userIncrease"></LineChart>
           </TabPanelItem>
 
-          <TabPanelItem title="活跃用户">
+          <TabPanelItem :title="$t('dashboard.user_active')">
             <LineChart class="eva-chart" v-if="userActive" :chartData="userActive"></LineChart>
           </TabPanelItem>
 
-          <TabPanelItem title="总用户">
+          <TabPanelItem :title="$t('dashboard.user_total')">
             <LineChart class="eva-chart" v-if="userTotal" :chartData="userTotal"></LineChart>
           </TabPanelItem>
 
@@ -96,8 +96,8 @@
       <div class="col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>报表
-              <button class="btn btn-xs btn-primary" @click="downloadReportCSV">下载报表（CSV）</button>
+            <h2>{{$t('dashboard.report')}}
+              <button class="btn btn-xs btn-primary" @click="downloadReportCSV">{{$t('dashboard.download_report')}}</button>
             </h2>
 
             <div class="clearfix"></div>
@@ -107,13 +107,13 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>日期</th>
-                    <th>新增设备</th>
-                    <th>活跃设备</th>
-                    <th>总设备</th>
-                    <th>新增用户</th>
-                    <th>活跃用户</th>
-                    <th>总用户</th>
+                    <th>{{$t('dashboard.date')}}</th>
+                    <th>{{$t('dashboard.device_increase')}}</th>
+                    <th>{{$t('dashboard.device_active')}}</th>
+                    <th>{{$t('dashboard.device_total')}}</th>
+                    <th>{{$t('dashboard.user_increase')}}</th>
+                    <th>{{$t('dashboard.user_active')}}</th>
+                    <th>{{$t('dashboard.user_total')}}</th>
                     <!-- <th>新增反馈</th> -->
                   </tr>
                 </thead>

@@ -19,8 +19,8 @@
 
           <div class="clearfix area-selector">
             <select class="form-control area-selector__content">
-              <option value="cn">中国区域</option>
-              <option value="us">北美区域</option>
+              <option value="cn">{{$t('app.area.cn')}}</option>
+              <option value="us">{{$t('app.area.na')}}</option>
             </select>
           </div>
 
@@ -33,6 +33,10 @@
             </div>
           </div>
           <!-- /sidebar menu -->
+
+          <div class="sidebar-footer">
+            {{$t('app.icp_license')}}
+          </div>
         </div>
       </div>
 
@@ -47,19 +51,19 @@
 
       <!-- footer content -->
       <footer>
-        Eva Cloud developer console
+        {{$t('app.console_footer')}}
         <div class="pull-right form-inline">
           <div class="form-group">
-            <label>语言:
+            <label>{{$t('app.lang')}}:
               <select>
-                <option value="zh_cn">中文</option>
-                <option value="us_en">English</option>
+                <option value="zh_cn">{{$t('app.lang_options.zh_cn')}}</option>
+                <option value="en_us">{{$t('app.lang_options.en_us')}}</option>
               </select>
             </label>
           </div>
 
           <div class="form-group">
-            <label>时区:
+            <label>{{$t('app.timezone')}}:
               <select :value="timezone" @input="updateTimezone">
                 <option v-for="gmt in 25" :value="'GMT' + (gmt - 13 < 0 ? '' : '+') + (gmt - 13)">GMT{{ (gmt - 13 < 0 ? '' : '+') + (gmt - 13) }}</option>
               </select>
@@ -86,12 +90,12 @@
       return {
         menu: [
           {
-            title: '仪表盘',
+            title: this.$t('nav.dashboard'),
             faIcon: 'fa-tachometer',
             toName: 'Dashboard'
           },
           {
-            title: '产品定义',
+            title: this.$t('nav.product_definition'),
             faIcon: 'fa-tablet',
             toName: 'ProductDefinitions'
             /* subMenu: [
@@ -106,7 +110,7 @@
             ] */
           },
           {
-            title: '运营',
+            title: this.$t('nav.processing'),
             faIcon: 'fa-line-chart',
             subMenu: [
               // { 暂时保留不显示
@@ -114,7 +118,7 @@
               //   toName: 'DataSummary'
               // },
               {
-                name: '设备管理',
+                name: this.$t('nav.device_manage'),
                 toName: 'ManageDevices'
               },
 //              {
@@ -122,7 +126,7 @@
 //                toName: 'DataProcessor'
 //              },
               {
-                name: '用户列表',
+                name: this.$t('nav.user_list'),
                 toName: 'UserManager'
               },
               // {
@@ -130,13 +134,13 @@
               //   toName: 'MessageManager'
               // },
               {
-                name: '用户反馈',
+                name: this.$t('nav.user_feedback'),
                 toName: 'FeedbackManager'
               }
             ]
           },
           {
-            title: '文档',
+            title: this.$t('nav.documentation'),
             faIcon: 'fa-book',
             toHref: '/document'
           }
@@ -187,5 +191,11 @@
       background-color: transparent;
       color: white;
     }
+  }
+
+  .sidebar-footer {
+    font-size: 12px;
+    text-align: center;
+    margin: 5px 0;
   }
 </style>

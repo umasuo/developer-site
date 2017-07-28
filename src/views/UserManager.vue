@@ -3,27 +3,27 @@
     <div class="row">
       <div class="col-sm-12">
 
-        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">{{$t('misc.fetch_data_fail')}}</div>
 
         <div class="x_panel">
           <div class="x_title">
-            <h2>过滤条件</h2>
+            <h2>{{$t('misc.filter_options')}}</h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <form class="form-inline">
               <div class="form-group">
-                <label>用户ID:
+                <label>{{$t('user_manage.user_id')}}:
                   <input type="text" class="form-control" v-model="id"/>
                 </label>
               </div>
               <div class="form-group">
-                <label>用户手机:
+                <label>{{$t('device_manage.user_phone')}}:
                   <input type="text" class="form-control" v-model="phone"/>
                 </label>
               </div>
 
-              <button type="submit" class="btn btn-default">搜索</button>
+              <button type="submit" class="btn btn-default">{{$t('misc.search')}}</button>
             </form>
           </div>
         </div>
@@ -34,7 +34,7 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>用户列表</h2>
+            <h2>{{$t('user_manage.user_list')}}</h2>
 
             <div class="clearfix"></div>
 
@@ -44,9 +44,9 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>用户 ID</th>
-                  <th>用户手机</th>
-                  <th>注册时间</th>
+                  <th>{{$t('user_manage.user_id')}}</th>
+                  <th>{{$t('device_manage.user_phone')}}</th>
+                  <th>{{$t('user_manage.register_date')}}</th>
                 </tr>
               </thead>
               <tbody>

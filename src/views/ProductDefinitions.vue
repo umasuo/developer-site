@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12">
 
-        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">{{$t('misc.fetch_data_fail')}}</div>
 
         <div class="eva-wizard eva-wizard--create-product form_wizard wizard_horizontal">
           <ul class="wizard_steps anchor">
@@ -11,7 +11,7 @@
               <span class="wizard_step selected">
                 <span class="step_no">1</span>
                 <span class="step_descr">
-                  产品定义<br>
+                  {{$t('product_definition.product_definition')}}<br>
                 </span>
               </span>
             </li>
@@ -19,7 +19,7 @@
               <span class="wizard_step disabled">
                 <span class="step_no">2</span>
                 <span class="step_descr">
-                  开发调试<br>
+                  {{$t('product_definition.develop')}}<br>
                 </span>
               </span>
             </li>
@@ -27,15 +27,15 @@
               <span class="wizard_step disabled">
                 <span class="step_no">3</span>
                 <span class="step_descr">
-                  批量投产<br>
+                  {{$t('product_definition.production')}}<br>
                 </span>
               </span>
             </li>
           </ul>
 
           <div class="stepContainer">
-            <button class="btn btn-lg btn-primary" @click="createProd()">创建产品</button>
-            <p class="eva-line-through"><span>或快速创建</span></p>
+            <button class="btn btn-lg btn-primary" @click="createProd()">{{$t('product_definition.create_product')}}</button>
+            <p class="eva-line-through"><span>{{$t('product_definition.quick_create')}}</span></p>
 
             <ul class="eva-quick-prod">
               <li v-for="productType in recommandProductTypes">
@@ -56,7 +56,7 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>产品列表</h2>
+            <h2>{{$t('product_definition.product_list')}}</h2>
 
             <div class="clearfix"></div>
           </div>
@@ -65,13 +65,13 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>图标</th>
-                  <th>名称</th>
-                  <th>类型</th>
-                  <th>介绍</th>
-                  <th>联网类型</th>
-                  <th>状态</th>
-                  <th>操作</th>
+                  <th>{{$t('misc.icon')}}</th>
+                  <th>{{$t('misc.name')}}</th>
+                  <th>{{$t('misc.type')}}</th>
+                  <th>{{$t('misc.description')}}</th>
+                  <th>{{$t('product_definition.network_type')}}</th>
+                  <th>{{$t('misc.state')}}</th>
+                  <th>{{$t('misc.operation')}}</th>
                 </tr>
               </thead>
               <tbody>

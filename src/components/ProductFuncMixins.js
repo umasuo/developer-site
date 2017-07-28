@@ -1,16 +1,21 @@
+import { parseTpl } from 'src/utils'
+
 export default {
-  filters: {
+  methods: {
     stringifyDataTypeValue (dataType) {
       switch (dataType.type) {
         case 'enum':
-          return '枚举值：' + dataType.values.join(',')
+          return this.$t('product_definition.func.datatype.enum') +
+                 ': ' + dataType.values.join(',')
         case 'value':
-          return `数值：从${dataType.startValue}到${dataType.endValue}，间隔${dataType.interval}，倍数${dataType.multiple}` +
-            (dataType.unit ? ('单位' + dataType.unit) : '')
+          return parseTpl(this.$t('product_definition.func.datatype.value_1', {
+            dataType
+          })) +
+          (dataType.unit ? (this.$t('misc.unit') + dataType.unit) : '')
         case 'boolean':
-          return '布尔值'
+          return this.$t('product_definition.func.datatype.bool')
         case 'string':
-          return '字符串'
+          return this.$t('product_definition.func.datatype.string')
       }
     },
 
@@ -28,13 +33,13 @@ export default {
     stringifyDataType (dataType) {
       switch (dataType.type) {
         case 'enum':
-          return '枚举值'
+          return this.$t('product_definition.func.datatype.enum')
         case 'value':
-          return '数值'
+          return this.$t('product_definition.func.datatype.value')
         case 'boolean':
-          return '布尔值'
+          return this.$t('product_definition.func.datatype.bool')
         case 'string':
-          return '字符串'
+          return this.$t('product_definition.func.datatype.string')
       }
     }
   }

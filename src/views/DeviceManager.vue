@@ -3,52 +3,52 @@
     <div class="row">
       <div class="col-sm-12">
 
-        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">部分数据获取失败，可能是网络断开，请刷新重试</div>
+        <div class="alert alert-danger" role="alert" v-if="message === 'fail'">{{$t('misc.fetch_data_fail')}}</div>
 
         <div class="x_panel">
           <div class="x_title">
-            <h2>过滤条件</h2>
+            <h2>{{$t('misc.filter_options')}}</h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
             <form class="form-inline">
               <div>
                 <div class="form-group">
-                  <label>产品:
+                  <label>{{$t('device_manage.product')}}:
                     <select class="form-control">
-                      <option value="all" selected="selected">所有产品</option>
-                      <option value="id1" >手环</option>
-                      <option value="id2" >体重秤</option>
+                      <option value="all" selected="selected">{{$t('device_manage.p_all_product')}}</option>
+                      <option value="id1" >{{$t('device_manage.p_band')}}</option>
+                      <option value="id2" >{{$t('device_manage.p_weight')}}</option>
                     </select>
                   </label>
                 </div>
 
                 <div class="form-group">
                   <label class="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox1" value="option1"> 是否激活
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> {{$t('device_manage.is_active')}}
                   </label>
                 </div>
               </div>
 
               <div>
                 <div class="form-group">
-                  <label>用户手机:
+                  <label>{{$t('device_manage.is_active')}}:
                     <input type="text" class="form-control"/>
                   </label>
                 </div>
                 <div class="form-group">
-                  <label>出厂ID:
+                  <label>{{$t('device_manage.union_id')}}:
                     <input type="text" class="form-control"/>
                   </label>
                 </div>
                 <div class="form-group">
-                  <label>设备ID:
+                  <label>{{$t('device_manage.device_id')}}:
                     <input type="text" class="form-control"/>
                   </label>
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-default">搜索</button>
+              <button type="submit" class="btn btn-default">{{$t('misc.search')}}</button>
             </form>
           </div>
         </div>
@@ -59,7 +59,7 @@
       <div class="col-sm-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>设备列表</h2>
+            <h2>{{$t('device_manage.device_list')}}</h2>
 
             <div class="clearfix"></div>
           </div>
@@ -68,12 +68,12 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>设备图标</th>
-                  <th>设备ID</th>
-                  <th>出厂ID</th>
-                  <th>所属产品</th>
-                  <th>所属用户</th>
-                  <th>绑定状态</th>
+                  <th>{{$t('device_manage.device_icon')}}</th>
+                  <th>{{$t('device_manage.device_id')}}</th>
+                  <th>{{$t('device_manage.union_id')}}</th>
+                  <th>{{$t('device_manage.belong_product')}}</th>
+                  <th>{{$t('device_manage.belong_user')}}</th>
+                  <th>{{$t('device_manage.binding_state')}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -151,17 +151,17 @@
         }
 
         if (device.status === 'BIND') {
-          return '于 ' +
+          return this.$t('device_manage.binding_state_1') + ' ' +
             moment(device.bindTime.toString(), 'x')
               .utcOffset(parseInt(this.timezone.substr(3)))
               .format('YYYY/MM/DD') +
-            ' 绑定'
+            ' ' + this.$t('device_manage.binding_state_2')
         } else {
-          return '于 ' +
+          return this.$t('device_manage.binding_state_1') + ' ' +
             moment(device.unbindTime.toString(), 'x')
               .utcOffset(parseInt(this.timezone.substr(3)))
               .format('YYYY/MM/DD') +
-            ' 解绑'
+            ' ' + this.$t('device_manage.binding_state_3')
         }
       }
     }
