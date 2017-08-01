@@ -8,9 +8,9 @@ export default {
           return this.$t('product_definition.func.datatype.enum') +
                  ': ' + dataType.values.join(',')
         case 'value':
-          return parseTpl(this.$t('product_definition.func.datatype.value_1', {
+          return parseTpl(this.$t('product_definition.func.datatype.value_1'), {
             dataType
-          })) +
+          }) +
           (dataType.unit ? (this.$t('misc.unit') + dataType.unit) : '')
         case 'boolean':
           return this.$t('product_definition.func.datatype.bool')
@@ -22,11 +22,11 @@ export default {
     stringifyTransferType (transferType) {
       switch (transferType) {
         case 'UP':
-          return '只上报'
+          return this.$t('product_definition.func.transfer.up')
         case 'DOWN':
-          return '只下发'
+          return this.$t('product_definition.func.transfer.down')
         case 'UPDOWN':
-          return '可上报可下发'
+          return this.$t('product_definition.func.transfer.updown')
       }
     },
 

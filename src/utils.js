@@ -11,13 +11,13 @@ export default {
 }
 
 function get (path, obj, fb = `$\{${path}}`) {
-  return path.split('.').reduce((res, key) => res[key] || fb, obj)
+  return path.split('.').reduce((res, key) => {
+    return res[key]
+  }, obj)
 }
 
 export function parseTpl (template, map, fallback) {
-  debugger
   return template.replace(/\$\{.+?}/g, (match) => {
-    debugger
     const path = match.substr(2, match.length - 3).trim()
     const value = get(path, map, fallback)
     return value
