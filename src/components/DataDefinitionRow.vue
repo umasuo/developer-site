@@ -5,10 +5,10 @@
     <td>{{ dataDefinition.description }}</td>
     <td>
       <span>
-        <a href="javascript:;" @click="openEditor">编辑</a>
+        <a href="javascript:;" @click="openEditor">{{$t('misc.edit')}}</a>
         <DataDefinitionEditor ref="editor" :dataDefinition="dataDefinition"></DataDefinitionEditor>
       </span>
-      <a href="javascript:;" @click="removeDataDefinition">删除</a>
+      <a href="javascript:;" @click="removeDataDefinition">{{$t('misc.delete')}}</a>
     </td>
   </tr>
 </template>

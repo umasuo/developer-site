@@ -2,10 +2,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Data ID</th>
-        <th>数据名</th>
-        <th>描述</th>
-        <th>操作</th>
+        <th>{{$t('product_definition.data.id')}}</th>
+        <th>{{$t('product_definition.data.name')}}</th>
+        <th>{{$t('misc.description')}}</th>
+        <th>{{$t('misc.operation')}}</th>
       </tr>
     </thead>
     <tbody>
@@ -14,10 +14,10 @@
         <td>{{ data.name }}</td>
         <td>{{ data.description }}</td>
         <td>
-          <a href="javascript:;" @click="showEditor" v-if="!viewOnly">编辑</a>
+          <a href="javascript:;" @click="showEditor" v-if="!viewOnly">{{$t('misc.edit')}}</a>
           <!-- TODO: remove confirm dialog -->
-          <a href="javascript:;" @click="removeData(data.id)" v-if="!viewOnly">删除</a>
-          <a href="javascript:;" @click="showEditor" v-else>查看</a>
+          <a href="javascript:;" @click="removeData(data.id)" v-if="!viewOnly">{{$t('misc.delete')}}</a>
+          <a href="javascript:;" @click="showEditor" v-else>{{$t('misc.view')}}</a>
 
           <portal to="modals" v-if="isShowingEditor">
             <DataDefinitionEditor id="product-data-editor" :product="product" :productData="data" :viewOnly="viewOnly"></DataDefinitionEditor>
@@ -81,7 +81,7 @@
                         .request
           })
         } catch (e) {
-          alert('出现错误，删除操作失败')
+          alert(this.$t('misc.delete_fail'))
         }
       },
 

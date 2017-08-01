@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">创建产品</h4>
+          <h4 class="modal-title" id="myModalLabel">{{$t('product_definition.create_product')}}</h4>
         </div>
         <div class="modal-body eva-product-create__wrapper">
           <div class="eva-product-create__content" :class="{ 'slideLeft': curStep === 2 }">
@@ -27,13 +27,13 @@
 
             <!-- STEP 2, Info-->
             <div class="eva-product-create-info">
-              <h3 v-if="curStep === 2">创建{{ selectedType.name }}产品</h3>
-              <h3 v-else>创建产品</h3>
-              <a href="javascript:;" @click="changeType">重选产品类别</a>
+              <h3 v-if="curStep === 2">{{$t('misc.create') + selectedType.name }}</h3>
+              <h3 v-else>{{$t('product_definition.create_product')}}</h3>
+              <a href="javascript:;" @click="changeType">{{$t('product_definition.reselect')}}</a>
 
               <form class="form-horizontal form-label-left eva-product-create-info__form">
                 <div class="form-group">
-                  <label class="control-label col-xs-3">产品名称:</label>
+                  <label class="control-label col-xs-3">{{$t('product_definition.name')}}: </label>
 
                   <div class="col-xs-9">
                     <input class="form-control" type="text" v-model="create.name">
@@ -41,14 +41,14 @@
                 </div>
 
                 <div class="clearfix eva-product-create-info__form-type">
-                  <label class="control-label col-xs-3">传输类型:</label>
+                  <label class="control-label col-xs-3">{{$t('product_definition.func.trans_type')}}: </label>
                   <div class="checkbox col-xs-9">
                     <label>
                       <input type="radio" v-model="create.type" value="WIFI"> WIFI
                     </label>
 
                     <label>
-                      <input type="radio" v-model="create.type" value="BLUETOOTH"> 蓝牙
+                      <input type="radio" v-model="create.type" value="BLUETOOTH"> {{$t('product_definition.func.bluetooth')}}
                     </label>
 
                     <label>
@@ -57,12 +57,12 @@
                   </div>
                 </div>
 
-                <p class="text-warning text-center" v-if="state === 'Request failed with status code 409'">已经存在相同名字的产品了</p>
+                <p class="text-warning text-center" v-if="state === 'Request failed with status code 409'">{{$t('product_definition.has_same_name')}}</p>
 
-                <p class="text-warning text-center" v-else-if="state === 'name, productTypeId and type are required'">必须填写所有选项</p>
-                <p class="text-warning text-center" v-else-if="state !== ''">发生未知错误，请刷新后重试</p>
+                <p class="text-warning text-center" v-else-if="state === 'name, productTypeId and type are required'">{{$t('misc.must_provide')}}</p>
+                <p class="text-warning text-center" v-else-if="state !== ''">{{$t('misc.unknow_error')}}</p>
 
-                <button type="submit" class="btn btn-lg btn-primary btn-block" @click.prevent="createAndEdit">创建</button>
+                <button type="submit" class="btn btn-lg btn-primary btn-block" @click.prevent="createAndEdit">{{$t('misc.create')}}</button>
               </form>
             </div>
 

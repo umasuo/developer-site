@@ -11,21 +11,21 @@
         <div class="modal-body">
 
           <form>
-            <label>Data ID :</label>
+            <label>{{$t('product_definition.data.id')}}: </label>
             <input type="text" class="form-control" v-model="editingDataDefinition.dataId" required :disabled="viewOnly">
 
-            <label>数据名 :</label>
+            <label>{{$t('product_definition.data.name')}}: </label>
             <input type="text" class="form-control" v-model="editingDataDefinition.name" required :disabled="viewOnly">
 
-            <label>描述 :</label>
+            <label>{{$t('misc.description')}}: </label>
             <textarea class="form-control" v-model="editingDataDefinition.description" required :disabled="viewOnly"></textarea>
 
-            <label>数据定义 <small>(使用 <a href="http://json-schema.org/" target="_blank">JSON Schema</a> drafts-04 描述数据格式)</small> :</label>
+            <label>{{$t('product_definition.data.def')}} <small>{{$t('product_definition.data.def_1')}} <a href="http://json-schema.org/" target="_blank">{{$t('product_definition.data.def_2')}}</a> {{$t('product_definition.data.def_3')}}</small>: </label>
             <div class="data-def-editor" ref="dataEditor">{{ JSON.stringify(editingDataDefinition.dataSchema, null, 2) }}</div>
 
-            <button type="button" class="btn btn-primary" @click="generateJson">更新范例数据</button>
-            <span v-if="errMsg">格式有误
-              <a href="javascript:;" class="text-danger" @click="showErrMsg = !showErrMsg">显示详细错误信息</a>
+            <button type="button" class="btn btn-primary" @click="generateJson">{{$t('product_definition.data.update_demo_data')}}</button>
+            <span v-if="errMsg">{{$t('product_definition.data.err')}}
+              <a href="javascript:;" class="text-danger" @click="showErrMsg = !showErrMsg">{{$t('product_definition.data.show_err_detail')}}</a>
             </span>
 
             <div>
@@ -36,17 +36,17 @@
 
             <div class="clear-fix"></div>
 
-            <label>范例数据(根据定义随机生成) :</label>
+            <label>{{$t('product_definition.data.demo_data')}}: </label>
             <textarea class="form-control data-editor__demo" v-model="demoJson" readonly :disabled="viewOnly"></textarea>
           </form>
 
         </div>
         <div class="modal-footer">
-          <p class="text-danger" v-if="message === 'fail'"><small>提交失败，请刷新重试</small></p>
-          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+          <p class="text-danger" v-if="message === 'fail'"><small>{{$t('misc.save_fail')}}</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>{{$t('misc.cancel')}}</small></p>
 
-          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary" @click="finishEditing" v-if="!viewOnly">保存</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{$t('misc.close')}}</button>
+          <button type="button" class="btn btn-primary" @click="finishEditing" v-if="!viewOnly">{{$t('misc.save')}}</button>
         </div>
 
       </div>

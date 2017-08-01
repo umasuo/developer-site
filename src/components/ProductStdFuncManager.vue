@@ -6,7 +6,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title">管理标准功能</h4>
+          <h4 class="modal-title">{{$t('product_definition.func.std_func_manager')}}</h4>
         </div>
 
         <div class="modal-body">
@@ -17,17 +17,17 @@
               </label>
             </div>
             <div v-if="availableFuncs.length === 0">
-              <p class="text-warning text-center">没有可用的标准功能</p>
+              <p class="text-warning text-center">{{$t('product_definition.func.no_std_func')}}</p>
             </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <p class="text-danger" v-if="message === 'fail'"><small>添加标准功能出错，请刷新重试</small></p>
-          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+          <p class="text-danger" v-if="message === 'fail'"><small>{{$t('product_definition.func.add_std_func_error')}}</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>{{$t('misc.unknow_error')}}</small></p>
 
-          <button type="submit" class="btn btn-primary" @click.prevent="selectStdFuncs">确定</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary" @click.prevent="selectStdFuncs">{{$t('misc.confirm')}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{$t('misc.cancel')}}</button>
         </div>
 
       </div>

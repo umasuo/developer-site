@@ -8,17 +8,20 @@ export default {
     fetch_data_fail: '部分数据获取失败，可能是网络断开，请刷新重试',
     save_fail: '保存失败，请刷新重试',
     delete_fail: '删除失败，请刷新重试',
+    must_provide: '必须填写所有选项',
     search: '查询',
     confirm: '确认',
     close: '关闭',
     view: '查看',
     modify: '修改',
     edit: '编辑',
+    generate: '生成',
     manage: '管理',
     add: '添加',
     delete: '删除',
     save: '保存',
     cancel: '取消',
+    create: '创建',
     unit: '单位',
     filter_options: '过滤条件',
     title: '标题',
@@ -188,6 +191,11 @@ $t('misc.')
 
     create_product: '创建产品',
     quick_create: '或快速创建',
+    reselect: '重选产品类别',
+    name: '产品名称',
+    bluetooth: '蓝牙',
+
+    has_same_name: '已经存在相同名字的产品了',
 
     product_list: '产品列表',
     network_type: '联网类型',
@@ -238,23 +246,81 @@ $t('misc.')
       prop: '功能点属性',
 
       datatype: {
-        enum: '枚举值',
-        value: '数值',
+        enum: '枚举型',
+        value: '数值型',
         // 这里使用 string template 的语法，但不带反引号不通过 babel 转译，而是在运行时自行解析，这样一来不同的语言就可以更自然的组织自己的语序。
         value_1: '数值：从${dataType.startValue}到${dataType.endValue}，间隔${dataType.interval}，倍数${dataType.multiple}',
-        bool: '布尔',
-        string: '字符串'
+        bool: '布尔型',
+        string: '字符型'
       },
 
       transfer: {
         up: '只上报',
         down: '只下发',
         updown: '可上报可下发'
-      }
+      },
+
+      std_func_manager: '管理标准功能',
+      no_std_func: '没有可用的标准功能',
+      add_std_func_error: '添加标准功能出错，请刷新重试'
+    },
+
+    func_editor: {
+      name: '功能点名称',
+      id: '功能 ID',
+      type: '数据类型',
+      desc: '根据产品实际功能来设定',
+
+      value: '数值范围',
+      input_int: '请输入整数',
+
+      interval: '间距',
+      multiple: '倍数',
+      unit: '单位',
+
+      enum: '枚举值',
+      enum_hint: '将枚举值填入此处，用英文逗号分隔',
+      enum_duplicate: '枚举值不允许重复，保存时将会自动去重',
+
+      max_lenght: '最大长度：',
+      max_lenght_hint: '不超过255个字节'
+    },
+
+    data: {
+      std_manager: '管理标准数据',
+      no_std_data: '没有可用的标准数据',
+
+      id: '数据 ID',
+      name: '数据名',
+      def: '数据定义',
+      def_1: '(使用',
+      def_2: 'JSON Schema',
+      def_3: 'drafts-04 描述数据格式)',
+
+      update_demo_data: '更新范例数据',
+      err: '格式有误',
+      show_err_detail: '显示详细错误信息',
+      demo_data: '范例数据(根据定义随机生成)'
     }
+  },
+
+  public_prodcut: {
+    developing: '发布产品',
+    developing_hint: '产品审核过程中，以及成功发布后，功能都会被锁定',
+    checking: '取消发布',
+    checking_hint: '正在审核中，已经锁定产品所有功能',
+    published: '下架',
+    published_hint: '注意：下架后无法再次上架，谨慎操作',
+    revoked: '已下架'
+  },
+
+  gen_union_id: {
+    title: '批量生成 Union ID',
+    input_quantity: '输入生成数量（1-10000）',
+    gen_fail: '生成失败，请刷新后重试'
   }
 /*
-$t('dashboard.')
-{{$t('dashboard.')}}
+$t('product_definition.func_editor.')
+{{$t('product_definition.func_editor.')}}
 */
 }

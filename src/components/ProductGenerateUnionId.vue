@@ -1,20 +1,20 @@
 <template>
   <div class="x_panel">
     <div class="x_title">
-      <h2>批量生成 Union ID</h2>
+      <h2>{{$t('gen_union_id.title')}}</h2>
       <div class="clearfix"></div>
     </div>
     <div class="x_content eva-unionid-form">
 
       <form>
-        <button type="submit" class="eva-unionid-form__button btn btn-default" @click.prevent="generate">生成</button>
+        <button type="submit" class="eva-unionid-form__button btn btn-default" @click.prevent="generate">{{$t('misc.generate')}}</button>
         <div class="eva-unionid-form__input-wrapper">
-          <input type="number" class="eva-unionid-form__input form-control" placeholder="输入生成数量（1-10000）"
+          <input type="number" class="eva-unionid-form__input form-control" :placeholder="$t('gen_union_id.input_quantity')"
                  min="1" max="10000"
                  v-model="quantity" >
         </div>
-        <p class="text-warnning" v-if="message === 'pending'">请稍候...</p>
-        <p class="text-warnning" v-else-if="message !== ''">生成失败，请刷新后重试</p>
+        <p class="text-warnning" v-if="message === 'pending'">{{$t('misc.pls_wait')}}</p>
+        <p class="text-warnning" v-else-if="message !== ''">{{$t('gen_union_id.gen_fail')}}</p>
       </form>
 
     </div>

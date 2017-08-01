@@ -12,27 +12,27 @@
 
           <form class="form-horizontal">
             <div class="form-group">
-              <label class="col-xs-3 control-label"><span class="required">*</span> 功能点名称：</label>
+              <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.name')}}: </label>
               <div class="col-xs-9">
                 <input type="text" class="form-control" v-model="editingFunc.name" :disabled="viewOnly">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-xs-3 control-label"><span class="required">*</span> 功能 ID：</label>
+              <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.id')}}: </label>
               <div class="col-xs-9">
                 <input type="text" class="form-control" v-model="editingFunc.functionId" :disabled="viewOnly || mode === 'standard'">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-xs-3 control-label"><span class="required">*</span> 数据类型：</label>
+              <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.type')}}: </label>
               <div class="col-xs-9">
-                <label class="eva-radio-label"><input type="radio" value="boolean" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> 布尔型</label>
-                <label class="eva-radio-label"><input type="radio" value="value" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> 数值型</label>
-                <label class="eva-radio-label"><input type="radio" value="enum" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> 枚举型</label>
+                <label class="eva-radio-label"><input type="radio" value="boolean" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> {{$t('product_definition.func.datatype.bool')}}</label>
+                <label class="eva-radio-label"><input type="radio" value="value" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> {{$t('product_definition.func.datatype.value')}}</label>
+                <label class="eva-radio-label"><input type="radio" value="enum" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> {{$t('product_definition.func.datatype.enum')}}</label>
                 <!--<label class="eva-radio-label"><input type="radio" value="error" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> 故障型</label>-->
-                <label class="eva-radio-label"><input type="radio" value="string" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> 字符型</label>
+                <label class="eva-radio-label"><input type="radio" value="string" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> {{$t('product_definition.func.datatype.string')}}</label>
                 <!--<label class="eva-radio-label"><input type="radio" value="raw" v-model="editingFunc.dataType.type" :disabled="viewOnly || mode === 'standard'"> RAW型</label>-->
               </div>
             </div>
@@ -40,29 +40,29 @@
             <!-- Fields for number type -->
             <template v-if="editingFunc.dataType.type === 'value'">
               <div class="form-group">
-                <label class="col-xs-3 control-label"><span class="required">*</span> 数值范围：</label>
+                <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.value')}}: </label>
                 <div class="col-xs-9 form-inline">
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.startValue" :disabled="viewOnly"> -
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.endValue" :disabled="viewOnly">
+                  <input type="text" class="form-control" :placeholder="$t('product_definition.func_editor.input_int')" v-model="numberType.startValue" :disabled="viewOnly"> -
+                  <input type="text" class="form-control" :placeholder="$t('product_definition.func_editor.input_int')" v-model="numberType.endValue" :disabled="viewOnly">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-xs-3 control-label"><span class="required">*</span> 间距：</label>
+                <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.interval')}}: </label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.interval" :disabled="viewOnly">
+                  <input type="text" class="form-control" :placeholder="$t('product_definition.func_editor.input_int')" v-model="numberType.interval" :disabled="viewOnly">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-xs-3 control-label"><span class="required">*</span> 倍数：</label>
+                <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.multiple')}}: </label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="请输入整数" v-model="numberType.multiple" :disabled="viewOnly">
+                  <input type="text" class="form-control" :placeholder="$t('product_definition.func_editor.input_int')" v-model="numberType.multiple" :disabled="viewOnly">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-xs-3 control-label">单位：</label>
+                <label class="col-xs-3 control-label"> {{$t('product_definition.func_editor.unit')}}: </label>
                 <div class="col-xs-9">
                   <input type="text" class="form-control" placeholder="" v-model="numberType.unit" :disabled="viewOnly">
                 </div>
@@ -72,11 +72,11 @@
             <!-- Fields for enum type -->
             <template v-else-if="editingFunc.dataType.type === 'enum'">
               <div class="form-group">
-                <label class="col-xs-3 control-label"><span class="required">*</span> 枚举值：</label>
+                <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func_editor.enum')}}: </label>
                 <div class="col-xs-9">
-                  <textarea class="form-control" v-model="enumValues" placeholder="将枚举值填入此处，用英文逗号分隔" :disabled="viewOnly"></textarea>
-                  <p class="text-danger" v-if="enumMessage === 'enum duplicated'"><small>枚举值不允许重复，保存时将会自动去重</small></p>
-                  <p class="text-danger" v-else-if="enumMessage !== ''"><small>未知错误</small></p>
+                  <textarea class="form-control" v-model="enumValues" :placeholder="$t('product_definition.func_editor.enum_hint')" :disabled="viewOnly"></textarea>
+                  <p class="text-danger" v-if="enumMessage === 'enum duplicated'"><small>{{$t('product_definition.func_editor.enum_duplicate')}}</small></p>
+                  <p class="text-danger" v-else-if="enumMessage !== ''"><small>{{$t('misc.unknow_error')}}</small></p>
                 </div>
               </div>
             </template>
@@ -95,37 +95,37 @@
             <!-- Fields for string type -->
             <template v-else-if="editingFunc.dataType.type === 'string'">
               <div class="form-group">
-                <label class="col-xs-3 control-label">最大长度：</label>
+                <label class="col-xs-3 control-label">{{$t('product_definition.func_editor.max_lenght')}}: </label>
                 <div class="col-xs-9">
-                  <input type="text" class="form-control" placeholder="不超过255个字节" disabled>
+                  <input type="text" class="form-control" :placeholder="$t('product_definition.func_editor.max_lenght_hint')" disabled>
                 </div>
               </div>
             </template>
 
             <div class="form-group">
-              <label class="col-xs-3 control-label"><span class="required">*</span> 数据传输类型：</label>
+              <label class="col-xs-3 control-label"><span class="required">*</span> {{$t('product_definition.func.trans_type')}}: </label>
               <div class="col-xs-9">
-                <label class="eva-radio-label"><input type="radio" value="UPDOWN" v-model="editingFunc.transferType" :disabled="viewOnly || editingFunc.dataType === 'error'"> 可下发可上报</label>
-                <label class="eva-radio-label"><input type="radio" value="UP" v-model="editingFunc.transferType" :disabled="viewOnly"> 只上报</label>
-                <label class="eva-radio-label"><input type="radio" value="DOWN" v-model="editingFunc.transferType" :disabled="viewOnly || editingFunc.dataType === 'error'"> 只下发</label>
+                <label class="eva-radio-label"><input type="radio" value="UPDOWN" v-model="editingFunc.transferType" :disabled="viewOnly || editingFunc.dataType === 'error'"> {{$t('product_definition.func.transfer.updown')}}</label>
+                <label class="eva-radio-label"><input type="radio" value="UP" v-model="editingFunc.transferType" :disabled="viewOnly"> {{$t('product_definition.func.transfer.up')}}</label>
+                <label class="eva-radio-label"><input type="radio" value="DOWN" v-model="editingFunc.transferType" :disabled="viewOnly || editingFunc.dataType === 'error'"> {{$t('product_definition.func.transfer.down')}}</label>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-xs-3 control-label">描述：</label>
+              <label class="col-xs-3 control-label">{{$t('misc.description')}}: </label>
               <div class="col-xs-9">
-                <textarea class="form-control" v-model="editingFunc.description" placeholder="根据产品实际功能来设定" :disabled="viewOnly"></textarea>
+                <textarea class="form-control" v-model="editingFunc.description" :placeholder="$t('product_definition.func_editor.desc')" :disabled="viewOnly"></textarea>
               </div>
             </div>
           </form>
 
         </div>
         <div class="modal-footer">
-          <p class="text-danger" v-if="message === 'fail'"><small>提交失败，请刷新重试</small></p>
-          <p class="text-danger" v-else-if="message !== ''"><small>未知错误</small></p>
+          <p class="text-danger" v-if="message === 'fail'"><small>{{$t('misc.save_fail')}}</small></p>
+          <p class="text-danger" v-else-if="message !== ''"><small>{{$t('misc.unknow_error')}}</small></p>
 
-          <button type="submit" class="btn btn-primary" @click.prevent="submit" v-if="!viewOnly">确定</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">{{ viewOnly ? '关闭' : '取消' }}</button>
+          <button type="submit" class="btn btn-primary" @click.prevent="submit" v-if="!viewOnly">{{$t('misc.confirm')}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ viewOnly ? $t('misc.close') : $t('misc.cancel') }}</button>
         </div>
 
       </div>
