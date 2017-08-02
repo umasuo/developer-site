@@ -14,7 +14,7 @@ var spinner = ora('Building docker image...')
 spinner.start()
 
 // run docker bash command to build image
-exec(`docker build -t umasuo/${package.name}:${package.version} .`, {
+exec(`docker build -t evacloud/${package.name}:${package.version} .`, {
   cwd: config.build.assetsRoot
 }, (error, stdout, stderr) => {
   spinner.stop()

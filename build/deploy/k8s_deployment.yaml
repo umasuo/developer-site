@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: developer-site
-          image: 'umasuo/developer-site:1.0.1'
+          image: 'evacloud/developer-site:1.0.1'
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
