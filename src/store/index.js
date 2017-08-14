@@ -103,6 +103,13 @@ const actions = {
     return updatedProduct
   },
 
+  async cancelProduct ({state, commit}, product) {
+    await api.product.cancelProduct(product.id, product.version)
+    const updatedProduct = {...product, ...{status: 'DEVELOPING', version: product.version + 1}}
+    commit('updateProduct', {oldProduct: product, newProduct: updatedProduct})
+    return updatedProduct
+  },
+
   async revokeProduct ({state, commit}, product) {
     await api.product.revokeProduct(product.id, product.version)
     const updatedProduct = {...product, ...{status: 'REVOKED', version: product.version + 1}}

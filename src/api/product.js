@@ -53,6 +53,13 @@ export default {
     return product
   },
 
+  async cancelProduct (pid, version) {
+    const product = await http.put(`products/${pid}/status`, {
+      type: 'CANCEL', version: version
+    })
+    return product
+  },
+
   async revokeProduct (pid, version) {
     const product = await http.put(`products/${pid}/status`, {
       type: 'REVOKE', version: version
