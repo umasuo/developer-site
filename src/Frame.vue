@@ -142,7 +142,7 @@
           {
             title: this.$t('nav.documentation'),
             faIcon: 'fa-book',
-            toHref: '/document'
+            toHref: 'https://umasuo.gitbooks.io/eva/content/'
           }
         ]
       }
