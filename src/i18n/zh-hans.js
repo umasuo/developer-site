@@ -55,7 +55,7 @@ $t('misc.')
     timezone: '时区',
 
     console_footer: 'Eva Cloud developer console',
-    icp_license: '网站备案号: 12312412321523 公司信息'
+    icp_license: '粤ICP备17102166号'
   },
 
   nav: {
