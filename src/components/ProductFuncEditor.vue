@@ -153,7 +153,8 @@
             dataType: {
               type: 'value'
             },
-            command: ''
+            command: '',
+            transferType: 'UPDOWN'
           }
         }
       },
