@@ -11,7 +11,7 @@ export default {
           return parseTpl(this.$t('product_definition.func.datatype.value_1'), {
             dataType
           }) +
-          (dataType.unit ? (this.$t('misc.unit') + dataType.unit) : '')
+          (dataType.unit ? (', ' + this.$t('misc.unit') + dataType.unit) : '')
         case 'boolean':
           return this.$t('product_definition.func.datatype.bool')
         case 'string':

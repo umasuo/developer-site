@@ -249,7 +249,7 @@ $t('misc.')
         enum: '枚举型',
         value: '数值型',
         // 这里使用 string template 的语法，但不带反引号不通过 babel 转译，而是在运行时自行解析，这样一来不同的语言就可以更自然的组织自己的语序。
-        value_1: '数值：从${dataType.startValue}到${dataType.endValue}，间隔${dataType.interval}，倍数${dataType.multiple}',
+        value_1: '数值：从${dataType.startValue}到${dataType.endValue}, 间隔${dataType.interval}, 倍数${dataType.multiple}',
         bool: '布尔型',
         string: '字符型'
       },
