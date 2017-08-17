@@ -48,7 +48,7 @@
                     </label>
 
                     <label>
-                      <input type="radio" v-model="create.type" value="BLUETOOTH"> {{$t('product_definition.func.bluetooth')}}
+                      <input type="radio" v-model="create.type" value="BLUETOOTH"> {{$t('product_definition.bluetooth')}}
                     </label>
 
                     <label>
