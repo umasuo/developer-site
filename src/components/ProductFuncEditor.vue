@@ -204,7 +204,19 @@
           dataType = {dataType: this.numberType}
         }
 
-        const actionName = this.mode === 'createCustom' ? 'addFunction' : 'updateFunction'
+        var actionName
+        switch (this.mode) {
+          case 'createCustom':
+            actionName = 'addFunction'
+            break
+          case 'standard':
+            actionName = 'updateStandardFunction'
+            break
+          case 'custom':
+            actionName = 'updateFunction'
+            break
+        }
+
         try {
           await this.updateProduct({
             product: this.product,
