@@ -17,7 +17,7 @@
             <p class="text-warning" v-else-if="signinState === 'password not valid'">{{$t('auth.pwd_format_wrong')}}</p>
             <p class="text-warning" v-else-if="signinState === 'fetching'">{{$t('misc.pls_wait')}}</p>
             <p class="text-warning" v-else-if="signinState === 'Request failed with status code 404'">{{$t('auth.account_not_exist')}}</p>
-            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 401'">{{$t('credential_wrong')}}</p>
+            <p class="text-warning" v-else-if="signinState === 'Request failed with status code 401'">{{$t('auth.credential_wrong')}}</p>
             <p class="text-warning" v-else-if="signinState !== ''">{{$t('misc.unknow_error')}}</p>
 
             <div>
