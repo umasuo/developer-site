@@ -141,6 +141,8 @@
       if (this.viewOnly) {
         this.editor.setReadOnly(true)
       }
+
+      this.generateJson()
     },
 
     methods: {
