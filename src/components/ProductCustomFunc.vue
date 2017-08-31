@@ -23,7 +23,7 @@
           <a href="javascript:;" @click="removeFunction(func.id)" v-if="!viewOnly">{{$t('misc.delete')}}</a>
           <a href="javascript:;" @click="showEditor(index)" v-else>{{$t('misc.view')}}</a>
 
-          <portal to="modals" v-if="isShowingEditor">
+          <portal to="modals" v-if="showingEditor === index">
             <ProductFuncEditor mode="custom" id="product-custom-func-editor" :product="product" :func="func" :viewOnly="viewOnly"></ProductFuncEditor>
           </portal>
 
@@ -55,7 +55,7 @@
 
     data () {
       return {
-        isShowingEditor: false
+        showingEditor: null
       }
     },
 
@@ -72,10 +72,10 @@
 
       showEditor (index) {
         const vm = this
-        this.isShowingEditor = true
+        this.showingEditor = index
         setTimeout(() => {
           $('#product-custom-func-editor').modal('show').on('hidden.bs.modal', () => {
-            vm.isShowingEditor = false
+            vm.showingEditor = null
           })
         }, 0)
       },

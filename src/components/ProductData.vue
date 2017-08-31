@@ -9,17 +9,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="data in productDatas">
+      <tr v-for="(data, index) in productDatas">
         <th scope="row">{{ data.dataId }}</th>
         <td>{{ data.name }}</td>
         <td>{{ data.description }}</td>
         <td>
-          <a href="javascript:;" @click="showEditor" v-if="!viewOnly">{{$t('misc.edit')}}</a>
+          <a href="javascript:;" @click="showEditor(index)" v-if="!viewOnly">{{$t('misc.edit')}}</a>
           <!-- TODO: remove confirm dialog -->
           <a href="javascript:;" @click="removeData(data.id)" v-if="!viewOnly">{{$t('misc.delete')}}</a>
-          <a href="javascript:;" @click="showEditor" v-else>{{$t('misc.view')}}</a>
+          <a href="javascript:;" @click="showEditor(index)" v-else>{{$t('misc.view')}}</a>
 
-          <portal to="modals" v-if="isShowingEditor">
+          <portal to="modals" v-if="showingEditor === index">
             <DataDefinitionEditor id="product-data-editor" :product="product" :productData="data" :viewOnly="viewOnly"></DataDefinitionEditor>
           </portal>
         </td>
@@ -54,7 +54,7 @@
 
     data () {
       return {
-        isShowingEditor: false
+        showingEditor: null
       }
     },
 
@@ -85,12 +85,12 @@
         }
       },
 
-      showEditor () {
+      showEditor (index) {
         const vm = this
-        this.isShowingEditor = true
+        this.showingEditor = index
         setTimeout(() => {
           $('#product-data-editor').modal('show').on('hidden.bs.modal', () => {
-            vm.isShowingEditor = false
+            vm.showingEditor = false
           })
         }, 0)
       }
