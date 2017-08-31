@@ -146,9 +146,9 @@
     methods: {
       ...mapActions(['updateProduct']),
 
-      finishEditing () {
+      async finishEditing () {
         try {
-          this.parseSchema()
+          await this.parseSchema()
         } catch (e) {
           this.errMsg = e.message
           return
