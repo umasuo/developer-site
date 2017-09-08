@@ -88,7 +88,7 @@
         }
 
         try {
-          await api.developer.resetPassword(this.$route.query.developerId, this.$route.query.token, this.reset.password)
+          await api.developer.resetPassword(this.$route.query.developerId, this.reset.password, this.$route.query.token)
           api.developer
           this.reset.state = 'success'
         } catch (e) {
